@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "inc/hw_memmap.h"
+#include "inc/tm4c123gh6pm.h"
 
 #include "driverlib/adc.h"
 #include "driverlib/aes.h"
@@ -39,6 +40,21 @@
 #include "driverlib/udma.h"
 #include "driverlib/usb.h"
 #include "driverlib/watchdog.h"
-#include "tm4c123gh6pm.h"
 
 #include "src/Uart_helper.h"
+void UpdateMYbuttons(void);  //updates switch values
+// 1 = Pushed down
+// 0 = Not pushed down
+// Note: User needs to config correct logic on whether or not pin is 
+// pulled up or down.  
+
+struct Mybuttons {
+	
+	uint8_t SW1;
+	uint8_t SW2;
+
+	
+};
+
+//global variable
+extern struct Mybuttons Mybuttons;
