@@ -428,6 +428,36 @@
               <FileType>5</FileType>
               <FilePath>.\systick_helper.h</FilePath>
             </File>
+            <File>
+              <FileName>ADC_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ADC_helper.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADC_helper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ADC_helper.h</FilePath>
+            </File>
+            <File>
+              <FileName>PWM_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\PWM_helper.c</FilePath>
+            </File>
+            <File>
+              <FileName>PWM_helper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\PWM_helper.h</FilePath>
+            </File>
+            <File>
+              <FileName>GPIO_helper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\GPIO_helper.c</FilePath>
+            </File>
+            <File>
+              <FileName>GPIO_helper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\GPIO_helper.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

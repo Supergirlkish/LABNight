@@ -64181,6 +64181,28 @@ N
 N	//short hand
 N		GPIO_PORTF_DEN_R |= 0x0000001F;
 X		(*((volatile uint32_t *)0x4002551C)) |= 0x0000001F;
+N	
+N	//Setup port D
+N
+N	//need to unlock the pins first
+N	GPIO_PORTD_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
+X	(*((volatile uint32_t *)0x40007520)) = 0x4C4F434B;  
+N	GPIO_PORTD_CR_R = 0xFF; 						//write CR reg
+X	(*((volatile uint32_t *)0x40007524)) = 0xFF; 						
+N	GPIO_PORTD_LOCK_R = 0;							//lock access to CR reg
+X	(*((volatile uint32_t *)0x40007520)) = 0;							
+N
+N	
+N	//clearing bits
+N	GPIO_PORTD_DIR_R &= ~0x000000C0; //Make sure PD6, PD7 are inputs
+X	(*((volatile uint32_t *)0x40007400)) &= ~0x000000C0; 
+N	//Setting  bits
+N	GPIO_PORTD_PUR_R |=  0x000000C0; //PD6, PD7 pullups enabled
+X	(*((volatile uint32_t *)0x40007510)) |=  0x000000C0; 
+N	GPIO_PORTD_DEN_R |=  0x000000C0; //enable digtial pins
+X	(*((volatile uint32_t *)0x4000751C)) |=  0x000000C0; 
+N
+N
 N	// Enable the GPIO pin for the LED (PF3).  Set the direction as output, and
 N    // enable the GPIO pin for digital function.
 N		
@@ -64197,6 +64219,19 @@ N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000001);
 N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
+N		
+N		//Port D Setup
+N	
+N	// Off Board Momentary Switches
+N	GPIOPinTypeGPIOInput(GPIO_PORTD_BASE,GPIO_PIN_6);
+X	GPIOPinTypeGPIOInput(0x40007000,0x00000040);
+N	GPIOPinTypeGPIOInput(GPIO_PORTD_BASE,GPIO_PIN_7);	
+X	GPIOPinTypeGPIOInput(0x40007000,0x00000080);	
+N	
+N	//use internal pull ups for other switches as well. 
+N	GPIOPadConfigSet(GPIO_PORTD_BASE,GPIO_PIN_6|GPIO_PIN_7,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU);
+X	GPIOPadConfigSet(0x40007000,0x00000040|0x00000080,0x00000001,0x0000000A);
+N	
 N	
 N}
 Nvoid UpdateMYbuttons()
@@ -64224,13 +64259,9 @@ N    volatile uint32_t ui32Loop;
 N	
 N	
 N    // Enable the GPIO port that is used for the on-board LED.
-W "project.c" 79 4 function "SysTick_Setup" declared implicitly
-N	  SysTick_Setup();
-W "project.c" 80 3 function "InterruptEnable" declared implicitly
-N		InterruptEnable();
-N		SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-X		SysCtlPeripheralEnable(0xf0000805);
-N    SetupHardware();
+N			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+X			SysCtlPeripheralEnable(0xf0000805);
+N			SetupHardware();
 N	 
 N	  
 N		
@@ -64604,6 +64635,6 @@ N				}
 N			}
 N			 
 N		}
-W "project.c" 398 2 last line of file ends without a newline
-W "project.c" 116 5 loop is not reachable
+W "project.c" 422 2 last line of file ends without a newline
+W "project.c" 140 5 loop is not reachable
 N}

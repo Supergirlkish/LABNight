@@ -1,5 +1,6 @@
-#line 1 "systick.c"
-#line 1 "systick_helper.h"
+#line 1 "GPIO_helper.c"
+#line 1 "GPIO_helper.h"
+
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdbool.h"
  
 
@@ -18,7 +19,7 @@
 
 
 
-#line 2 "systick_helper.h"
+#line 3 "GPIO_helper.h"
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
  
  
@@ -275,7 +276,767 @@ typedef unsigned     long long uintmax_t;
 
 
  
-#line 3 "systick_helper.h"
+#line 4 "GPIO_helper.h"
+#line 1 ".\\driverlib\\sysctl.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 140 ".\\driverlib\\sysctl.h"
+
+
+
+
+
+
+
+
+#line 155 ".\\driverlib\\sysctl.h"
+
+
+
+
+
+
+
+
+#line 171 ".\\driverlib\\sysctl.h"
+
+
+
+
+
+
+
+#line 185 ".\\driverlib\\sysctl.h"
+                                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 214 ".\\driverlib\\sysctl.h"
+
+
+
+
+
+
+
+#line 385 ".\\driverlib\\sysctl.h"
+
+
+
+
+
+
+
+#line 462 ".\\driverlib\\sysctl.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 486 ".\\driverlib\\sysctl.h"
+
+
+
+
+
+
+
+
+                                            
+
+                                            
+
+
+
+
+
+
+
+
+
+
+
+#line 516 ".\\driverlib\\sysctl.h"
+
+
+
+
+
+
+#line 535 ".\\driverlib\\sysctl.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 556 ".\\driverlib\\sysctl.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+extern uint32_t SysCtlSRAMSizeGet(void);
+extern uint32_t SysCtlFlashSizeGet(void);
+extern uint32_t SysCtlFlashSectorSizeGet(void);
+extern _Bool SysCtlPeripheralPresent(uint32_t ui32Peripheral);
+extern _Bool SysCtlPeripheralReady(uint32_t ui32Peripheral);
+extern void SysCtlPeripheralPowerOn(uint32_t ui32Peripheral);
+extern void SysCtlPeripheralPowerOff(uint32_t ui32Peripheral);
+extern void SysCtlPeripheralReset(uint32_t ui32Peripheral);
+extern void SysCtlPeripheralEnable(uint32_t ui32Peripheral);
+extern void SysCtlPeripheralDisable(uint32_t ui32Peripheral);
+extern void SysCtlPeripheralSleepEnable(uint32_t ui32Peripheral);
+extern void SysCtlPeripheralSleepDisable(uint32_t ui32Peripheral);
+extern void SysCtlPeripheralDeepSleepEnable(uint32_t ui32Peripheral);
+extern void SysCtlPeripheralDeepSleepDisable(uint32_t ui32Peripheral);
+extern void SysCtlPeripheralClockGating(_Bool bEnable);
+extern void SysCtlIntRegister(void (*pfnHandler)(void));
+extern void SysCtlIntUnregister(void);
+extern void SysCtlIntEnable(uint32_t ui32Ints);
+extern void SysCtlIntDisable(uint32_t ui32Ints);
+extern void SysCtlIntClear(uint32_t ui32Ints);
+extern uint32_t SysCtlIntStatus(_Bool bMasked);
+extern void SysCtlLDOSleepSet(uint32_t ui32Voltage);
+extern uint32_t SysCtlLDOSleepGet(void);
+extern void SysCtlLDODeepSleepSet(uint32_t ui32Voltage);
+extern uint32_t SysCtlLDODeepSleepGet(void);
+extern void SysCtlSleepPowerSet(uint32_t ui32Config);
+extern void SysCtlDeepSleepPowerSet(uint32_t ui32Config);
+extern void SysCtlReset(void);
+extern void SysCtlSleep(void);
+extern void SysCtlDeepSleep(void);
+extern uint32_t SysCtlResetCauseGet(void);
+extern void SysCtlResetCauseClear(uint32_t ui32Causes);
+extern void SysCtlBrownOutConfigSet(uint32_t ui32Config,
+                                    uint32_t ui32Delay);
+extern void SysCtlDelay(uint32_t ui32Count);
+extern void SysCtlMOSCConfigSet(uint32_t ui32Config);
+extern uint32_t SysCtlPIOSCCalibrate(uint32_t ui32Type);
+extern void SysCtlClockSet(uint32_t ui32Config);
+extern uint32_t SysCtlClockGet(void);
+extern void SysCtlDeepSleepClockSet(uint32_t ui32Config);
+extern void SysCtlDeepSleepClockConfigSet(uint32_t ui32Div,
+                                          uint32_t ui32Config);
+extern void SysCtlPWMClockSet(uint32_t ui32Config);
+extern uint32_t SysCtlPWMClockGet(void);
+extern void SysCtlIOSCVerificationSet(_Bool bEnable);
+extern void SysCtlMOSCVerificationSet(_Bool bEnable);
+extern void SysCtlPLLVerificationSet(_Bool bEnable);
+extern void SysCtlClkVerificationClear(void);
+extern void SysCtlGPIOAHBEnable(uint32_t ui32GPIOPeripheral);
+extern void SysCtlGPIOAHBDisable(uint32_t ui32GPIOPeripheral);
+extern void SysCtlUSBPLLEnable(void);
+extern void SysCtlUSBPLLDisable(void);
+extern uint32_t SysCtlClockFreqSet(uint32_t ui32Config,
+                                   uint32_t ui32SysClock);
+extern void SysCtlResetBehaviorSet(uint32_t ui32Behavior);
+extern uint32_t SysCtlResetBehaviorGet(void);
+extern void SysCtlClockOutConfig(uint32_t ui32Config, uint32_t ui32Div);
+extern void SysCtlAltClkConfig(uint32_t ui32Config);
+extern uint32_t SysCtlNMIStatus(void);
+extern void SysCtlNMIClear(uint32_t ui32Status);
+extern void SysCtlVoltageEventConfig(uint32_t ui32Config);
+extern uint32_t SysCtlVoltageEventStatus(void);
+extern void SysCtlVoltageEventClear(uint32_t ui32Status);
+extern _Bool SysCtlVCOGet(uint32_t ui32Crystal, uint32_t *pui32VCOFrequency);
+
+
+
+
+
+
+
+
+
+
+#line 5 "GPIO_helper.h"
+#line 1 ".\\inc\\hw_memmap.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 116 ".\\inc\\hw_memmap.h"
+                                            
+
+                                            
+
+                                            
+#line 141 ".\\inc\\hw_memmap.h"
+                                            
+
+                                            
+#line 150 ".\\inc\\hw_memmap.h"
+
+#line 6 "GPIO_helper.h"
+#line 1 ".\\driverlib\\gpio.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 68 ".\\driverlib\\gpio.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 91 ".\\driverlib\\gpio.h"
+
+
+
+
+
+
+
+#line 105 ".\\driverlib\\gpio.h"
+
+
+
+
+
+
+
+#line 119 ".\\driverlib\\gpio.h"
+
+
+
+
+
+
+
+#line 135 ".\\driverlib\\gpio.h"
+
+
+
+
+
+
+extern void GPIODirModeSet(uint32_t ui32Port, uint8_t ui8Pins,
+                           uint32_t ui32PinIO);
+extern uint32_t GPIODirModeGet(uint32_t ui32Port, uint8_t ui8Pin);
+extern void GPIOIntTypeSet(uint32_t ui32Port, uint8_t ui8Pins,
+                           uint32_t ui32IntType);
+extern uint32_t GPIOIntTypeGet(uint32_t ui32Port, uint8_t ui8Pin);
+extern void GPIOPadConfigSet(uint32_t ui32Port, uint8_t ui8Pins,
+                             uint32_t ui32Strength, uint32_t ui32PadType);
+extern void GPIOPadConfigGet(uint32_t ui32Port, uint8_t ui8Pin,
+                             uint32_t *pui32Strength, uint32_t *pui32PadType);
+extern void GPIOIntEnable(uint32_t ui32Port, uint32_t ui32IntFlags);
+extern void GPIOIntDisable(uint32_t ui32Port, uint32_t ui32IntFlags);
+extern uint32_t GPIOIntStatus(uint32_t ui32Port, _Bool bMasked);
+extern void GPIOIntClear(uint32_t ui32Port, uint32_t ui32IntFlags);
+extern void GPIOIntRegister(uint32_t ui32Port, void (*pfnIntHandler)(void));
+extern void GPIOIntUnregister(uint32_t ui32Port);
+extern void GPIOIntRegisterPin(uint32_t ui32Port, uint32_t ui32Pin,
+                               void (*pfnIntHandler)(void));
+extern void GPIOIntUnregisterPin(uint32_t ui32Port, uint32_t ui32Pin);
+extern int32_t GPIOPinRead(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinWrite(uint32_t ui32Port, uint8_t ui8Pins, uint8_t ui8Val);
+extern void GPIOPinConfigure(uint32_t ui32PinConfig);
+extern void GPIOPinTypeADC(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeCAN(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeComparator(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeComparatorOutput(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeDIVSCLK(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeEPI(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeEthernetLED(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeEthernetMII(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeGPIOInput(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeGPIOOutput(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeGPIOOutputOD(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeHibernateRTCCLK(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeI2C(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeI2CSCL(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeLCD(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeOneWire(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypePWM(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeQEI(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeSSI(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeTimer(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeTrace(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeUART(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeUSBAnalog(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeUSBDigital(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeWakeHigh(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOPinTypeWakeLow(uint32_t ui32Port, uint8_t ui8Pins);
+extern uint32_t GPIOPinWakeStatus(uint32_t ui32Port);
+extern void GPIODMATriggerEnable(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIODMATriggerDisable(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOADCTriggerEnable(uint32_t ui32Port, uint8_t ui8Pins);
+extern void GPIOADCTriggerDisable(uint32_t ui32Port, uint8_t ui8Pins);
+
+
+
+
+
+
+
+
+
+
+#line 7 "GPIO_helper.h"
+#line 1 ".\\driverlib\\uart.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 74 ".\\driverlib\\uart.h"
+
+
+
+
+
+
+
+
+
+
+#line 98 ".\\driverlib\\uart.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+extern void UARTParityModeSet(uint32_t ui32Base, uint32_t ui32Parity);
+extern uint32_t UARTParityModeGet(uint32_t ui32Base);
+extern void UARTFIFOLevelSet(uint32_t ui32Base, uint32_t ui32TxLevel,
+                             uint32_t ui32RxLevel);
+extern void UARTFIFOLevelGet(uint32_t ui32Base, uint32_t *pui32TxLevel,
+                             uint32_t *pui32RxLevel);
+extern void UARTConfigSetExpClk(uint32_t ui32Base, uint32_t ui32UARTClk,
+                                uint32_t ui32Baud, uint32_t ui32Config);
+extern void UARTConfigGetExpClk(uint32_t ui32Base, uint32_t ui32UARTClk,
+                                uint32_t *pui32Baud, uint32_t *pui32Config);
+extern void UARTEnable(uint32_t ui32Base);
+extern void UARTDisable(uint32_t ui32Base);
+extern void UARTFIFOEnable(uint32_t ui32Base);
+extern void UARTFIFODisable(uint32_t ui32Base);
+extern void UARTEnableSIR(uint32_t ui32Base, _Bool bLowPower);
+extern void UARTDisableSIR(uint32_t ui32Base);
+extern _Bool UARTCharsAvail(uint32_t ui32Base);
+extern _Bool UARTSpaceAvail(uint32_t ui32Base);
+extern int32_t UARTCharGetNonBlocking(uint32_t ui32Base);
+extern int32_t UARTCharGet(uint32_t ui32Base);
+extern _Bool UARTCharPutNonBlocking(uint32_t ui32Base, unsigned char ucData);
+extern void UARTCharPut(uint32_t ui32Base, unsigned char ucData);
+extern void UARTBreakCtl(uint32_t ui32Base, _Bool bBreakState);
+extern _Bool UARTBusy(uint32_t ui32Base);
+extern void UARTIntRegister(uint32_t ui32Base, void (*pfnHandler)(void));
+extern void UARTIntUnregister(uint32_t ui32Base);
+extern void UARTIntEnable(uint32_t ui32Base, uint32_t ui32IntFlags);
+extern void UARTIntDisable(uint32_t ui32Base, uint32_t ui32IntFlags);
+extern uint32_t UARTIntStatus(uint32_t ui32Base, _Bool bMasked);
+extern void UARTIntClear(uint32_t ui32Base, uint32_t ui32IntFlags);
+extern void UARTDMAEnable(uint32_t ui32Base, uint32_t ui32DMAFlags);
+extern void UARTDMADisable(uint32_t ui32Base, uint32_t ui32DMAFlags);
+extern uint32_t UARTRxErrorGet(uint32_t ui32Base);
+extern void UARTRxErrorClear(uint32_t ui32Base);
+extern void UARTSmartCardEnable(uint32_t ui32Base);
+extern void UARTSmartCardDisable(uint32_t ui32Base);
+extern void UARTModemControlSet(uint32_t ui32Base, uint32_t ui32Control);
+extern void UARTModemControlClear(uint32_t ui32Base, uint32_t ui32Control);
+extern uint32_t UARTModemControlGet(uint32_t ui32Base);
+extern uint32_t UARTModemStatusGet(uint32_t ui32Base);
+extern void UARTFlowControlSet(uint32_t ui32Base, uint32_t ui32Mode);
+extern uint32_t UARTFlowControlGet(uint32_t ui32Base);
+extern void UARTTxIntModeSet(uint32_t ui32Base, uint32_t ui32Mode);
+extern uint32_t UARTTxIntModeGet(uint32_t ui32Base);
+extern void UARTClockSourceSet(uint32_t ui32Base, uint32_t ui32Source);
+extern uint32_t UARTClockSourceGet(uint32_t ui32Base);
+extern void UART9BitEnable(uint32_t ui32Base);
+extern void UART9BitDisable(uint32_t ui32Base);
+extern void UART9BitAddrSet(uint32_t ui32Base, uint8_t ui8Addr,
+                            uint8_t ui8Mask);
+extern void UART9BitAddrSend(uint32_t ui32Base, uint8_t ui8Addr);
+extern void UARTLoopbackEnable(uint32_t ui32Base);
+
+
+
+
+
+
+
+
+
+
+#line 8 "GPIO_helper.h"
 #line 1 ".\\driverlib\\../inc/tm4c123gh6pm.h"
 
 
@@ -8335,8 +9096,8 @@ typedef unsigned     long long uintmax_t;
 
 
 
-#line 4 "systick_helper.h"
-#line 1 ".\\driverlib\\systick.h"
+#line 9 "GPIO_helper.h"
+#line 1 ".\\inc\\hw_gpio.h"
 
 
 
@@ -8384,6 +9145,7 @@ typedef unsigned     long long uintmax_t;
 
 
 
+#line 79 ".\\inc\\hw_gpio.h"
 
 
 
@@ -8391,74 +9153,399 @@ typedef unsigned     long long uintmax_t;
 
 
 
+                                            
 
 
 
 
-extern void SysTickEnable(void);
-extern void SysTickDisable(void);
-extern void SysTickIntRegister(void (*pfnHandler)(void));
-extern void SysTickIntUnregister(void);
-extern void SysTickIntEnable(void);
-extern void SysTickIntDisable(void);
-extern void SysTickPeriodSet(uint32_t ui32Period);
-extern uint32_t SysTickPeriodGet(void);
-extern uint32_t SysTickValueGet(void);
 
 
 
 
 
+                                            
 
 
 
 
 
-#line 5 "systick_helper.h"
 
-void SetupSystick(void);
-void SysTickWait(unsigned long);
-void SysTickWait10ms(unsigned long);
 
 
 
+                                            
 
-#line 2 "systick.c"
 
-void SetupSystick()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            
+
+                                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            
+                                            
+                                            
+                                            
+                                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 194 ".\\inc\\hw_gpio.h"
+                                            
+                                            
+                                            
+
+                                            
+
+                                            
+                                            
+                                            
+                                            
+                                            
+#line 212 ".\\inc\\hw_gpio.h"
+
+#line 10 "GPIO_helper.h"
+#line 1 ".\\inc\\hw_types.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 63 ".\\inc\\hw_types.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#line 11 "GPIO_helper.h"
+
+void GpioSetup(void);		
+void GpioSetup2(void);	
+void UpdateSwitches(void);  
+
+
+
+
+
+
+struct MySwitches {
+	
+	uint8_t SW1;
+	uint8_t SW2;
+	uint8_t SW3;
+	uint8_t SW4;
+	uint8_t SW5;
+	
+};
+
+
+extern struct MySwitches MySwitches;
+#line 2 "GPIO_helper.c"
+
+struct MySwitches MySwitches;
+
+
+
+
+
+
+	
+void GpioSetup()		
 {
-  
-  
+	
+	
+	
+	
+	
+	
   
 	
-                                        
-  
+	GPIOPinTypeGPIOOutput(0x40025000, 0x00000008);
+	GPIOPinTypeGPIOOutput(0x40025000, 0x00000004);
+	GPIOPinTypeGPIOOutput(0x40025000, 0x00000002);
 	
-	SysTickPeriodSet(0x00FFFFFF);
-	SysTickEnable();
+	
+	
+	GPIOPinTypeGPIOInput(0x40025000,0x00000001);
+	GPIOPinTypeGPIOInput(0x40025000,0x00000010);
+	
+	
+	GPIOPadConfigSet(0x40025000,0x00000001|0x00000010,0x00000001,0x0000000A);
+	
+	
+	
+	
+	GPIOPinTypeGPIOInput(0x40007000,0x00000040);
+	GPIOPinTypeGPIOInput(0x40007000,0x00000080);	
+	
+	
+	GPIOPadConfigSet(0x40007000,0x00000040|0x00000080,0x00000001,0x0000000A);
+	
+	
+	
+	
+	
+	GPIOPinTypeGPIOInput(0x40006000,0x00000080);
+		
+	
+	GPIOPadConfigSet(0x40006000,0x00000080,0x00000001,0x0000000A);	
+	
+	
+	GPIOPinTypeGPIOOutput(0x40005000, 0x00000020|0x00000010|0x00000002|0x00000001);
+	GPIOPadConfigSet(0x40005000,0x00000020|0x00000010|0x00000002|0x00000001,0x00000001,0x00000008);
+
+	
+	GPIOPinTypeGPIOOutput(0x40024000, 0x00000020|0x00000010);
+	GPIOPadConfigSet(0x40024000,0x00000020|0x00000010,0x00000001,0x00000008);
+
 }
 
 
 
 
-void SysTickWait(unsigned long delay)
+void GpioSetup2()
 {
-	(*((volatile uint32_t *)0xE000E014)) = delay-1;  
-  (*((volatile uint32_t *)0xE000E018)) = 0;       
-  while(((*((volatile uint32_t *)0xE000E010))&0x00010000)==0)
-	{ 
-	}
+	
+
+	
+	(*((volatile uint32_t *)0x40025520)) = 0x4C4F434B;  
+	(*((volatile uint32_t *)0x40025524)) = 0xFF; 						
+	(*((volatile uint32_t *)0x40025520)) = 0;							
+
+	(*((volatile uint32_t *)0x40025400)) = 0x0000000E; 
+	(*((volatile uint32_t *)0x40025510)) = 0x00000011; 
+	
+	(*((volatile uint32_t *)0x4002551C)) = 0x0000001F; 
+	
+	(*((volatile uint32_t *)0x4002551C)) = (*((volatile uint32_t *)0x4002551C)) | 0x0000001F; 
+	
+	(*((volatile uint32_t *)0x4002551C)) |= 0x0000001F; 
+	
+	
+
+	
+	(*((volatile uint32_t *)0x40007520)) = 0x4C4F434B;  
+	(*((volatile uint32_t *)0x40007524)) = 0xFF; 						
+	(*((volatile uint32_t *)0x40007520)) = 0;							
+
+	
+	
+	(*((volatile uint32_t *)0x40007400)) &= ~0x000000C0; 
+	
+	(*((volatile uint32_t *)0x40007510)) |=  0x000000C0; 
+	(*((volatile uint32_t *)0x4000751C)) |=  0x000000C0; 
+
 }
 
 
-
-
-void SysTickWait10ms(unsigned long delay)
+void UpdateSwitches()
 {
-  unsigned long i;
-  for(i=0; i<delay; i++)
-	{
-    SysTickWait(800000);  
-  }
+		uint32_t scratch;
+		
+	
+		scratch = GPIOPinRead(0x40025000,0x00000010);
+		if (scratch != 0) MySwitches.SW1 = 0;
+		else MySwitches.SW1 = 1;
+		
+		scratch = GPIOPinRead(0x40025000,0x00000001);
+		if (scratch != 0) MySwitches.SW2 = 0;
+		else MySwitches.SW2 = 1;
+	
+		scratch = GPIOPinRead(0x40007000,0x00000040);
+		if (scratch != 0) MySwitches.SW3 = 0;
+		else MySwitches.SW3 = 1;
+	
+		scratch = GPIOPinRead(0x40007000,0x00000080);
+		if (scratch != 0) MySwitches.SW4 = 0;
+		else MySwitches.SW4 = 1;
+	
+		
+		scratch = GPIOPinRead(0x40006000,0x00000080);
+		if (scratch != 0) MySwitches.SW5 = 1;
+		else MySwitches.SW5 = 0;
+		
+	
 }
-

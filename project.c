@@ -40,6 +40,22 @@ void UnlockPins()
 	
 	//short hand
 		GPIO_PORTF_DEN_R |= 0x0000001F;
+	
+	//Setup port D
+
+	//need to unlock the pins first
+	GPIO_PORTD_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
+	GPIO_PORTD_CR_R = 0xFF; 						//write CR reg
+	GPIO_PORTD_LOCK_R = 0;							//lock access to CR reg
+
+	
+	//clearing bits
+	GPIO_PORTD_DIR_R &= ~0x000000C0; //Make sure PD6, PD7 are inputs
+	//Setting  bits
+	GPIO_PORTD_PUR_R |=  0x000000C0; //PD6, PD7 pullups enabled
+	GPIO_PORTD_DEN_R |=  0x000000C0; //enable digtial pins
+
+
 	// Enable the GPIO pin for the LED (PF3).  Set the direction as output, and
     // enable the GPIO pin for digital function.
 		
@@ -51,6 +67,16 @@ void UnlockPins()
 
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
+		
+		//Port D Setup
+	
+	// Off Board Momentary Switches
+	GPIOPinTypeGPIOInput(GPIO_PORTD_BASE,GPIO_PIN_6);
+	GPIOPinTypeGPIOInput(GPIO_PORTD_BASE,GPIO_PIN_7);	
+	
+	//use internal pull ups for other switches as well. 
+	GPIOPadConfigSet(GPIO_PORTD_BASE,GPIO_PIN_6|GPIO_PIN_7,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU);
+	
 	
 }
 void UpdateMYbuttons()
@@ -76,10 +102,8 @@ int  main(void)
 	
 	
     // Enable the GPIO port that is used for the on-board LED.
-	  SysTick_Setup();
-		InterruptEnable();
-		SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-    SetupHardware();
+			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+			SetupHardware();
 	 
 	  
 		

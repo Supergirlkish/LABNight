@@ -17867,6 +17867,22 @@ void UnlockPins()
 	
 		(*((volatile uint32_t *)0x4002551C)) |= 0x0000001F;
 	
+	
+
+	
+	(*((volatile uint32_t *)0x40007520)) = 0x4C4F434B;  
+	(*((volatile uint32_t *)0x40007524)) = 0xFF; 						
+	(*((volatile uint32_t *)0x40007520)) = 0;							
+
+	
+	
+	(*((volatile uint32_t *)0x40007400)) &= ~0x000000C0; 
+	
+	(*((volatile uint32_t *)0x40007510)) |=  0x000000C0; 
+	(*((volatile uint32_t *)0x4000751C)) |=  0x000000C0; 
+
+
+	
     
 		
     GPIOPinTypeGPIOOutput(0x40025000, 0x00000008);
@@ -17877,6 +17893,16 @@ void UnlockPins()
 
 		GPIOPinTypeGPIOInput(0x40025000, 0x00000001);
 		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
+		
+		
+	
+	
+	GPIOPinTypeGPIOInput(0x40007000,0x00000040);
+	GPIOPinTypeGPIOInput(0x40007000,0x00000080);	
+	
+	
+	GPIOPadConfigSet(0x40007000,0x00000040|0x00000080,0x00000001,0x0000000A);
+	
 	
 }
 void UpdateMYbuttons()
@@ -17902,10 +17928,8 @@ int  main(void)
 	
 	
     
-	  SysTick_Setup();
-		InterruptEnable();
-		SysCtlPeripheralEnable(0xf0000805);
-    SetupHardware();
+			SysCtlPeripheralEnable(0xf0000805);
+			SetupHardware();
 	 
 	  
 		
