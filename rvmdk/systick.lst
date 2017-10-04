@@ -1,6 +1,6 @@
 L 1 "systick.c"
-N#include "systick.h"
-L 1 "systick.h" 1
+N#include "systick_helper.h"
+L 1 "systick_helper.h" 1
 N#include <stdlib.h>
 L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h" 1
 N/* stdlib.h: ANSI draft (X3J11 May 88) library header, section 4.10 */
@@ -973,7 +973,7 @@ N
 N#endif /* __stdlib_h */
 N
 N/* end of stdlib.h */
-L 2 "systick.h" 2
+L 2 "systick_helper.h" 2
 N#include <stdint.h>
 L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h" 1
 N/* Copyright (C) ARM Ltd., 1999,2014 */
@@ -1305,7 +1305,7 @@ N
 N#endif /* __stdint_h */
 N
 N/* end of stdint.h */
-L 3 "systick.h" 2
+L 3 "systick_helper.h" 2
 N#include "tm4c123gh6pm.h"
 L 1 ".\inc\tm4c123gh6pm.h" 1
 N//*****************************************************************************
@@ -14391,7 +14391,7 @@ N
 N#endif
 N
 N#endif // __TM4C123GH6PM_H__
-L 4 "systick.h" 2
+L 4 "systick_helper.h" 2
 N#include "project.h"
 L 1 "project.h" 1
 N#include <stdbool.h>
@@ -63996,19 +63996,20 @@ N};
 N//global variable
 W "project.h" 59 35 last line of file ends without a newline
 Nextern struct Mybuttons Mybuttons;
-L 5 "systick.h" 2
+L 5 "systick_helper.h" 2
 N
-Nstruct SysTickTimer
-N{
-N	uint32_t mSTimer;
-N	uint64_t uSTimer;
-N};
+N
+N//struct SysTickTimer
+N//{
+N//	uint32_t mSTimer;
+N//	uint64_t uSTimer;
+N//};
 N
 Nvoid SysTick_Setup(void);
 Nvoid InterruptEnable(void);
 N
 N
-W "systick.h" 16 36 last line of file ends without a newline
+W "systick_helper.h" 17 36 last line of file ends without a newline
 Nextern struct SysTickTimer Mytimer;
 L 2 "systick.c" 2
 N

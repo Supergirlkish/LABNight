@@ -1,5 +1,5 @@
 #line 1 "systick.c"
-#line 1 "systick.h"
+#line 1 "systick_helper.h"
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdlib.h"
  
  
@@ -737,7 +737,7 @@ extern __declspec(__nothrow) int __C_library_version_number(void);
 
 
  
-#line 2 "systick.h"
+#line 2 "systick_helper.h"
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdint.h"
  
  
@@ -994,7 +994,7 @@ typedef unsigned     long long uintmax_t;
 
 
  
-#line 3 "systick.h"
+#line 3 "systick_helper.h"
 #line 1 ".\\inc\\tm4c123gh6pm.h"
 
 
@@ -9054,7 +9054,7 @@ typedef unsigned     long long uintmax_t;
 
 
 
-#line 4 "systick.h"
+#line 4 "systick_helper.h"
 #line 1 "project.h"
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdbool.h"
  
@@ -17671,13 +17671,14 @@ struct Mybuttons {
 };
 
 extern struct Mybuttons Mybuttons;
-#line 5 "systick.h"
+#line 5 "systick_helper.h"
 
-struct SysTickTimer
-{
-	uint32_t mSTimer;
-	uint64_t uSTimer;
-};
+
+
+
+
+
+
 
 void SysTick_Setup(void);
 void InterruptEnable(void);

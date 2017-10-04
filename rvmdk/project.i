@@ -17902,10 +17902,11 @@ int  main(void)
 	
 	
     
-		SysCtlPeripheralEnable(0xf0000805);
-    SetupHardware();
 	  SysTick_Setup();
 		InterruptEnable();
+		SysCtlPeripheralEnable(0xf0000805);
+    SetupHardware();
+	 
 	  
 		
 	
@@ -17936,10 +17937,7 @@ int  main(void)
 			
 			
 			
-			for()
-			{
-				
-			}
+			
 		}
     while(2)
     {

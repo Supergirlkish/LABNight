@@ -64224,13 +64224,14 @@ N    volatile uint32_t ui32Loop;
 N	
 N	
 N    // Enable the GPIO port that is used for the on-board LED.
+W "project.c" 79 4 function "SysTick_Setup" declared implicitly
+N	  SysTick_Setup();
+W "project.c" 80 3 function "InterruptEnable" declared implicitly
+N		InterruptEnable();
 N		SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 X		SysCtlPeripheralEnable(0xf0000805);
 N    SetupHardware();
-W "project.c" 81 4 function "SysTick_Setup" declared implicitly
-N	  SysTick_Setup();
-W "project.c" 82 3 function "InterruptEnable" declared implicitly
-N		InterruptEnable();
+N	 
 N	  
 N		
 N	
@@ -64270,14 +64271,7 @@ X			GPIOPinWrite(0x40025000, 0x00000002, 0xF);
 N			
 N			// use systick for 10ms to turn off
 N			
-E "project.c" 113 8 expected an expression
-E "project.c" 113 8 expected a ";"
-E "project.c" 113 8 expected an expression
-E "project.c" 113 8 expected a ";"
-N			for()
-N			{
-N				
-N			}
+N			
 N		}
 N    while(2)
 N    {
@@ -64610,6 +64604,6 @@ N				}
 N			}
 N			 
 N		}
-W "project.c" 400 2 last line of file ends without a newline
-W "project.c" 118 5 loop is not reachable
+W "project.c" 398 2 last line of file ends without a newline
+W "project.c" 116 5 loop is not reachable
 N}
