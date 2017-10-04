@@ -423,6 +423,11 @@
               <FileType>1</FileType>
               <FilePath>.\systick.c</FilePath>
             </File>
+            <File>
+              <FileName>systick_helper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\systick_helper.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -64227,8 +64227,10 @@ N    // Enable the GPIO port that is used for the on-board LED.
 N		SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 X		SysCtlPeripheralEnable(0xf0000805);
 N    SetupHardware();
-N	
-N
+W "project.c" 81 4 function "SysTick_Setup" declared implicitly
+N	  SysTick_Setup();
+W "project.c" 82 3 function "InterruptEnable" declared implicitly
+N		InterruptEnable();
 N	  
 N		
 N	
@@ -64256,8 +64258,28 @@ N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000001);
 N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
-N
-N    while(1)
+N		while(1)
+N		{ // Turn on White LED
+N			
+N			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
+X			GPIOPinWrite(0x40025000, 0x00000008, 0xF);
+N			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
+X			GPIOPinWrite(0x40025000, 0x00000004, 0xF);
+N			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
+X			GPIOPinWrite(0x40025000, 0x00000002, 0xF);
+N			
+N			// use systick for 10ms to turn off
+N			
+E "project.c" 113 8 expected an expression
+E "project.c" 113 8 expected a ";"
+E "project.c" 113 8 expected an expression
+E "project.c" 113 8 expected a ";"
+N			for()
+N			{
+N				
+N			}
+N		}
+N    while(2)
 N    {
 N				UARTCharPut(UART0_BASE, temp);
 X				UARTCharPut(0x4000C000, temp);
@@ -64268,7 +64290,7 @@ N
 N			
 N				UnlockPins();
 N				UpdateMYbuttons ();	
-N			
+N				
 N				if(Mybuttons.SW1==0)
 N				{
 N				}
@@ -64585,7 +64607,9 @@ N				}
 N				else
 N				{
 N				}
-N			}				
+N			}
+N			 
 N		}
-W "project.c" 386 2 last line of file ends without a newline
+W "project.c" 400 2 last line of file ends without a newline
+W "project.c" 118 5 loop is not reachable
 N}

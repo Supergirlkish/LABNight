@@ -48,9 +48,23 @@ src/Uart_helper.h(11): warning:  #1-D: last line of file ends without a newline
   void UartSetup2(void);	//sets up Uart for my configuration registers
 project.h(59): warning:  #1-D: last line of file ends without a newline
   extern struct Mybuttons Mybuttons;
-project.c(386): warning:  #1-D: last line of file ends without a newline
+project.c(81): warning:  #223-D: function "SysTick_Setup" declared implicitly
+  	  SysTick_Setup();
+project.c(82): warning:  #223-D: function "InterruptEnable" declared implicitly
+  		InterruptEnable();
+project.c(113): error:  #29: expected an expression
+  			for()
+project.c(113): error:  #65: expected a ";"
+  			for()
+project.c(113): error:  #29: expected an expression
+  			for()
+project.c(113): error:  #65: expected a ";"
+  			for()
+project.c(400): warning:  #1-D: last line of file ends without a newline
   }
-project.c: 7 warnings, 0 errors
+project.c(118): warning:  #128-D: loop is not reachable
+      while(2)
+project.c: 10 warnings, 4 errors
 compiling systick.c...
 driverlib/hibernate.h(229): warning:  #231-D: declaration is not visible outside of function
   extern void HibernateCalendarSet(struct tm *psTime);
@@ -67,11 +81,7 @@ project.h(59): warning:  #1-D: last line of file ends without a newline
 systick.h(16): warning:  #1-D: last line of file ends without a newline
   extern struct SysTickTimer Mytimer;
 systick.c: 7 warnings, 0 errors
-linking...
-Program Size: Code=2976 RO-data=628 RW-data=4 ZI-data=260  
-FromELF: creating hex file...
-After Build - User command #1: fromelf --bin --output .\rvmdk\project.bin .\rvmdk\project.axf
-".\rvmdk\project.axf" - 0 Error(s), 15 Warning(s).
+".\rvmdk\project.axf" - 4 Error(s), 18 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -94,6 +104,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.0.2
+Target not created.
 Build Time Elapsed:  00:00:02
 </pre>
 </body>

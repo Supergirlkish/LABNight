@@ -3,11 +3,12 @@
 #include "tm4c123gh6pm.h"
 #include "project.h"
 
-struct SysTickTimer
-{
-	uint32_t mSTimer;
-	uint64_t uSTimer;
-};
+
+//struct SysTickTimer
+//{
+//	uint32_t mSTimer;
+//	uint64_t uSTimer;
+//};
 
 void SysTick_Setup(void);
 void InterruptEnable(void);

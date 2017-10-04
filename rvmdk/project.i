@@ -17904,8 +17904,8 @@ int  main(void)
     
 		SysCtlPeripheralEnable(0xf0000805);
     SetupHardware();
-	
-
+	  SysTick_Setup();
+		InterruptEnable();
 	  
 		
 	
@@ -17927,8 +17927,21 @@ int  main(void)
 
 		GPIOPinTypeGPIOInput(0x40025000, 0x00000001);
 		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
-
-    while(1)
+		while(1)
+		{ 
+			
+			GPIOPinWrite(0x40025000, 0x00000008, 0xF);
+			GPIOPinWrite(0x40025000, 0x00000004, 0xF);
+			GPIOPinWrite(0x40025000, 0x00000002, 0xF);
+			
+			
+			
+			for()
+			{
+				
+			}
+		}
+    while(2)
     {
 				UARTCharPut(0x4000C000, temp);
 			  temp++;
@@ -17938,7 +17951,7 @@ int  main(void)
 			
 				UnlockPins();
 				UpdateMYbuttons ();	
-			
+				
 				if(Mybuttons.SW1==0)
 				{
 				}
@@ -18207,6 +18220,7 @@ int  main(void)
 				else
 				{
 				}
-			}				
+			}
+			 
 		}
 }

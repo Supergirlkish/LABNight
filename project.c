@@ -76,10 +76,11 @@ int  main(void)
 	
 	
     // Enable the GPIO port that is used for the on-board LED.
+	  SysTick_Setup();
+		InterruptEnable();
 		SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
     SetupHardware();
-	
-
+	 
 	  
 		
 	
@@ -101,8 +102,18 @@ int  main(void)
 
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
-
-    while(1)
+		while(1)
+		{ // Turn on White LED
+			
+			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
+			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
+			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
+			
+			// use systick for 10ms to turn off
+			
+			
+		}
+    while(2)
     {
 				UARTCharPut(UART0_BASE, temp);
 			  temp++;
@@ -112,7 +123,7 @@ int  main(void)
 			
 				UnlockPins();
 				UpdateMYbuttons ();	
-			
+				
 				if(Mybuttons.SW1==0)
 				{
 				}
@@ -381,6 +392,7 @@ int  main(void)
 				else
 				{
 				}
-			}				
+			}
+			 
 		}
 }
