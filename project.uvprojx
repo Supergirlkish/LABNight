@@ -409,13 +409,6 @@
         </Group>
         <Group>
           <GroupName>Documentation</GroupName>
-          <Files>
-            <File>
-              <FileName>README.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\README.txt</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>src</GroupName>
@@ -426,9 +419,9 @@
               <FilePath>.\src\Uart_helper.c</FilePath>
             </File>
             <File>
-              <FileName>Uart_helper.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\src\Uart_helper.h</FilePath>
+              <FileName>systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\systick.c</FilePath>
             </File>
           </Files>
         </Group>

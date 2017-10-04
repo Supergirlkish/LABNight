@@ -55,6 +55,5 @@ struct Mybuttons {
 
 	
 };
-
 //global variable
 extern struct Mybuttons Mybuttons;
