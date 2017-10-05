@@ -8416,49 +8416,32 @@ extern uint32_t SysTickValueGet(void);
 
 #line 5 "systick_helper.h"
 
-void SetupSystick(void);
-void SysTickWait(unsigned long);
-void SysTickWait10ms(unsigned long);
+void SysTick_Init(void);
+void SysTickWait(uint32_t delay);
+void SysTickWait10ms(uint32_t delay);
 
 
 
 
 #line 2 "systick.c"
 
-void SetupSystick()
+void SysTick_Init(void)
 {
-  
-  
-  
-	
-                                        
-  
-	
-	SysTickPeriodSet(0x00FFFFFF);
-	SysTickEnable();
-}
-
-
-
-
-void SysTickWait(unsigned long delay)
-{
-	(*((volatile uint32_t *)0xE000E014)) = delay-1;  
-  (*((volatile uint32_t *)0xE000E018)) = 0;       
-  while(((*((volatile uint32_t *)0xE000E010))&0x00010000)==0)
-	{ 
+    (*((volatile uint32_t *)0xE000E010)) = 0;                   
+		(*((volatile uint32_t *)0xE000E014)) = 0x00FFFFFF;        
+		(*((volatile uint32_t *)0xE000E018)) = 0;                
+	  (*((volatile uint32_t *)0xE000E010)) = 0x00000005;
+}	
+void SysTickWait(uint32_t delay){
+	(*((volatile uint32_t *)0xE000E014))= delay -1;
+	(*((volatile uint32_t *)0xE000E018)) = 0;
+	while(((*((volatile uint32_t *)0xE000E010))&0x000100000)==0){ 
+		}
 	}
-}
-
-
-
-
-void SysTickWait10ms(unsigned long delay)
-{
-  unsigned long i;
+void SysTickWait10ms(uint32_t delay)
+{ uint32_t i;
   for(i=0; i<delay; i++)
 	{
     SysTickWait(800000);  
   }
 }
-

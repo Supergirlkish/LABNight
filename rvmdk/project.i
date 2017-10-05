@@ -17832,6 +17832,7 @@ extern __declspec(__nothrow) void __use_no_semihosting(void);
 
 #line 3 "project.c"
 #line 4 "project.c"
+
 struct Mybuttons Mybuttons;
 
 
@@ -17839,7 +17840,7 @@ struct Mybuttons Mybuttons;
 
 
 
-#line 17 "project.c"
+#line 18 "project.c"
 
 
 void SetupHardware()
@@ -17921,19 +17922,38 @@ void UpdateMYbuttons()
 
 		
 	}
+	static void step(uint32_t n)
+		{
+		(*((volatile uint32_t *)0x4000703C)) = n; 
+		SysTickWait10ms(10); 
+		}
+		
 int  main(void)
 {
+	
+	
+		SysTick_Init();
+		(*((volatile uint32_t *)0x400FE608)) |= 0x08; 
+		while(((*((volatile uint32_t *)0x400FE608)) &0x08)== 0)
+		{
+		}; 
+	 	(*((volatile uint32_t *)0x40007400))|= 0x0F; 
+		(*((volatile uint32_t *)0x4000751C))|= 0x0F; 
+		while(1){
+			step(5);   
+			step(6);   
+			step(10); 
+			step(9);  
+		}
+	
 		uint8_t temp;
     volatile uint32_t ui32Loop;
 	
 	
     
 			SysCtlPeripheralEnable(0xf0000805);
+			SysCtlPeripheralEnable(0xf0000803);
 			SetupHardware();
-	 
-	  
-		
-	
 		
 		
     while(!SysCtlPeripheralReady(0xf0000805))
@@ -17952,7 +17972,7 @@ int  main(void)
 
 		GPIOPinTypeGPIOInput(0x40025000, 0x00000001);
 		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
-		while(1)
+		while(2)
 		{ 
 			
 			GPIOPinWrite(0x40025000, 0x00000008, 0xF);
@@ -17963,7 +17983,7 @@ int  main(void)
 			
 			
 		}
-    while(2)
+    while(3)
     {
 				UARTCharPut(0x4000C000, temp);
 			  temp++;

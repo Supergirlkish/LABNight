@@ -13531,53 +13531,40 @@ N
 N#endif // __DRIVERLIB_SYSTICK_H__
 L 5 "systick_helper.h" 2
 N
-Nvoid SetupSystick(void);
-Nvoid SysTickWait(unsigned long);
-Nvoid SysTickWait10ms(unsigned long);
+Nvoid SysTick_Init(void);
+Nvoid SysTickWait(uint32_t delay);
+Nvoid SysTickWait10ms(uint32_t delay);
 N
 N
 N
 N
 L 2 "systick.c" 2
 N
-Nvoid SetupSystick()
+Nvoid SysTick_Init(void)
 N{
-N  //NVIC_ST_CTRL_R = 0;                   // disable SysTick during setup
-N  //NVIC_ST_RELOAD_R = NVIC_ST_RELOAD_M;  // maximum reload value
-N  //NVIC_ST_CURRENT_R = 0;                // any write to current clears it
-N	
-N                                        // enable SysTick with core clock
-N  //NVIC_ST_CTRL_R = NVIC_ST_CTRL_ENABLE+NVIC_ST_CTRL_CLK_SRC;	
-N	
-N	SysTickPeriodSet(NVIC_ST_RELOAD_M);
-X	SysTickPeriodSet(0x00FFFFFF);
-N	SysTickEnable();
-N}
-N
-N
-N// Time delay using busy wait.
-N// The delay parameter is in units of the 80 MHz core clock. (12.5 ns)
-Nvoid SysTickWait(unsigned long delay)
-N{
-N	NVIC_ST_RELOAD_R = delay-1;  // number of counts to wait
-X	(*((volatile uint32_t *)0xE000E014)) = delay-1;  
-N  NVIC_ST_CURRENT_R = 0;       // any value written to CURRENT clears
-X  (*((volatile uint32_t *)0xE000E018)) = 0;       
-N  while((NVIC_ST_CTRL_R&0x00010000)==0)
-X  while(((*((volatile uint32_t *)0xE000E010))&0x00010000)==0)
-N	{ // wait for count flag
+N    NVIC_ST_CTRL_R = 0;                   // disable SysTick during setup
+X    (*((volatile uint32_t *)0xE000E010)) = 0;                   
+N		NVIC_ST_RELOAD_R = 0x00FFFFFF;        // maximum reload valu
+X		(*((volatile uint32_t *)0xE000E014)) = 0x00FFFFFF;        
+N		NVIC_ST_CURRENT_R = 0;                // any write to current clears it
+X		(*((volatile uint32_t *)0xE000E018)) = 0;                
+N	  NVIC_ST_CTRL_R = 0x00000005;
+X	  (*((volatile uint32_t *)0xE000E010)) = 0x00000005;
+N}	
+Nvoid SysTickWait(uint32_t delay){
+N	NVIC_ST_RELOAD_R= delay -1;
+X	(*((volatile uint32_t *)0xE000E014))= delay -1;
+N	NVIC_ST_CURRENT_R = 0;
+X	(*((volatile uint32_t *)0xE000E018)) = 0;
+N	while((NVIC_ST_CTRL_R&0x000100000)==0){ // wait for count flag
+X	while(((*((volatile uint32_t *)0xE000E010))&0x000100000)==0){ 
+N		}
 N	}
-N}
-N
-N
-N// 800000*12.5ns equals 10ms
-N
-Nvoid SysTickWait10ms(unsigned long delay)
-N{
-N  unsigned long i;
+Nvoid SysTickWait10ms(uint32_t delay)
+N{ uint32_t i;
 N  for(i=0; i<delay; i++)
 N	{
 N    SysTickWait(800000);  // wait 10ms
 N  }
+W "systick.c" 22 2 last line of file ends without a newline
 N}
-N

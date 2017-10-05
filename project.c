@@ -1,6 +1,7 @@
 #include "project.h"
 #include <stdio.h>
 #include <stdint.h>
+#define STEPPER (*((volatile uint32_t *)0x4000703C))
 struct Mybuttons Mybuttons;
 //*****************************************************************************
 //
@@ -95,19 +96,38 @@ void UpdateMYbuttons()
 
 		
 	}
+	static void step(uint32_t n)
+		{
+		STEPPER = n; // output stepper causing it to step once
+		SysTickWait10ms(10); // wait for 10 ms
+		}
+		
 int  main(void)
 {
+	// systick start
+	
+		SysTick_Init();
+		SYSCTL_RCGCGPIO_R |= 0x08; // activate clock port D
+		while((SYSCTL_RCGCGPIO_R &0x08)== 0)
+		{
+		}; // ready to start?
+	 	GPIO_PORTD_DIR_R|= 0x0F; // PD3- 0 are outputs
+		GPIO_PORTD_DEN_R|= 0x0F; //	PD3- 0 are enabled as ditigal port
+		while(1){
+			step(5);   // not sure if connecting motor, button or LED set-up for motor
+			step(6);   // not sure if connecting motor, button or LED set-up for motor
+			step(10); //  not sure if connecting motor, button or LED set-up for motor
+			step(9);  //  not sure if connecting motor, button or LED set-up for motor
+		}
+	
 		uint8_t temp;
     volatile uint32_t ui32Loop;
 	
 	
     // Enable the GPIO port that is used for the on-board LED.
 			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
 			SetupHardware();
-	 
-	  
-		
-	
 		
 		// Check if the peripheral access is enabled.
     while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF))
@@ -126,7 +146,7 @@ int  main(void)
 
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
-		while(1)
+		while(2)
 		{ // Turn on White LED
 			
 			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
@@ -137,7 +157,7 @@ int  main(void)
 			
 			
 		}
-    while(2)
+    while(3)
     {
 				UARTCharPut(UART0_BASE, temp);
 			  temp++;

@@ -3,9 +3,9 @@
 #include "../inc/tm4c123gh6pm.h"
 #include "systick.h"
 
-void SetupSystick(void);
-void SysTickWait(unsigned long);
-void SysTickWait10ms(unsigned long);
+void SysTick_Init(void);
+void SysTickWait(uint32_t delay);
+void SysTickWait10ms(uint32_t delay);
 
 
 

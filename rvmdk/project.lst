@@ -64134,6 +64134,7 @@ N/* end of stdio.h */
 N
 L 3 "project.c" 2
 N#include <stdint.h>
+N#define STEPPER (*((volatile uint32_t *)0x4000703C))
 Nstruct Mybuttons Mybuttons;
 N//*****************************************************************************
 N//
@@ -64252,20 +64253,48 @@ N		else Mybuttons.SW2 = 1;
 N
 N		
 N	}
+N	static void step(uint32_t n)
+N		{
+N		STEPPER = n; // output stepper causing it to step once
+X		(*((volatile uint32_t *)0x4000703C)) = n; 
+W "project.c" 102 3 function "SysTickWait10ms" declared implicitly
+N		SysTickWait10ms(10); // wait for 10 ms
+N		}
+N		
 Nint  main(void)
 N{
+N	// systick start
+N	
+W "project.c" 109 3 function "SysTick_Init" declared implicitly
+N		SysTick_Init();
+N		SYSCTL_RCGCGPIO_R |= 0x08; // activate clock port D
+X		(*((volatile uint32_t *)0x400FE608)) |= 0x08; 
+N		while((SYSCTL_RCGCGPIO_R &0x08)== 0)
+X		while(((*((volatile uint32_t *)0x400FE608)) &0x08)== 0)
+N		{
+N		}; // ready to start?
+N	 	GPIO_PORTD_DIR_R|= 0x0F; // PD3- 0 are outputs
+X	 	(*((volatile uint32_t *)0x40007400))|= 0x0F; 
+N		GPIO_PORTD_DEN_R|= 0x0F; //	PD3- 0 are enabled as ditigal port
+X		(*((volatile uint32_t *)0x4000751C))|= 0x0F; 
+N		while(1){
+N			step(5);   // not sure if connecting motor, button or LED set-up for motor
+N			step(6);   // not sure if connecting motor, button or LED set-up for motor
+N			step(10); //  not sure if connecting motor, button or LED set-up for motor
+N			step(9);  //  not sure if connecting motor, button or LED set-up for motor
+N		}
+N	
 N		uint8_t temp;
 N    volatile uint32_t ui32Loop;
 N	
 N	
 N    // Enable the GPIO port that is used for the on-board LED.
+W "project.c" 128 4 statement is unreachable
 N			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 X			SysCtlPeripheralEnable(0xf0000805);
+N			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
+X			SysCtlPeripheralEnable(0xf0000803);
 N			SetupHardware();
-N	 
-N	  
-N		
-N	
 N		
 N		// Check if the peripheral access is enabled.
 N    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF))
@@ -64290,7 +64319,7 @@ N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000001);
 N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
-N		while(1)
+N		while(2)
 N		{ // Turn on White LED
 N			
 N			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
@@ -64304,7 +64333,7 @@ N			// use systick for 10ms to turn off
 N			
 N			
 N		}
-N    while(2)
+N    while(3)
 N    {
 N				UARTCharPut(UART0_BASE, temp);
 X				UARTCharPut(0x4000C000, temp);
@@ -64635,6 +64664,6 @@ N				}
 N			}
 N			 
 N		}
-W "project.c" 422 2 last line of file ends without a newline
-W "project.c" 140 5 loop is not reachable
+W "project.c" 442 2 last line of file ends without a newline
+W "project.c" 160 5 loop is not reachable
 N}
