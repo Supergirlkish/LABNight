@@ -64220,8 +64220,14 @@ N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000001);
 N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
+N	
+N	 //Port B Setup
+N		GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_5|GPIO_PIN_4|GPIO_PIN_1|GPIO_PIN_0);
+X		GPIOPinTypeGPIOOutput(0x40005000, 0x00000020|0x00000010|0x00000002|0x00000001);
+N	  GPIOPadConfigSet(GPIO_PORTB_BASE,GPIO_PIN_5|GPIO_PIN_4|GPIO_PIN_1|GPIO_PIN_0,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD);
+X	  GPIOPadConfigSet(0x40005000,0x00000020|0x00000010|0x00000002|0x00000001,0x00000001,0x00000008);
 N		
-N		//Port D Setup
+N	//Port D Setup
 N	
 N	// Off Board Momentary Switches
 N	GPIOPinTypeGPIOInput(GPIO_PORTD_BASE,GPIO_PIN_6);
@@ -64232,7 +64238,12 @@ N
 N	//use internal pull ups for other switches as well. 
 N	GPIOPadConfigSet(GPIO_PORTD_BASE,GPIO_PIN_6|GPIO_PIN_7,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU);
 X	GPIOPadConfigSet(0x40007000,0x00000040|0x00000080,0x00000001,0x0000000A);
-N	
+N		
+N	//Port E Setup
+N	GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_5|GPIO_PIN_4);
+X	GPIOPinTypeGPIOOutput(0x40024000, 0x00000020|0x00000010);
+N	GPIOPadConfigSet(GPIO_PORTE_BASE,GPIO_PIN_5|GPIO_PIN_4,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD);
+X	GPIOPadConfigSet(0x40024000,0x00000020|0x00000010,0x00000001,0x00000008);
 N	
 N}
 Nvoid UpdateMYbuttons()
@@ -64257,7 +64268,7 @@ N	static void step(uint32_t n)
 N		{
 N		STEPPER = n; // output stepper causing it to step once
 X		(*((volatile uint32_t *)0x4000703C)) = n; 
-W "project.c" 102 3 function "SysTickWait10ms" declared implicitly
+W "project.c" 109 3 function "SysTickWait10ms" declared implicitly
 N		SysTickWait10ms(10); // wait for 10 ms
 N		}
 N		
@@ -64265,7 +64276,7 @@ Nint  main(void)
 N{
 N	// systick start
 N	
-W "project.c" 109 3 function "SysTick_Init" declared implicitly
+W "project.c" 116 3 function "SysTick_Init" declared implicitly
 N		SysTick_Init();
 N		SYSCTL_RCGCGPIO_R |= 0x08; // activate clock port D
 X		(*((volatile uint32_t *)0x400FE608)) |= 0x08; 
@@ -64289,7 +64300,7 @@ N    volatile uint32_t ui32Loop;
 N	
 N	
 N    // Enable the GPIO port that is used for the on-board LED.
-W "project.c" 128 4 statement is unreachable
+W "project.c" 135 4 statement is unreachable
 N			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 X			SysCtlPeripheralEnable(0xf0000805);
 N			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
@@ -64664,6 +64675,6 @@ N				}
 N			}
 N			 
 N		}
-W "project.c" 442 2 last line of file ends without a newline
-W "project.c" 160 5 loop is not reachable
+W "project.c" 449 2 last line of file ends without a newline
+W "project.c" 167 5 loop is not reachable
 N}

@@ -68,8 +68,12 @@ void UnlockPins()
 
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
+	
+	 //Port B Setup
+		GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_5|GPIO_PIN_4|GPIO_PIN_1|GPIO_PIN_0);
+	  GPIOPadConfigSet(GPIO_PORTB_BASE,GPIO_PIN_5|GPIO_PIN_4|GPIO_PIN_1|GPIO_PIN_0,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD);
 		
-		//Port D Setup
+	//Port D Setup
 	
 	// Off Board Momentary Switches
 	GPIOPinTypeGPIOInput(GPIO_PORTD_BASE,GPIO_PIN_6);
@@ -77,7 +81,10 @@ void UnlockPins()
 	
 	//use internal pull ups for other switches as well. 
 	GPIOPadConfigSet(GPIO_PORTD_BASE,GPIO_PIN_6|GPIO_PIN_7,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU);
-	
+		
+	//Port E Setup
+	GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_5|GPIO_PIN_4);
+	GPIOPadConfigSet(GPIO_PORTE_BASE,GPIO_PIN_5|GPIO_PIN_4,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD);
 	
 }
 void UpdateMYbuttons()

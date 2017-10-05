@@ -40,10 +40,13 @@ systick.c(22): warning:  #1-D: last line of file ends without a newline
   }
 systick.c: 1 warning, 0 errors
 creating preprocessor file for ADC_helper.c...
-compiling ADC_helper.c...
 creating preprocessor file for PWM_helper.c...
-creating preprocessor file for GPIO_helper.c...
 compiling PWM_helper.c...
+creating preprocessor file for GPIO_helper.c...
+compiling ADC_helper.c...
+ADC_helper.c(81): warning:  #1-D: last line of file ends without a newline
+  }
+ADC_helper.c: 1 warning, 0 errors
 compiling project.c...
 driverlib/hibernate.h(229): warning:  #231-D: declaration is not visible outside of function
   extern void HibernateCalendarSet(struct tm *psTime);
@@ -57,14 +60,17 @@ src/Uart_helper.h(11): warning:  #1-D: last line of file ends without a newline
   void UartSetup2(void);	//sets up Uart for my configuration registers
 project.h(59): warning:  #1-D: last line of file ends without a newline
   extern struct Mybuttons Mybuttons;
-project.c(102): warning:  #223-D: function "SysTickWait10ms" declared implicitly
+project.c(109): warning:  #223-D: function "SysTickWait10ms" declared implicitly
   		SysTickWait10ms(10); // wait for 10 ms
-project.c(442): warning:  #1-D: last line of file ends without a newline
+project.c(116): warning:  #223-D: function "SysTick_Init" declared implicitly
+  		SysTick_Init();
+project.c(135): warning:  #111-D: statement is unreachable
+  			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+project.c(449): warning:  #1-D: last line of file ends without a newline
   }
-project.c(160): warning:  #128-D: loop is not reachable
+project.c(167): warning:  #128-D: loop is not reachable
       while(3)
 project.c: 11 warnings, 0 errors
-_PERIPH_GPIOF);
 compiling GPIO_helper.c...
 GPIO_helper.c(126): warning:  #1-D: last line of file ends without a newline
   }
@@ -73,7 +79,7 @@ linking...
 Program Size: Code=900 RO-data=16 RW-data=0 ZI-data=256  
 FromELF: creating hex file...
 After Build - User command #1: fromelf --bin --output .\rvmdk\project.bin .\rvmdk\project.axf
-".\rvmdk\project.axf" - 0 Error(s), 12 Warning(s).
+".\rvmdk\project.axf" - 0 Error(s), 15 Warning(s).
 
 <h2>Software Packages used:</h2>
 
