@@ -1,6 +1,7 @@
 #include "project.h"
 #include <stdio.h>
 #include <stdint.h>
+#include "PWM_helper.h"
 #define STEPPER (*((volatile uint32_t *)0x4000703C))
 struct Mybuttons Mybuttons;
 //*****************************************************************************
@@ -127,6 +128,47 @@ int  main(void)
 			step(9);  //  not sure if connecting motor, button or LED set-up for motor
 		}
 	
+		//Clock to 80Mhz, start system tick, configure PWM.
+	SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
+	SysTickbegin();
+	PWMInit();
+	uint8_t values[LEDNum]; //Stores the values of brightness to send
+  uint32_t brilho=255;
+  uint32_t time = 1000;
+		
+	//Set all LEDs to 0
+		
+	int i;
+	for(i=0; i < LEDNum; i++){
+	  values[i]=0;
+	}
+
+	/*
+	 * the k is used for a test patern. It flashes each LED once at 255 brightness so it can be checked if there is
+	 * any "leakage" into other LEDs. Right now that partern is not being used.
+	 * Right now all LEDs are geting random values.
+	 */
+	int k=0;
+	while(1){
+
+		if(k !=0)
+		  values [k-1]=0;
+		else
+		  values[LEDNum-1]=0;
+			values[k] = 0xFF;
+			k++;
+		if(k>= LEDNum)
+		  k=0;
+
+		/*i;
+		for(i=0; i < LEDNum; i++){
+		  values[i]=rand()%brilho;
+		}*/
+		Wait(time); //Stops the code for 200mS
+
+		//Start timer to send data
+		SendData();
+	}
 		uint8_t temp;
     volatile uint32_t ui32Loop;
 	
