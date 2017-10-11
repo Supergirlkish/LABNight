@@ -64180,7 +64180,8 @@ X	(*((volatile uint32_t *)0x4002551C)) = (*((volatile uint32_t *)0x4002551C)) | 
 N	//short hand
 N	GPIO_PORTF_DEN_R |= 0x0000001F;
 X	(*((volatile uint32_t *)0x4002551C)) |= 0x0000001F;
-N//	//Setup port D
+N	
+N	//Setup port D
 N
 N//	//need to unlock the pins first
 N//	GPIO_PORTD_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
@@ -64346,17 +64347,7 @@ N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000001);
 N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
-N//		while(2)
-N//		{ // Turn on White LED
-N//			
-N//			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
-N//			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
-N//			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
-N//			
-N//			// use systick for 10ms to turn off
-N//			
-N//			
-N//		}
+N
 N    while(1)
 N    {
 N				UARTCharPut(UART0_BASE, temp);
@@ -64688,5 +64679,5 @@ N				}
 N			}
 N			 
 N		}
-W "project.c" 487 2 last line of file ends without a newline
+W "project.c" 478 2 last line of file ends without a newline
 N}

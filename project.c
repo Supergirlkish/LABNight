@@ -39,7 +39,8 @@ void UnlockPins()
 	GPIO_PORTF_DEN_R = GPIO_PORTF_DEN_R | 0x0000001F; 
 	//short hand
 	GPIO_PORTF_DEN_R |= 0x0000001F;
-//	//Setup port D
+	
+	//Setup port D
 
 //	//need to unlock the pins first
 //	GPIO_PORTD_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
@@ -191,17 +192,7 @@ int  main(void)
 
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
-//		while(2)
-//		{ // Turn on White LED
-//			
-//			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
-//			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
-//			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
-//			
-//			// use systick for 10ms to turn off
-//			
-//			
-//		}
+
     while(1)
     {
 				UARTCharPut(UART0_BASE, temp);

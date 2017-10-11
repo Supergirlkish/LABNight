@@ -17865,7 +17865,8 @@ void UnlockPins()
 	(*((volatile uint32_t *)0x4002551C)) = (*((volatile uint32_t *)0x4002551C)) | 0x0000001F; 
 	
 	(*((volatile uint32_t *)0x4002551C)) |= 0x0000001F;
-
+	
+	
 
 
 
@@ -18017,16 +18018,6 @@ int  main(void)
 
 		GPIOPinTypeGPIOInput(0x40025000, 0x00000001);
 		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
-
-
-
-
-
-
-
-
-
-
 
     while(1)
     {
