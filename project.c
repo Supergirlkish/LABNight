@@ -1,8 +1,8 @@
 #include "project.h"
 #include <stdio.h>
 #include <stdint.h>
-#include "PWM_helper.h"
-#define STEPPER (*((volatile uint32_t *)0x4000703C))
+//#include "PWM_helper.h"
+//#define STEPPER (*((volatile uint32_t *)0x4000703C))
 struct Mybuttons Mybuttons;
 //*****************************************************************************
 //
@@ -26,36 +26,32 @@ void SetupHardware()
 void UnlockPins()
 {
 	
-	// Unlocking PORT F
-		
-		GPIO_PORTF_LOCK_R=GPIO_LOCK_KEY;
-		GPIO_PORTF_CR_R= 0xFF;
-		GPIO_PORTF_LOCK_R= 0;
-	
-		GPIO_PORTF_DIR_R=  0x0000000E; // PF1,PF2 & PF3 are outputs, all other outputs
-		GPIO_PORTF_PUR_R = 0x00000011; //Pullups on PF0, PF4
-		GPIO_PORTF_DEN_R = 0x0000001F; //PF0-4, digital enable, all others not
-	
-	//alternatively, set the digital enable while preserving the register contents
-	
-		GPIO_PORTF_DEN_R = GPIO_PORTF_DEN_R | 0x0000001F; 
-	
-	//short hand
-		GPIO_PORTF_DEN_R |= 0x0000001F;
-	
-	//Setup port D
-
 	//need to unlock the pins first
-	GPIO_PORTD_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
-	GPIO_PORTD_CR_R = 0xFF; 						//write CR reg
-	GPIO_PORTD_LOCK_R = 0;							//lock access to CR reg
+	GPIO_PORTF_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
+	GPIO_PORTF_CR_R = 0xFF; 						//write CR reg
+	GPIO_PORTF_LOCK_R = 0;							//lock access to CR reg
 
+	GPIO_PORTF_DIR_R = 0x0000000E; //PF1-3, outputs, all others inputs
+	GPIO_PORTF_PUR_R = 0x00000011; //Pullups on PF0, PF4
 	
-	//clearing bits
-	GPIO_PORTD_DIR_R &= ~0x000000C0; //Make sure PD6, PD7 are inputs
-	//Setting  bits
-	GPIO_PORTD_PUR_R |=  0x000000C0; //PD6, PD7 pullups enabled
-	GPIO_PORTD_DEN_R |=  0x000000C0; //enable digtial pins
+	GPIO_PORTF_DEN_R = 0x0000001F; //PF0-4, digital enable, all others not
+	//alternatively, set the digital enable while preserving the register contents
+	GPIO_PORTF_DEN_R = GPIO_PORTF_DEN_R | 0x0000001F; 
+	//short hand
+	GPIO_PORTF_DEN_R |= 0x0000001F;
+//	//Setup port D
+
+//	//need to unlock the pins first
+//	GPIO_PORTD_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
+//	GPIO_PORTD_CR_R = 0xFF; 						//write CR reg
+//	GPIO_PORTD_LOCK_R = 0;							//lock access to CR reg
+
+//	
+//	//clearing bits
+//	GPIO_PORTD_DIR_R &= ~0x000000C0; //Make sure PD6, PD7 are inputs
+//	//Setting  bits
+//	GPIO_PORTD_PUR_R |=  0x000000C0; //PD6, PD7 pullups enabled
+//	GPIO_PORTD_DEN_R |=  0x000000C0; //enable digtial pins
 
 
 	// Enable the GPIO pin for the LED (PF3).  Set the direction as output, and
@@ -70,23 +66,23 @@ void UnlockPins()
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
 	
-	 //Port B Setup
-		GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_5|GPIO_PIN_4|GPIO_PIN_1|GPIO_PIN_0);
-	  GPIOPadConfigSet(GPIO_PORTB_BASE,GPIO_PIN_5|GPIO_PIN_4|GPIO_PIN_1|GPIO_PIN_0,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD);
-		
-	//Port D Setup
-	
-	// Off Board Momentary Switches
-	GPIOPinTypeGPIOInput(GPIO_PORTD_BASE,GPIO_PIN_6);
-	GPIOPinTypeGPIOInput(GPIO_PORTD_BASE,GPIO_PIN_7);	
-	
-	//use internal pull ups for other switches as well. 
-	GPIOPadConfigSet(GPIO_PORTD_BASE,GPIO_PIN_6|GPIO_PIN_7,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU);
-		
-	//Port E Setup
-	GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_5|GPIO_PIN_4);
-	GPIOPadConfigSet(GPIO_PORTE_BASE,GPIO_PIN_5|GPIO_PIN_4,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD);
-	
+//	 //Port B Setup
+//		GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_5|GPIO_PIN_4|GPIO_PIN_1|GPIO_PIN_0);
+//	  GPIOPadConfigSet(GPIO_PORTB_BASE,GPIO_PIN_5|GPIO_PIN_4|GPIO_PIN_1|GPIO_PIN_0,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD);
+//		
+//	//Port D Setup
+//	
+//	// Off Board Momentary Switches
+//	GPIOPinTypeGPIOInput(GPIO_PORTD_BASE,GPIO_PIN_6);
+//	GPIOPinTypeGPIOInput(GPIO_PORTD_BASE,GPIO_PIN_7);	
+//	
+//	//use internal pull ups for other switches as well. 
+//	GPIOPadConfigSet(GPIO_PORTD_BASE,GPIO_PIN_6|GPIO_PIN_7,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU);
+//		
+//	//Port E Setup
+//	GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_5|GPIO_PIN_4);
+//	GPIOPadConfigSet(GPIO_PORTE_BASE,GPIO_PIN_5|GPIO_PIN_4,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD);
+//	
 }
 void UpdateMYbuttons()
 	{
@@ -104,78 +100,78 @@ void UpdateMYbuttons()
 
 		
 	}
-	static void step(uint32_t n)
-		{
-		STEPPER = n; // output stepper causing it to step once
-		SysTickWait10ms(10); // wait for 10 ms
-		}
+//	static void step(uint32_t n)
+//		{
+//		STEPPER = n; // output stepper causing it to step once
+//		SysTickWait10ms(10); // wait for 10 ms
+//		}
 		
 int  main(void)
-{
+ {
 	// systick start
-	
-		SysTick_Init();
-		SYSCTL_RCGCGPIO_R |= 0x08; // activate clock port D
-		while((SYSCTL_RCGCGPIO_R &0x08)== 0)
-		{
-		}; // ready to start?
-	 	GPIO_PORTD_DIR_R|= 0x0F; // PD3- 0 are outputs
-		GPIO_PORTD_DEN_R|= 0x0F; //	PD3- 0 are enabled as ditigal port
-		while(1){
-			step(5);   // not sure if connecting motor, button or LED set-up for motor
-			step(6);   // not sure if connecting motor, button or LED set-up for motor
-			step(10); //  not sure if connecting motor, button or LED set-up for motor
-			step(9);  //  not sure if connecting motor, button or LED set-up for motor
-		}
-	
-		//Clock to 80Mhz, start system tick, configure PWM.
-	SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
-	SysTickbegin();
-	PWMInit();
-	uint8_t values[LEDNum]; //Stores the values of brightness to send
-  uint32_t brilho=255;
-  uint32_t time = 1000;
-		
-	//Set all LEDs to 0
-		
-	int i;
-	for(i=0; i < LEDNum; i++){
-	  values[i]=0;
-	}
+//	
+//		SysTick_Init();
+//		SYSCTL_RCGCGPIO_R |= 0x08; // activate clock port D
+//		while((SYSCTL_RCGCGPIO_R &0x08)== 0)
+//		{
+//		}; // ready to start?
+//	 	GPIO_PORTD_DIR_R|= 0x0F; // PD3- 0 are outputs
+//		GPIO_PORTD_DEN_R|= 0x0F; //	PD3- 0 are enabled as ditigal port
+//		while(1){
+//			step(5);   // not sure if connecting motor, button or LED set-up for motor
+//			step(6);   // not sure if connecting motor, button or LED set-up for motor
+//			step(10); //  not sure if connecting motor, button or LED set-up for motor
+//			step(9);  //  not sure if connecting motor, button or LED set-up for motor
+//		}
+//	
+//		//Clock to 80Mhz, start system tick, configure PWM.
+//	SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
+//	SysTickbegin();
+//	PWMInit();
+//	uint8_t values[LEDNum]; //Stores the values of brightness to send
+//  uint32_t brilho=255;
+//  uint32_t time = 1000;
+//		
+//	//Set all LEDs to 0
+//		
+//	int i;
+//	for(i=0; i < LEDNum; i++){
+//	  values[i]=0;
+//	}
 
-	/*
-	 * the k is used for a test patern. It flashes each LED once at 255 brightness so it can be checked if there is
-	 * any "leakage" into other LEDs. Right now that partern is not being used.
-	 * Right now all LEDs are geting random values.
-	 */
-	int k=0;
-	while(1){
+//	/*
+//	 * the k is used for a test patern. It flashes each LED once at 255 brightness so it can be checked if there is
+//	 * any "leakage" into other LEDs. Right now that partern is not being used.
+//	 * Right now all LEDs are geting random values.
+//	 */
+//	int k=0;
+//	while(1){
 
-		if(k !=0)
-		  values [k-1]=0;
-		else
-		  values[LEDNum-1]=0;
-			values[k] = 0xFF;
-			k++;
-		if(k>= LEDNum)
-		  k=0;
+//		if(k !=0)
+//		  values [k-1]=0;
+//		else
+//		  values[LEDNum-1]=0;
+//			values[k] = 0xFF;
+//			k++;
+//		if(k>= LEDNum)
+//		  k=0;
 
-		/*i;
-		for(i=0; i < LEDNum; i++){
-		  values[i]=rand()%brilho;
-		}*/
-		Wait(time); //Stops the code for 200mS
+//		/*i;
+//		for(i=0; i < LEDNum; i++){
+//		  values[i]=rand()%brilho;
+//		}*/
+//		Wait(time); //Stops the code for 200mS
 
-		//Start timer to send data
-		SendData();
-	}
+//		//Start timer to send data
+//		SendData();
+//	}
 		uint8_t temp;
     volatile uint32_t ui32Loop;
 	
 	
     // Enable the GPIO port that is used for the on-board LED.
 			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
+			//SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
 			SetupHardware();
 		
 		// Check if the peripheral access is enabled.
@@ -195,18 +191,18 @@ int  main(void)
 
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
-		while(2)
-		{ // Turn on White LED
-			
-			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
-			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
-			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
-			
-			// use systick for 10ms to turn off
-			
-			
-		}
-    while(3)
+//		while(2)
+//		{ // Turn on White LED
+//			
+//			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
+//			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
+//			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
+//			
+//			// use systick for 10ms to turn off
+//			
+//			
+//		}
+    while(1)
     {
 				UARTCharPut(UART0_BASE, temp);
 			  temp++;
@@ -362,7 +358,7 @@ int  main(void)
     		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 				
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 
@@ -370,7 +366,7 @@ int  main(void)
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
 
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 				// Turn on the Blue LED.
@@ -378,7 +374,7 @@ int  main(void)
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 				
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 
@@ -386,14 +382,14 @@ int  main(void)
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }// Turn on the Red LED.
 			
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 				
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 
@@ -401,7 +397,7 @@ int  main(void)
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         { 
 				}
 			// Turn on the Purple LED.
@@ -410,7 +406,7 @@ int  main(void)
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 				
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 
@@ -419,7 +415,7 @@ int  main(void)
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 				
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 				// Turn on the Yellow LED.
@@ -428,7 +424,7 @@ int  main(void)
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 				
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 
@@ -437,7 +433,7 @@ int  main(void)
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 				
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 				
@@ -447,7 +443,7 @@ int  main(void)
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 				
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 
@@ -458,7 +454,7 @@ int  main(void)
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 				
         // Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 				// Turn on the CYAN LED.
@@ -467,7 +463,7 @@ int  main(void)
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 				
 				// Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 				{
 				}				
 				
@@ -477,7 +473,7 @@ int  main(void)
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 				
 				// Delay for a bit.
-        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
+        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 			
