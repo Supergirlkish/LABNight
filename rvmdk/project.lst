@@ -64181,19 +64181,19 @@ N	//short hand
 N	GPIO_PORTF_DEN_R |= 0x0000001F;
 X	(*((volatile uint32_t *)0x4002551C)) |= 0x0000001F;
 N	
-N	//Setup port D
+N	//Setup port C
 N
 N//	//need to unlock the pins first
-N//	GPIO_PORTD_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
-N//	GPIO_PORTD_CR_R = 0xFF; 						//write CR reg
-N//	GPIO_PORTD_LOCK_R = 0;							//lock access to CR reg
+N//	GPIO_PORTC_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
+N//	GPIO_PORTC_CR_R = 0xFF; 						//write CR reg
+N//	GPIO_PORTC_LOCK_R = 0;							//lock access to CR reg
 N
 N//	
 N//	//clearing bits
-N//	GPIO_PORTD_DIR_R &= ~0x000000C0; //Make sure PD6, PD7 are inputs
+N//	GPIO_PORTC_DIR_R &= ~0x000000C0; //Make sure PD6, PD7 are inputs
 N//	//Setting  bits
-N//	GPIO_PORTD_PUR_R |=  0x000000C0; //PD6, PD7 pullups enabled
-N//	GPIO_PORTD_DEN_R |=  0x000000C0; //enable digtial pins
+N//	GPIO_PORTC_PUR_R |=  0x000000C0; //PD6, PD7 pullups enabled
+N//	GPIO_PORTC_DEN_R |=  0x000000C0; //enable digtial pins
 N
 N
 N	// Enable the GPIO pin for the LED (PF3).  Set the direction as output, and
@@ -64226,10 +64226,11 @@ N//
 N//	//use internal pull ups for other switches as well. 
 N//	GPIOPadConfigSet(GPIO_PORTD_BASE,GPIO_PIN_6|GPIO_PIN_7,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU);
 N//		
-N//	//Port E Setup
-N//	GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_5|GPIO_PIN_4);
-N//	GPIOPadConfigSet(GPIO_PORTE_BASE,GPIO_PIN_5|GPIO_PIN_4,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD);
-N//	
+N	//Port E Setup
+N  //	GPIOPinTypeGPIOOnput(GPIO_PORTE_BASE, GPIO_PIN_1);
+N	////	GPIOPinTypeGPIOOnput(GPIO_PORTE_BASE, GPIO_PIN_2);
+N	//	GPIOPinTypeGPIOOnput(GPIO_PORTE_BASE, GPIO_PIN_3);
+N		
 N}
 Nvoid UpdateMYbuttons()
 N	{
@@ -64264,8 +64265,8 @@ N//		SYSCTL_RCGCGPIO_R |= 0x08; // activate clock port D
 N//		while((SYSCTL_RCGCGPIO_R &0x08)== 0)
 N//		{
 N//		}; // ready to start?
-N//	 	GPIO_PORTD_DIR_R|= 0x0F; // PD3- 0 are outputs
-N//		GPIO_PORTD_DEN_R|= 0x0F; //	PD3- 0 are enabled as ditigal port
+N//	 	GPIO_PORTC_DIR_R|= 0x0F; // PD3- 0 are outputs
+N//		GPIO_PORTC_DEN_R|= 0x0F; //	PD3- 0 are enabled as ditigal port
 N//		while(1){
 N//			step(5);   // not sure if connecting motor, button or LED set-up for motor
 N//			step(6);   // not sure if connecting motor, button or LED set-up for motor
@@ -64679,5 +64680,5 @@ N				}
 N			}
 N			 
 N		}
-W "project.c" 478 2 last line of file ends without a newline
+W "project.c" 479 2 last line of file ends without a newline
 N}

@@ -40,19 +40,19 @@ void UnlockPins()
 	//short hand
 	GPIO_PORTF_DEN_R |= 0x0000001F;
 	
-	//Setup port D
+	//Setup port C
 
 //	//need to unlock the pins first
-//	GPIO_PORTD_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
-//	GPIO_PORTD_CR_R = 0xFF; 						//write CR reg
-//	GPIO_PORTD_LOCK_R = 0;							//lock access to CR reg
+//	GPIO_PORTC_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
+//	GPIO_PORTC_CR_R = 0xFF; 						//write CR reg
+//	GPIO_PORTC_LOCK_R = 0;							//lock access to CR reg
 
 //	
 //	//clearing bits
-//	GPIO_PORTD_DIR_R &= ~0x000000C0; //Make sure PD6, PD7 are inputs
+//	GPIO_PORTC_DIR_R &= ~0x000000C0; //Make sure PD6, PD7 are inputs
 //	//Setting  bits
-//	GPIO_PORTD_PUR_R |=  0x000000C0; //PD6, PD7 pullups enabled
-//	GPIO_PORTD_DEN_R |=  0x000000C0; //enable digtial pins
+//	GPIO_PORTC_PUR_R |=  0x000000C0; //PD6, PD7 pullups enabled
+//	GPIO_PORTC_DEN_R |=  0x000000C0; //enable digtial pins
 
 
 	// Enable the GPIO pin for the LED (PF3).  Set the direction as output, and
@@ -80,10 +80,11 @@ void UnlockPins()
 //	//use internal pull ups for other switches as well. 
 //	GPIOPadConfigSet(GPIO_PORTD_BASE,GPIO_PIN_6|GPIO_PIN_7,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD_WPU);
 //		
-//	//Port E Setup
-//	GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_5|GPIO_PIN_4);
-//	GPIOPadConfigSet(GPIO_PORTE_BASE,GPIO_PIN_5|GPIO_PIN_4,GPIO_STRENGTH_2MA,GPIO_PIN_TYPE_STD);
-//	
+	//Port E Setup
+  //	GPIOPinTypeGPIOOnput(GPIO_PORTE_BASE, GPIO_PIN_1);
+	////	GPIOPinTypeGPIOOnput(GPIO_PORTE_BASE, GPIO_PIN_2);
+	//	GPIOPinTypeGPIOOnput(GPIO_PORTE_BASE, GPIO_PIN_3);
+		
 }
 void UpdateMYbuttons()
 	{
@@ -116,8 +117,8 @@ int  main(void)
 //		while((SYSCTL_RCGCGPIO_R &0x08)== 0)
 //		{
 //		}; // ready to start?
-//	 	GPIO_PORTD_DIR_R|= 0x0F; // PD3- 0 are outputs
-//		GPIO_PORTD_DEN_R|= 0x0F; //	PD3- 0 are enabled as ditigal port
+//	 	GPIO_PORTC_DIR_R|= 0x0F; // PD3- 0 are outputs
+//		GPIO_PORTC_DEN_R|= 0x0F; //	PD3- 0 are enabled as ditigal port
 //		while(1){
 //			step(5);   // not sure if connecting motor, button or LED set-up for motor
 //			step(6);   // not sure if connecting motor, button or LED set-up for motor
