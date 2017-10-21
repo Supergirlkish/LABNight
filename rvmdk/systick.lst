@@ -13532,7 +13532,7 @@ N#endif // __DRIVERLIB_SYSTICK_H__
 L 5 "systick_helper.h" 2
 N
 Nvoid SysTick_Init(void);
-Nvoid SysTickWait(uint32_t delay);
+Nvoid SysTick_Wait(uint32_t delay);
 Nvoid SysTickWait10ms(uint32_t delay);
 N
 N
@@ -13551,7 +13551,7 @@ X		(*((volatile uint32_t *)0xE000E018)) = 0;
 N	  NVIC_ST_CTRL_R = 0x00000005;
 X	  (*((volatile uint32_t *)0xE000E010)) = 0x00000005;
 N}	
-Nvoid SysTickWait(uint32_t delay){
+Nvoid SysTick_Wait(uint32_t delay){
 N	NVIC_ST_RELOAD_R= delay -1;
 X	(*((volatile uint32_t *)0xE000E014))= delay -1;
 N	NVIC_ST_CURRENT_R = 0;
@@ -13564,7 +13564,7 @@ Nvoid SysTickWait10ms(uint32_t delay)
 N{ uint32_t i;
 N  for(i=0; i<delay; i++)
 N	{
-N    SysTickWait(800000);  // wait 10ms
+N    SysTick_Wait(800000);  // wait 10ms
 N  }
 W "systick.c" 22 2 last line of file ends without a newline
 N}

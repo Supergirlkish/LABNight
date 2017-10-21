@@ -8417,7 +8417,7 @@ extern uint32_t SysTickValueGet(void);
 #line 5 "systick_helper.h"
 
 void SysTick_Init(void);
-void SysTickWait(uint32_t delay);
+void SysTick_Wait(uint32_t delay);
 void SysTickWait10ms(uint32_t delay);
 
 
@@ -8432,7 +8432,7 @@ void SysTick_Init(void)
 		(*((volatile uint32_t *)0xE000E018)) = 0;                
 	  (*((volatile uint32_t *)0xE000E010)) = 0x00000005;
 }	
-void SysTickWait(uint32_t delay){
+void SysTick_Wait(uint32_t delay){
 	(*((volatile uint32_t *)0xE000E014))= delay -1;
 	(*((volatile uint32_t *)0xE000E018)) = 0;
 	while(((*((volatile uint32_t *)0xE000E010))&0x000100000)==0){ 
@@ -8442,6 +8442,6 @@ void SysTickWait10ms(uint32_t delay)
 { uint32_t i;
   for(i=0; i<delay; i++)
 	{
-    SysTickWait(800000);  
+    SysTick_Wait(800000);  
   }
 }

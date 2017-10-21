@@ -1,14 +1,15 @@
 #define E 0x80 // on PA7
 #define RS 0x40 // on PA6
-#define LCDATA (*((volatile uint32_t*)0x400053FC)) // PORT B
+#define LCDDATA (*((volatile uint32_t*)0x400053FC)) // PORT B
 #define LCDCMD (*((volatile uint32_t*)0x40004300)) // PA7-PA6
 #define BusFreq 80 // assuming a 80 mhz bus clock
 #define T500ns BusFreq/2 // 500ns
 #define T40us 40*BusFreq // 40us
 #define T160us 160*BusFreq // 160us
-#define 1600us 1600*BusFreq // 1.60ms
+#define T1600us 1600*BusFreq // 1.60ms
 #define T5ms 5000*BusFreq //5 ms
 #define T15ms 15000*BusFreq //15ms
+#include "systick_helper.h"
 
 // send a command byte to the LCD
 void static OutCmd(uint8_t command)
@@ -38,13 +39,13 @@ void static OutCmd(uint8_t command)
 			GPIO_PORTA_DR8R_R |=0xC0;
 			SysTick_Init(); //
 			LCDCMD = 0; // E=0, R/W=0, RS=0
-			SysTickWait(T15ms); // 
+			SysTick_Wait(T15ms); // 
 			OutCmd(0x30); // command wake up 
-			SysTickWait(T5ms); // wait 5 ms, busy flag not available 
+			SysTick_Wait(T5ms); // wait 5 ms, busy flag not available 
 			OutCmd(0x30); // command Wake up #2
-			SysTickWait(T160us); // wait 160 us, busy flag not available
+			SysTick_Wait(T160us); // wait 160 us, busy flag not available
 			OutCmd(0x30); // command wake up #3
-			SysTickWait(T160us); // must wait 160us, busy flag not available
+			SysTick_Wait(T160us); // must wait 160us, busy flag not available
 			OutCmd(0x38); // Function set : 8-bit/ 2-line
 			OutCmd(0x10); //Set cursor
 			OutCmd(0x0C); // Display ON; Cursor ON
@@ -59,14 +60,14 @@ void static OutCmd(uint8_t command)
 			LCDCMD= E+RS; // E=1, R/W=0, RS=1
 			SysTick_Wait(T500ns); // wait 500ns
 			LCDCMD= RS; // E=1, R/W=0, RS=1
-			SysTick_Wait(T40ns); // wait 500ns
+			SysTick_Wait(T40us); // wait 500ns
 		}
 		// Inputs: none      Output: none
 		void LCD_Clear(void)
 		{
 			OutCmd(0x01); // clear display
-			SysTickWait(T1600ms); // wait 1.60 ms
+			SysTick_Wait(T1600us); // wait 1.60 ms
 			OutCmd(0x02); // cursor at home
-			SysTickWait(T1600ms); // wait 1.6ms
+			SysTick_Wait(T1600us); // wait 1.6ms
 		}
 		

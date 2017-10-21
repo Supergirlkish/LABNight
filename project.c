@@ -1,6 +1,7 @@
 #include "project.h"
 #include <stdio.h>
 #include <stdint.h>
+#include "LCD_1.h"
 //#include "PWM_helper.h"
 //#define STEPPER (*((volatile uint32_t *)0x4000703C))
 struct Mybuttons Mybuttons;
