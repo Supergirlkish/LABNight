@@ -443,6 +443,16 @@
               <FileType>1</FileType>
               <FilePath>.\GPIO_helper.c</FilePath>
             </File>
+            <File>
+              <FileName>LCDDisplay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LCDDisplay.c</FilePath>
+            </File>
+            <File>
+              <FileName>LCDDiplay.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LCDDiplay.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

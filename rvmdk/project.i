@@ -17909,6 +17909,56 @@ void static OutCmd(uint8_t command)
 		}
 		
 #line 5 "project.c"
+#line 1 "LCDDiplay.h"
+
+
+
+#line 5 "LCDDiplay.h"
+#line 6 "LCDDiplay.h"
+#line 7 "LCDDiplay.h"
+#line 8 "LCDDiplay.h"
+#line 9 "LCDDiplay.h"
+
+void pulseLCD(void);
+void sendByte(char, int);
+void setCursorPositionLCD(char, char);
+void clearLCD(void);
+void initLCD(void);
+void printLCD(char*);
+void setBlockCursorLCD(void);
+void setLineCursorLCD(void);
+void cursorOnLCD(void);
+void cursorOffLCD(void);
+void displayOffLCD(void);
+void displayOnLCD(void);
+void homeLCD(void);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+#line 49 "LCDDiplay.h"
+
+
+
+
+
+
+#line 6 "project.c"
+#line 7 "project.c"
 
 
 struct Mybuttons Mybuttons;
@@ -17918,7 +17968,7 @@ struct Mybuttons Mybuttons;
 
 
 
-#line 20 "project.c"
+#line 22 "project.c"
 
 
 void SetupHardware()
@@ -18013,48 +18063,9 @@ void UpdateMYbuttons()
 		
 int  main(void)
  {
+	 
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
 
 
 
@@ -18096,7 +18107,8 @@ int  main(void)
 
 		GPIOPinTypeGPIOInput(0x40025000, 0x00000001);
 		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
-
+    SysCtlClockSet(0x03C00000|0x00000000|0x00000540|0x00000000);
+    
     while(1)
     {
 				UARTCharPut(0x4000C000, temp);
@@ -18107,17 +18119,22 @@ int  main(void)
 			
 				UnlockPins();
 				UpdateMYbuttons ();	
-				
+				initLCD();
 				if(Mybuttons.SW1==0)
 				{
 				}
 				else
-				{				
+				{						
+						
 		
        
 				
     		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
-				
+				printLCD("Hey Switch ONE");
+				setCursorPositionLCD(1,0);
+				printLCD("Green ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18125,7 +18142,11 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000008, 0x0);
-
+				printLCD("Hey Switch One");
+				setCursorPositionLCD(1,0);
+				printLCD("Green OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18133,7 +18154,11 @@ int  main(void)
 				
 			
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-				
+				printLCD("Hey Switch ONE");
+				setCursorPositionLCD(1,0);
+				printLCD("Blue ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18141,14 +18166,22 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-
+				printLCD("Hey Switch One");
+				setCursorPositionLCD(1,0);
+				printLCD("Blue OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
         }
 			
         GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-				
+				printLCD("Hey Switch ONE");
+				setCursorPositionLCD(1,0);
+				printLCD("Red ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18156,7 +18189,11 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-
+				printLCD("Hey Switch One");
+				setCursorPositionLCD(1,0);
+				printLCD("Red OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         { 
@@ -18173,7 +18210,11 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-				
+				printLCD("Hey Switch TWO");
+				setCursorPositionLCD(1,0);
+				printLCD("Purple ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18182,7 +18223,11 @@ int  main(void)
         
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-				
+				printLCD("Hey Switch TWO");
+				setCursorPositionLCD(1,0);
+				printLCD("Purple OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18191,7 +18236,11 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-				
+				printLCD("Hey Switch TWO");
+				setCursorPositionLCD(1,0);
+				printLCD("Yellow ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18200,7 +18249,11 @@ int  main(void)
         
         GPIOPinWrite(0x40025000, 0x00000008, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-				
+				printLCD("Hey Switch TWO");
+				setCursorPositionLCD(1,0);
+				printLCD("Yellow OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18210,7 +18263,11 @@ int  main(void)
 			  GPIOPinWrite(0x40025000, 0x00000008, 0xF);
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-				
+				printLCD("Hey Switch TWO");
+				setCursorPositionLCD(1,0);
+				printLCD("White ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18221,7 +18278,11 @@ int  main(void)
 				GPIOPinWrite(0x40025000, 0x00000008, 0x0);
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-				
+				printLCD("Hey Switch TWO");
+				setCursorPositionLCD(1,0);
+				printLCD("White OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18230,7 +18291,11 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-				
+				printLCD("Hey Switch TWO");
+				setCursorPositionLCD(1,0);
+				printLCD("Cyan ON");
+				SysCtlDelay(10000000);
+				clearLCD();
 				
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 				{
@@ -18240,7 +18305,11 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000008, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-				
+				printLCD("Hey Switch TWO");
+				setCursorPositionLCD(1,0);
+				printLCD("Cyan OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
 				
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18251,7 +18320,11 @@ int  main(void)
 				{ 
 				
     		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
-				
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Green ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
@@ -18259,7 +18332,11 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000008, 0x0);
-
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Green OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
@@ -18267,7 +18344,11 @@ int  main(void)
 				
 			
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-				
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Blue ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
@@ -18275,14 +18356,22 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Blue OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
         }
 			
         GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-				
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Red ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
@@ -18290,7 +18379,11 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Red OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         { 
@@ -18299,7 +18392,11 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-				
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Purple ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
@@ -18308,7 +18405,11 @@ int  main(void)
         
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-				
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Purple OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
@@ -18317,7 +18418,11 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-				
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Yellow ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
@@ -18326,7 +18431,11 @@ int  main(void)
         
         GPIOPinWrite(0x40025000, 0x00000008, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-				
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Yellow OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
@@ -18336,7 +18445,11 @@ int  main(void)
 			  GPIOPinWrite(0x40025000, 0x00000008, 0xF);
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-				
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("White ON");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
@@ -18347,7 +18460,11 @@ int  main(void)
 				GPIOPinWrite(0x40025000, 0x00000008, 0x0);
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-				
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("White OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {
@@ -18356,7 +18473,11 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-				
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Cyan ON");
+				SysCtlDelay(10000000);
+				clearLCD();
 				
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 				{
@@ -18366,7 +18487,11 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000008, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-				
+				printLCD("Hey SW1 & SW2");
+				setCursorPositionLCD(1,0);
+				printLCD("Cyan OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
 				
         for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
         {

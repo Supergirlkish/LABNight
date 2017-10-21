@@ -64258,6 +64258,67 @@ N		}
 W "LCD_1.h" 73 3 last line of file ends without a newline
 N		
 L 5 "project.c" 2
+N#include "LCDDiplay.h"
+L 1 "LCDDiplay.h" 1
+N#ifndef LIB_DISPLAY_H_
+N#define LIB_DISPLAY_H_
+N
+N#include <stdint.h>
+N#include <stdbool.h>
+N#include "inc/hw_memmap.h"
+N#include "driverlib/gpio.h"
+N#include "driverlib/sysctl.h"
+N
+Nvoid pulseLCD(void);
+Nvoid sendByte(char, int);
+Nvoid setCursorPositionLCD(char, char);
+Nvoid clearLCD(void);
+Nvoid initLCD(void);
+Nvoid printLCD(char*);
+Nvoid setBlockCursorLCD(void);
+Nvoid setLineCursorLCD(void);
+Nvoid cursorOnLCD(void);
+Nvoid cursorOffLCD(void);
+Nvoid displayOffLCD(void);
+Nvoid displayOnLCD(void);
+Nvoid homeLCD(void);
+N
+N#define FALSE 0
+N#define TRUE 1
+N/*
+N *
+N * Pin Connections:
+N * PE4 [pin 5]  -> RS
+N * PE5 [pin 6]  -> EN
+N * PD0 [pin 23] -> D4
+N * PD1 [pin 24] -> D5
+N * PD2 [pin 25] -> D6
+N * PD3 [pin 26] -> D7
+N *
+N * pin number in [] indicates
+N * energia pin reference!
+N *
+N */
+N
+W "LCDDiplay.h" 41 9 incompatible redefinition of macro "RS"  (declared at line 2 of "LCD_1.h")
+N#define RS GPIO_PIN_4 // Pin 5
+N#define EN GPIO_PIN_5 // Pin 6
+N#define D4 GPIO_PIN_0 // Pin 23
+N#define D5 GPIO_PIN_1 // Pin 24
+N#define D6 GPIO_PIN_2 // Pin 25
+N#define D7 GPIO_PIN_3 // Pin 26
+N#define ALLDATAPINS  D7 | D6 | D5 | D4
+N#define ALLCONTROLPINS RS | EN
+N
+N#define DATA_PORT_BASE GPIO_PORTD_BASE
+N#define CMD_PORT_BASE GPIO_PORTE_BASE
+N#define DATA_PERIPH SYSCTL_PERIPH_GPIOD
+N#define CMD_PERIPH SYSCTL_PERIPH_GPIOE
+N
+W "LCDDiplay.h" 55 28 last line of file ends without a newline
+N#endif /* LIB_DISPLAY_H_ */
+L 6 "project.c" 2
+N#include "driverlib/rom_map.h"
 N//#include "PWM_helper.h"
 N//#define STEPPER (*((volatile uint32_t *)0x4000703C))
 Nstruct Mybuttons Mybuttons;
@@ -64307,17 +64368,17 @@ X	(*((volatile uint32_t *)0x4002551C)) |= 0x0000001F;
 N	
 N	//Setup port C
 N
-N//	//need to unlock the pins first
-N//	GPIO_PORTC_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
-N//	GPIO_PORTC_CR_R = 0xFF; 						//write CR reg
-N//	GPIO_PORTC_LOCK_R = 0;							//lock access to CR reg
+N////  need to unlock the pins first
+N//	  GPIO_PORTC_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
+N//	  GPIO_PORTC_CR_R = 0xFF; 						//write CR reg
+N//	  GPIO_PORTC_LOCK_R = 0;							//lock access to CR reg
 N
 N//	
-N//	//clearing bits
-N//	GPIO_PORTC_DIR_R &= ~0x000000C0; //Make sure PD6, PD7 are inputs
+N////	//clearing bits
+N//	  GPIO_PORTC_DIR_R &= ~0x000000C0; //Make sure PD6, PD7 are inputs
 N//	//Setting  bits
-N//	GPIO_PORTC_PUR_R |=  0x000000C0; //PD6, PD7 pullups enabled
-N//	GPIO_PORTC_DEN_R |=  0x000000C0; //enable digtial pins
+N//	  GPIO_PORTC_PUR_R |=  0x000000C0; //PD6, PD7 pullups enabled
+N//  	GPIO_PORTC_DEN_R |=  0x000000C0; //enable digtial pins
 N
 N
 N	// Enable the GPIO pin for the LED (PF3).  Set the direction as output, and
@@ -64376,69 +64437,30 @@ N
 N	}
 N//	static void step(uint32_t n)
 N//		{
-N//		STEPPER = n; // output stepper causing it to step once
+N//	  STEPPER = n; // output stepper causing it to step once
 N//		SysTickWait10ms(10); // wait for 10 ms
 N//		}
 N		
 Nint  main(void)
 N {
+N	 
 N	// systick start
-N//	
+N	
 N//		SysTick_Init();
 N//		SYSCTL_RCGCGPIO_R |= 0x08; // activate clock port D
 N//		while((SYSCTL_RCGCGPIO_R &0x08)== 0)
 N//		{
 N//		}; // ready to start?
-N//	 	GPIO_PORTC_DIR_R|= 0x0F; // PD3- 0 are outputs
+N// 	  GPIO_PORTC_DIR_R|= 0x0F; // PD3- 0 are outputs
 N//		GPIO_PORTC_DEN_R|= 0x0F; //	PD3- 0 are enabled as ditigal port
 N//		while(1){
 N//			step(5);   // not sure if connecting motor, button or LED set-up for motor
 N//			step(6);   // not sure if connecting motor, button or LED set-up for motor
-N//			step(10); //  not sure if connecting motor, button or LED set-up for motor
+N//		  step(10); //  not sure if connecting motor, button or LED set-up for motor
 N//			step(9);  //  not sure if connecting motor, button or LED set-up for motor
 N//		}
 N//	
-N//		//Clock to 80Mhz, start system tick, configure PWM.
-N//	SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
-N//	SysTickbegin();
-N//	PWMInit();
-N//	uint8_t values[LEDNum]; //Stores the values of brightness to send
-N//  uint32_t brilho=255;
-N//  uint32_t time = 1000;
-N//		
-N//	//Set all LEDs to 0
-N//		
-N//	int i;
-N//	for(i=0; i < LEDNum; i++){
-N//	  values[i]=0;
-N//	}
 N
-N//	/*
-N//	 * the k is used for a test patern. It flashes each LED once at 255 brightness so it can be checked if there is
-N//	 * any "leakage" into other LEDs. Right now that partern is not being used.
-N//	 * Right now all LEDs are geting random values.
-N//	 */
-N//	int k=0;
-N//	while(1){
-N
-N//		if(k !=0)
-N//		  values [k-1]=0;
-N//		else
-N//		  values[LEDNum-1]=0;
-N//			values[k] = 0xFF;
-N//			k++;
-N//		if(k>= LEDNum)
-N//		  k=0;
-N
-N//		/*i;
-N//		for(i=0; i < LEDNum; i++){
-N//		  values[i]=rand()%brilho;
-N//		}*/
-N//		Wait(time); //Stops the code for 200mS
-N
-N//		//Start timer to send data
-N//		SendData();
-N//	}
 N		uint8_t temp;
 N    volatile uint32_t ui32Loop;
 N	
@@ -64472,7 +64494,9 @@ N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_0);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000001);
 N		GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
 X		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
-N
+N    SysCtlClockSet(SYSCTL_SYSDIV_8|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
+X    SysCtlClockSet(0x03C00000|0x00000000|0x00000540|0x00000000);
+N    
 N    while(1)
 N    {
 N				UARTCharPut(UART0_BASE, temp);
@@ -64484,18 +64508,23 @@ N
 N			
 N				UnlockPins();
 N				UpdateMYbuttons ();	
-N				
+N				initLCD();
 N				if(Mybuttons.SW1==0)
 N				{
 N				}
 N				else
-N				{				
+N				{						
+N						
 N		
 N       // Turn on Green Led
 N				
 N    		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 X    		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
-N				
+N				printLCD("Hey Switch ONE");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Green ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64504,7 +64533,11 @@ N
 N        // Turn off the Green LED.
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0x0);
-N
+N				printLCD("Hey Switch One");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Green OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64513,7 +64546,11 @@ N				// Turn on the Blue LED.
 N			
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-N				
+N				printLCD("Hey Switch ONE");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Blue ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64522,7 +64559,11 @@ N
 N        // Turn off the Blue LED.
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-N
+N				printLCD("Hey Switch One");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Blue OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64530,7 +64571,11 @@ N        }// Turn on the Red LED.
 N			
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				
+N				printLCD("Hey Switch ONE");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Red ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64539,7 +64584,11 @@ N
 N        // Turn off the Red LED.
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N
+N				printLCD("Hey Switch One");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Red OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        { 
@@ -64558,7 +64607,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				
+N				printLCD("Hey Switch TWO");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Purple ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64569,7 +64622,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N				
+N				printLCD("Hey Switch TWO");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Purple OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64580,7 +64637,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				
+N				printLCD("Hey Switch TWO");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Yellow ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64591,7 +64652,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0x0);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N				
+N				printLCD("Hey Switch TWO");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Yellow OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64604,7 +64669,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				
+N				printLCD("Hey Switch TWO");
+N				setCursorPositionLCD(1,0);
+N				printLCD("White ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64618,7 +64687,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N				
+N				printLCD("Hey Switch TWO");
+N				setCursorPositionLCD(1,0);
+N				printLCD("White OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64629,7 +64702,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-N				
+N				printLCD("Hey Switch TWO");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Cyan ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N				// Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N				{
@@ -64641,7 +64718,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0x0);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-N				
+N				printLCD("Hey Switch TWO");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Cyan OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N				// Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
@@ -64653,7 +64734,11 @@ N				{ // Turn on Green Led
 N				
 N    		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 X    		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
-N				
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Green ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64662,7 +64747,11 @@ N
 N        // Turn off the Green LED.
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0x0);
-N
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Green OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64671,7 +64760,11 @@ N				// Turn on the Blue LED.
 N			
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-N				
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Blue ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64680,7 +64773,11 @@ N
 N        // Turn off the Blue LED.
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-N
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Blue OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64688,7 +64785,11 @@ N        }// Turn on the Red LED.
 N			
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Red ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64697,7 +64798,11 @@ N
 N        // Turn off the Red LED.
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Red OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        { 
@@ -64708,7 +64813,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Purple ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64719,7 +64828,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N				
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Purple OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64730,7 +64843,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Yellow ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64741,7 +64858,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0x0);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N				
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Yellow OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64754,7 +64875,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("White ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64768,7 +64893,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N				
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("White OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64779,7 +64908,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-N				
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Cyan ON");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N				// Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N				{
@@ -64791,7 +64924,11 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0x0);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-N				
+N				printLCD("Hey SW1 & SW2");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Cyan OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
 N				// Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
@@ -64804,5 +64941,5 @@ N				}
 N			}
 N			 
 N		}
-W "project.c" 480 2 last line of file ends without a newline
+W "project.c" 557 2 last line of file ends without a newline
 N}
