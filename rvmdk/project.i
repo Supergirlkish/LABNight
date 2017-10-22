@@ -17994,20 +17994,6 @@ void UnlockPins()
 	(*((volatile uint32_t *)0x4002551C)) |= 0x0000001F;
 	
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
     
 		
@@ -18021,22 +18007,6 @@ void UnlockPins()
 		GPIOPinTypeGPIOInput(0x40025000, 0x00000010);
 	
 
-
-
-
-
-
-
-
-
-
-
-
-
-	
-  
-	
-	
 		
 }
 void UpdateMYbuttons()
@@ -18060,7 +18030,7 @@ void UpdateMYbuttons()
 
 
 
-		
+
 int  main(void)
  {
 	 
