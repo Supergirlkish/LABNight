@@ -1,7 +1,7 @@
 #include "project.h"
 #include <stdio.h>
 #include <stdint.h>
-#include "LCD_1.h"
+//#include "LCD_1.h"
 #include "LCDDiplay.h"
 #include "driverlib/rom_map.h"
 //#include "PWM_helper.h"

@@ -453,6 +453,16 @@
               <FileType>5</FileType>
               <FilePath>.\LCDDiplay.h</FilePath>
             </File>
+            <File>
+              <FileName>Stepper.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Stepper.c</FilePath>
+            </File>
+            <File>
+              <FileName>Stepper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Stepper.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
