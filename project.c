@@ -83,23 +83,33 @@ void UpdateMYbuttons()
 //		
 int  main(void)
  {
-	 
-	// systick start
-	
-//		SysTick_Init();
-//		SYSCTL_RCGCGPIO_R |= 0x04; // activate clock port C
-//		while((SYSCTL_RCGCGPIO_R &0x04)== 0)
-//		{
-//		}; // ready to start?
-// 	  GPIO_PORTC_DIR_R|= 0x0F; // PD3- 0 are outputs
-//		GPIO_PORTC_DEN_R|= 0x0F; //	PD3- 0 are enabled as ditigal port
-//		while(1){
-//			step(5);   // not sure if connecting motor, button or LED set-up for motor
-//			step(6);   // not sure if connecting motor, button or LED set-up for motor
-//		  step(10); //  not sure if connecting motor, button or LED set-up for motor
-//			step(9);  //  not sure if connecting motor, button or LED set-up for motor
+//	 
+//	SysCtlClockSet(SYSCTL_SYSDIV_8|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
+//	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+//	GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE,  GPIO_PIN_2);
+//	GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_2 ,0);
+//	initStepper();
+//	int i,rotations,active=1;
+//	for (rotations=0; rotations<100; rotations++) {
+//		for (i=0; i<26;i++) {
+//			stepBackward(157);
+//			stopStepper();
+//			if (active) {
+//				GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_2,GPIO_PIN_2);
+//				active=FALSE;
+//			} else {
+//				GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_2,0);
+//				active=TRUE;
+//			}
+//			SysCtlDelay(10000000);
 //		}
-//	
+//			stepBackward(21);
+//			stopStepper();
+
+//			SysCtlDelay(10000000);
+//		}
+
+	
 
 		uint8_t temp;
     volatile uint32_t ui32Loop;

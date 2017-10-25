@@ -64289,23 +64289,33 @@ N//		}
 N//		
 Nint  main(void)
 N {
-N	 
-N	// systick start
-N	
-N//		SysTick_Init();
-N//		SYSCTL_RCGCGPIO_R |= 0x04; // activate clock port C
-N//		while((SYSCTL_RCGCGPIO_R &0x04)== 0)
-N//		{
-N//		}; // ready to start?
-N// 	  GPIO_PORTC_DIR_R|= 0x0F; // PD3- 0 are outputs
-N//		GPIO_PORTC_DEN_R|= 0x0F; //	PD3- 0 are enabled as ditigal port
-N//		while(1){
-N//			step(5);   // not sure if connecting motor, button or LED set-up for motor
-N//			step(6);   // not sure if connecting motor, button or LED set-up for motor
-N//		  step(10); //  not sure if connecting motor, button or LED set-up for motor
-N//			step(9);  //  not sure if connecting motor, button or LED set-up for motor
+N//	 
+N//	SysCtlClockSet(SYSCTL_SYSDIV_8|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
+N//	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+N//	GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE,  GPIO_PIN_2);
+N//	GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_2 ,0);
+N//	initStepper();
+N//	int i,rotations,active=1;
+N//	for (rotations=0; rotations<100; rotations++) {
+N//		for (i=0; i<26;i++) {
+N//			stepBackward(157);
+N//			stopStepper();
+N//			if (active) {
+N//				GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_2,GPIO_PIN_2);
+N//				active=FALSE;
+N//			} else {
+N//				GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_2,0);
+N//				active=TRUE;
+N//			}
+N//			SysCtlDelay(10000000);
 N//		}
-N//	
+N//			stepBackward(21);
+N//			stopStepper();
+N
+N//			SysCtlDelay(10000000);
+N//		}
+N
+N	
 N
 N		uint8_t temp;
 N    volatile uint32_t ui32Loop;
@@ -64787,5 +64797,5 @@ N				}
 N			}
 N			 
 N		}
-W "project.c" 527 2 last line of file ends without a newline
+W "project.c" 537 2 last line of file ends without a newline
 N}
