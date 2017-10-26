@@ -1,5 +1,70 @@
 #line 1 "Stepper.c"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+
 #line 1 "Stepper.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
 
 
 
@@ -260,7 +325,7 @@ typedef unsigned     long long uintmax_t;
 
 
  
-#line 6 "Stepper.h"
+#line 38 "Stepper.h"
 #line 1 "C:\\Keil_v5\\ARM\\ARMCC\\Bin\\..\\include\\stdbool.h"
  
 
@@ -279,7 +344,7 @@ typedef unsigned     long long uintmax_t;
 
 
 
-#line 7 "Stepper.h"
+#line 39 "Stepper.h"
 #line 1 "inc/hw_memmap.h"
 
 
@@ -341,7 +406,7 @@ typedef unsigned     long long uintmax_t;
                                             
 #line 150 "inc/hw_memmap.h"
 
-#line 8 "Stepper.h"
+#line 40 "Stepper.h"
 #line 1 "driverlib/gpio.h"
 
 
@@ -514,7 +579,7 @@ extern void GPIOADCTriggerDisable(uint32_t ui32Port, uint8_t ui8Pins);
 
 
 
-#line 9 "Stepper.h"
+#line 41 "Stepper.h"
 #line 1 "driverlib/sysctl.h"
 
 
@@ -808,7 +873,7 @@ extern _Bool SysCtlVCOGet(uint32_t ui32Crystal, uint32_t *pui32VCOFrequency);
 
 
 
-#line 10 "Stepper.h"
+#line 42 "Stepper.h"
 
 void stepForward(int);
 void stepBackward(int);
@@ -839,28 +904,29 @@ void stopStepper(void);
 
 
 
-#line 2 "Stepper.c"
-int states[]={0x0,0x1,0x3,0x4,0x5,0x6,0x7,0x8};
+#line 35 "Stepper.c"
+int states[]={0x01,0x03,0x02,0x06,0x04,0x0C,0x08,0x09};
+
 int currentstate=0;
 
 void initStepper(void)
 {
-	SysCtlPeripheralEnable(0xf0000800);
-	GPIOPinTypeGPIOOutput(0x40004000,  0x00000004|0x00000008|0x00000010|0x00000020);
-	GPIOPinWrite(0x40004000, 0x00000004|0x00000008|0x00000010|0x00000020 ,0);
+	SysCtlPeripheralEnable(0xf0000804);
+	GPIOPinTypeGPIOOutput(0x40024000,  0x00000001|0x00000002|0x00000004|0x00000008);
+	GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008 ,0);
 }
 
 void stopStepper(void) {
-	GPIOPinWrite(0x40004000, 0x00000004|0x00000008|0x00000010|0x00000020, 0);
+	GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008, 0);
 	if (--currentstate<0)
 		currentstate=7;
 }
- 
+
 
 void stepForward(int steps) {
 	int n;
 	for (n=0; n<steps; n++) {
-		GPIOPinWrite(0x40004000, 0x00000004|0x00000008|0x00000010|0x00000020,  states[currentstate++]);
+		GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate++]);
 		if (currentstate>7) currentstate=0;
 		SysCtlDelay(10000);
 	}
@@ -869,7 +935,7 @@ void stepForward(int steps) {
 void stepBackward(int steps) {
 	int n;
 	for (n=steps; n>=0; n--) {
-		GPIOPinWrite(0x40004000, 0x00000004|0x00000008|0x00000010|0x00000020,  states[currentstate--]);
+		GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate--]);
 		if (currentstate<0) currentstate=7;
 		SysCtlDelay(10000);
 	}

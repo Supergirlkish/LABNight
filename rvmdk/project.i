@@ -17883,6 +17883,79 @@ void homeLCD(void);
 
 #line 6 "project.c"
 #line 7 "project.c"
+#line 1 "Stepper.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+
+
+
+
+#line 38 "Stepper.h"
+#line 39 "Stepper.h"
+#line 40 "Stepper.h"
+#line 41 "Stepper.h"
+#line 42 "Stepper.h"
+
+void stepForward(int);
+void stepBackward(int);
+void initStepper(void);
+void stopStepper(void);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+#line 8 "project.c"
 
 
 struct Mybuttons Mybuttons;
@@ -17892,7 +17965,7 @@ struct Mybuttons Mybuttons;
 
 
 
-#line 22 "project.c"
+#line 23 "project.c"
 
 
 void SetupHardware()
@@ -17957,33 +18030,41 @@ void UpdateMYbuttons()
 
 int  main(void)
  {
+	SysCtlClockSet(0x03C00000|0x00000000|0x00000540|0x00000000);
+	SysCtlPeripheralEnable(0xf0000805);
+	GPIOPinTypeGPIOOutput(0x40025000,  0x00000004|0x00000008);
+	GPIOPinWrite(0x40025000, 0x00000004|0x00000008 ,0);
+	initStepper();
+	initLCD();
+	int i,rotations,active=1;
+	for (rotations=0; rotations<100; rotations++) {
+		for (i=0; i<26;i++) {
+			stepForward(157);
+			stopStepper();
+			if (active) {
+				GPIOPinWrite(0x40025000,0x00000008,0x00000008);
+				active=0;
+						} 
+			else {
+				GPIOPinWrite(0x40025000,0x00000008,0);
+				active=1;
+				printLCD("WHAT THE F?");
+				setCursorPositionLCD(1,0);
+				printLCD("Green OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
+			}
+			SysCtlDelay(1000000);
+		}
+			stepForward(21);
+			stopStepper();
 
+			SysCtlDelay(10000000);
+		}
+	GPIOPinWrite(0x40025000, 0x00000004 ,0x00000004);
+	while(1) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
+	}	
 
 		uint8_t temp;
     volatile uint32_t ui32Loop;

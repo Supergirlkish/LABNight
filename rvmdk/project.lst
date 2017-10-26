@@ -64195,6 +64195,82 @@ W "LCDDiplay.h" 55 28 last line of file ends without a newline
 N#endif /* LIB_DISPLAY_H_ */
 L 6 "project.c" 2
 N#include "driverlib/rom_map.h"
+N#include "Stepper.h"
+L 1 "Stepper.h" 1
+N/*
+N * Stepper Motor Library for Stellaris/Tiva launchpads
+N * Supports 28BYJ-48 Motor
+N * All rights reserved.
+N * Distributed under the BSD License
+N * Copyright (c) 2015, Manolis Kiagias
+N *
+N * Redistribution and use in source and binary forms, with or without
+N * modification, are permitted provided that the following conditions
+N * are met:
+N *
+N * *  Redistributions of source code must retain the above copyright
+N *    notice, this list of conditions and the following disclaimer.
+N *
+N * *  Redistributions in binary form must reproduce the above copyright
+N *    notice, this list of conditions and the following disclaimer in the
+N *    documentation and/or other materials provided with the distribution.
+N *
+N * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+N * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+N * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+N * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+N * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+N * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+N * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+N * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+N * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+N * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+N * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+N * --/COPYRIGHT--*/
+N /*******************************************************************************/
+N
+N
+N#ifndef LIB_STEPPER_H_
+N#define LIB_STEPPER_H_
+N
+N#include <stdint.h>
+N#include <stdbool.h>
+N#include "inc/hw_memmap.h"
+N#include "driverlib/gpio.h"
+N#include "driverlib/sysctl.h"
+N
+Nvoid stepForward(int);
+Nvoid stepBackward(int);
+Nvoid initStepper(void);
+Nvoid stopStepper(void);
+N
+N#define FALSE 0
+N#define TRUE 1
+N/*
+N *
+N * Pin Connections:
+N * PE0 [pin 18]  -> IN1
+N * PE1 [pin 27]  -> IN2
+N * PE2 [pin 28]  -> IN3
+N * PE3 [pin 29]  -> IN4
+N *
+N * pin number in [] indicates
+N * energia pin reference!
+N *
+N */
+N
+N#define IN1 GPIO_PIN_0 // Pin 18
+N#define IN2 GPIO_PIN_1 // Pin 27
+N#define IN3 GPIO_PIN_2 // Pin 28
+N#define IN4 GPIO_PIN_3 // Pin 29
+N#define ALLINPINS IN1|IN2|IN3|IN4
+N
+N#define STEPPER_PORT_BASE GPIO_PORTE_BASE
+N#define STEPPER_PERIPH SYSCTL_PERIPH_GPIOE
+N
+W "Stepper.h" 72 28 last line of file ends without a newline
+N#endif /* LIB_STEPPER_H_ */
+L 8 "project.c" 2
 N//#include "PWM_helper.h"
 N//#define STEPPER (*((volatile uint32_t *)0x4000703C))
 Nstruct Mybuttons Mybuttons;
@@ -64289,39 +64365,57 @@ N//		}
 N//		
 Nint  main(void)
 N {
-N//	 
-N//	SysCtlClockSet(SYSCTL_SYSDIV_8|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
-N//	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-N//	GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE,  GPIO_PIN_2);
-N//	GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_2 ,0);
-N//	initStepper();
-N//	int i,rotations,active=1;
-N//	for (rotations=0; rotations<100; rotations++) {
-N//		for (i=0; i<26;i++) {
-N//			stepBackward(157);
-N//			stopStepper();
-N//			if (active) {
-N//				GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_2,GPIO_PIN_2);
-N//				active=FALSE;
-N//			} else {
-N//				GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_2,0);
-N//				active=TRUE;
-N//			}
-N//			SysCtlDelay(10000000);
-N//		}
-N//			stepBackward(21);
-N//			stopStepper();
+N	SysCtlClockSet(SYSCTL_SYSDIV_8|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
+X	SysCtlClockSet(0x03C00000|0x00000000|0x00000540|0x00000000);
+N	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+X	SysCtlPeripheralEnable(0xf0000805);
+N	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE,  GPIO_PIN_2|GPIO_PIN_3);
+X	GPIOPinTypeGPIOOutput(0x40025000,  0x00000004|0x00000008);
+N	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2|GPIO_PIN_3 ,0);
+X	GPIOPinWrite(0x40025000, 0x00000004|0x00000008 ,0);
+N	initStepper();
+N	initLCD();
+N	int i,rotations,active=1;
+N	for (rotations=0; rotations<100; rotations++) {
+N		for (i=0; i<26;i++) {
+N			stepForward(157);
+N			stopStepper();
+N			if (active) {
+N				GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,GPIO_PIN_3);
+X				GPIOPinWrite(0x40025000,0x00000008,0x00000008);
+N				active=FALSE;
+X				active=0;
+N						} 
+N			else {
+N				GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,0);
+X				GPIOPinWrite(0x40025000,0x00000008,0);
+N				active=TRUE;
+X				active=1;
+N				printLCD("WHAT THE F?");
+N				setCursorPositionLCD(1,0);
+N				printLCD("Green OFF");
+N				SysCtlDelay(10000000);
+N				clearLCD();
+N			}
+N			SysCtlDelay(1000000);
+N		}
+N			stepForward(21);
+N			stopStepper();
 N
-N//			SysCtlDelay(10000000);
-N//		}
+N			SysCtlDelay(10000000);
+N		}
+N	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2 ,GPIO_PIN_2);
+X	GPIOPinWrite(0x40025000, 0x00000004 ,0x00000004);
+N	while(1) {
 N
-N	
+N	}	
 N
 N		uint8_t temp;
 N    volatile uint32_t ui32Loop;
 N	
 N	
 N    // Enable the GPIO port that is used for the on-board LED.
+W "project.c" 128 4 statement is unreachable
 N			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 X			SysCtlPeripheralEnable(0xf0000805);
 N			//SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
@@ -64797,5 +64891,5 @@ N				}
 N			}
 N			 
 N		}
-W "project.c" 537 2 last line of file ends without a newline
+W "project.c" 546 2 last line of file ends without a newline
 N}

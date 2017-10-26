@@ -4,6 +4,7 @@
 //#include "LCD_1.h"
 #include "LCDDiplay.h"
 #include "driverlib/rom_map.h"
+#include "Stepper.h"
 //#include "PWM_helper.h"
 //#define STEPPER (*((volatile uint32_t *)0x4000703C))
 struct Mybuttons Mybuttons;
@@ -83,33 +84,41 @@ void UpdateMYbuttons()
 //		
 int  main(void)
  {
-//	 
-//	SysCtlClockSet(SYSCTL_SYSDIV_8|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
-//	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-//	GPIOPinTypeGPIOOutput(GPIO_PORTA_BASE,  GPIO_PIN_2);
-//	GPIOPinWrite(GPIO_PORTA_BASE, GPIO_PIN_2 ,0);
-//	initStepper();
-//	int i,rotations,active=1;
-//	for (rotations=0; rotations<100; rotations++) {
-//		for (i=0; i<26;i++) {
-//			stepBackward(157);
-//			stopStepper();
-//			if (active) {
-//				GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_2,GPIO_PIN_2);
-//				active=FALSE;
-//			} else {
-//				GPIOPinWrite(GPIO_PORTA_BASE,GPIO_PIN_2,0);
-//				active=TRUE;
-//			}
-//			SysCtlDelay(10000000);
-//		}
-//			stepBackward(21);
-//			stopStepper();
+	SysCtlClockSet(SYSCTL_SYSDIV_8|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE,  GPIO_PIN_2|GPIO_PIN_3);
+	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2|GPIO_PIN_3 ,0);
+	initStepper();
+	initLCD();
+	int i,rotations,active=1;
+	for (rotations=0; rotations<100; rotations++) {
+		for (i=0; i<26;i++) {
+			stepForward(157);
+			stopStepper();
+			if (active) {
+				GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,GPIO_PIN_3);
+				active=FALSE;
+						} 
+			else {
+				GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,0);
+				active=TRUE;
+				printLCD("WHAT THE F?");
+				setCursorPositionLCD(1,0);
+				printLCD("Green OFF");
+				SysCtlDelay(10000000);
+				clearLCD();
+			}
+			SysCtlDelay(1000000);
+		}
+			stepForward(21);
+			stopStepper();
 
-//			SysCtlDelay(10000000);
-//		}
+			SysCtlDelay(10000000);
+		}
+	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2 ,GPIO_PIN_2);
+	while(1) {
 
-	
+	}	
 
 		uint8_t temp;
     volatile uint32_t ui32Loop;

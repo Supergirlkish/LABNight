@@ -1,6 +1,71 @@
 L 1 "Stepper.c"
+N/*
+N * Stepper Motor Library for Stellaris/Tiva launchpads
+N * Supports 28BYJ-48 Motor
+N * All rights reserved.
+N * Distributed under the BSD License
+N * Copyright (c) 2015, Manolis Kiagias
+N *
+N * Redistribution and use in source and binary forms, with or without
+N * modification, are permitted provided that the following conditions
+N * are met:
+N *
+N * *  Redistributions of source code must retain the above copyright
+N *    notice, this list of conditions and the following disclaimer.
+N *
+N * *  Redistributions in binary form must reproduce the above copyright
+N *    notice, this list of conditions and the following disclaimer in the
+N *    documentation and/or other materials provided with the distribution.
+N *
+N * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+N * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+N * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+N * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+N * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+N * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+N * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+N * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+N * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+N * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+N * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+N * --/COPYRIGHT--*/
+N /*******************************************************************************/
+N
+N
 N#include "Stepper.h"
 L 1 "Stepper.h" 1
+N/*
+N * Stepper Motor Library for Stellaris/Tiva launchpads
+N * Supports 28BYJ-48 Motor
+N * All rights reserved.
+N * Distributed under the BSD License
+N * Copyright (c) 2015, Manolis Kiagias
+N *
+N * Redistribution and use in source and binary forms, with or without
+N * modification, are permitted provided that the following conditions
+N * are met:
+N *
+N * *  Redistributions of source code must retain the above copyright
+N *    notice, this list of conditions and the following disclaimer.
+N *
+N * *  Redistributions in binary form must reproduce the above copyright
+N *    notice, this list of conditions and the following disclaimer in the
+N *    documentation and/or other materials provided with the distribution.
+N *
+N * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+N * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+N * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+N * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+N * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+N * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+N * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+N * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+N * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+N * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+N * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+N * --/COPYRIGHT--*/
+N /*******************************************************************************/
+N
 N
 N#ifndef LIB_STEPPER_H_
 N#define LIB_STEPPER_H_
@@ -336,7 +401,7 @@ N
 N#endif /* __stdint_h */
 N
 N/* end of stdint.h */
-L 6 "Stepper.h" 2
+L 38 "Stepper.h" 2
 N#include <stdbool.h>
 L 1 "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h" 1
 N/* stdbool.h: ISO/IEC 9899:1999 (C99), section 7.16 */
@@ -366,7 +431,7 @@ N  #endif
 N
 N#endif /* __bool_true_false_are_defined */
 N
-L 7 "Stepper.h" 2
+L 39 "Stepper.h" 2
 N#include "inc/hw_memmap.h"
 L 1 "inc/hw_memmap.h" 1
 N//*****************************************************************************
@@ -520,7 +585,7 @@ N#define NVIC_BASE               0xE000E000  // Nested Vectored Interrupt Ctrl
 N#define TPIU_BASE               0xE0040000  // Trace Port Interface Unit
 N
 N#endif // __HW_MEMMAP_H__
-L 8 "Stepper.h" 2
+L 40 "Stepper.h" 2
 N#include "driverlib/gpio.h"
 L 1 "driverlib/gpio.h" 1
 N//*****************************************************************************
@@ -728,7 +793,7 @@ S}
 N#endif
 N
 N#endif // __DRIVERLIB_GPIO_H__
-L 9 "Stepper.h" 2
+L 41 "Stepper.h" 2
 N#include "driverlib/sysctl.h"
 L 1 "driverlib/sysctl.h" 1
 N//*****************************************************************************
@@ -1400,7 +1465,7 @@ S}
 N#endif
 N
 N#endif // __DRIVERLIB_SYSCTL_H__
-L 10 "Stepper.h" 2
+L 42 "Stepper.h" 2
 N
 Nvoid stepForward(int);
 Nvoid stepBackward(int);
@@ -1412,54 +1477,55 @@ N#define TRUE 1
 N/*
 N *
 N * Pin Connections:
-N * PA2 [pin 18]  -> IN1
-N * PA3 [pin 27]  -> IN2
-N * PA4 [pin 28]  -> IN3
-N * PA5 [pin 29]  -> IN4
+N * PE0 [pin 18]  -> IN1
+N * PE1 [pin 27]  -> IN2
+N * PE2 [pin 28]  -> IN3
+N * PE3 [pin 29]  -> IN4
 N *
 N * pin number in [] indicates
 N * energia pin reference!
 N *
 N */
 N
-N#define IN1 GPIO_PIN_2 // Pin 18
-N#define IN2 GPIO_PIN_3 // Pin 27
-N#define IN3 GPIO_PIN_4 // Pin 28
-N#define IN4 GPIO_PIN_5 // Pin 29
+N#define IN1 GPIO_PIN_0 // Pin 18
+N#define IN2 GPIO_PIN_1 // Pin 27
+N#define IN3 GPIO_PIN_2 // Pin 28
+N#define IN4 GPIO_PIN_3 // Pin 29
 N#define ALLINPINS IN1|IN2|IN3|IN4
 N
-N#define STEPPER_PORT_BASE GPIO_PORTA_BASE
-N#define STEPPER_PERIPH SYSCTL_PERIPH_GPIOA
+N#define STEPPER_PORT_BASE GPIO_PORTE_BASE
+N#define STEPPER_PERIPH SYSCTL_PERIPH_GPIOE
 N
-W "Stepper.h" 40 28 last line of file ends without a newline
+W "Stepper.h" 72 28 last line of file ends without a newline
 N#endif /* LIB_STEPPER_H_ */
-L 2 "Stepper.c" 2
-Nint states[]={0x0,0x1,0x3,0x4,0x5,0x6,0x7,0x8};
+L 35 "Stepper.c" 2
+Nint states[]={0x01,0x03,0x02,0x06,0x04,0x0C,0x08,0x09};
+N//int states[]={0b0001,0b0011,0b0010,0b0110,0b0100,0b1100,0b1000,0b1001};
 Nint currentstate=0;
 N
 Nvoid initStepper(void)
 N{
 N	SysCtlPeripheralEnable(STEPPER_PERIPH);
-X	SysCtlPeripheralEnable(0xf0000800);
+X	SysCtlPeripheralEnable(0xf0000804);
 N	GPIOPinTypeGPIOOutput(STEPPER_PORT_BASE,  ALLINPINS);
-X	GPIOPinTypeGPIOOutput(0x40004000,  0x00000004|0x00000008|0x00000010|0x00000020);
+X	GPIOPinTypeGPIOOutput(0x40024000,  0x00000001|0x00000002|0x00000004|0x00000008);
 N	GPIOPinWrite(STEPPER_PORT_BASE, ALLINPINS ,0);
-X	GPIOPinWrite(0x40004000, 0x00000004|0x00000008|0x00000010|0x00000020 ,0);
+X	GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008 ,0);
 N}
 N
 Nvoid stopStepper(void) {
 N	GPIOPinWrite(STEPPER_PORT_BASE, ALLINPINS, 0);
-X	GPIOPinWrite(0x40004000, 0x00000004|0x00000008|0x00000010|0x00000020, 0);
+X	GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008, 0);
 N	if (--currentstate<0)
 N		currentstate=7;
 N}
-N 
+N
 N
 Nvoid stepForward(int steps) {
 N	int n;
 N	for (n=0; n<steps; n++) {
 N		GPIOPinWrite(STEPPER_PORT_BASE, ALLINPINS,  states[currentstate++]);
-X		GPIOPinWrite(0x40004000, 0x00000004|0x00000008|0x00000010|0x00000020,  states[currentstate++]);
+X		GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate++]);
 N		if (currentstate>7) currentstate=0;
 N		SysCtlDelay(10000);
 N	}
@@ -1469,9 +1535,9 @@ Nvoid stepBackward(int steps) {
 N	int n;
 N	for (n=steps; n>=0; n--) {
 N		GPIOPinWrite(STEPPER_PORT_BASE, ALLINPINS,  states[currentstate--]);
-X		GPIOPinWrite(0x40004000, 0x00000004|0x00000008|0x00000010|0x00000020,  states[currentstate--]);
+X		GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate--]);
 N		if (currentstate<0) currentstate=7;
 N		SysCtlDelay(10000);
 N	}
-W "Stepper.c" 35 2 last line of file ends without a newline
+W "Stepper.c" 69 2 last line of file ends without a newline
 N}
