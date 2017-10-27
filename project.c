@@ -84,41 +84,41 @@ void UpdateMYbuttons()
 //		
 int  main(void)
  {
-	SysCtlClockSet(SYSCTL_SYSDIV_8|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE,  GPIO_PIN_2|GPIO_PIN_3);
-	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2|GPIO_PIN_3 ,0);
-	initStepper();
-	initLCD();
-	int i,rotations,active=1;
-	for (rotations=0; rotations<100; rotations++) {
-		for (i=0; i<26;i++) {
-			stepForward(157);
-			stopStepper();
-			if (active) {
-				GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,GPIO_PIN_3);
-				active=FALSE;
-						} 
-			else {
-				GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,0);
-				active=TRUE;
-				printLCD("WHAT THE F?");
-				setCursorPositionLCD(1,0);
-				printLCD("Green OFF");
-				SysCtlDelay(10000000);
-				clearLCD();
-			}
-			SysCtlDelay(1000000);
-		}
-			stepForward(21);
-			stopStepper();
+//	SysCtlClockSet(SYSCTL_SYSDIV_8|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
+//	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+//	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE,  GPIO_PIN_2|GPIO_PIN_3);
+//	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2|GPIO_PIN_3 ,0);
+//	initStepper();
+//	initLCD();
+//	int i,rotations,active=1;
+//	for (rotations=0; rotations<100; rotations++) {
+//		for (i=0; i<26;i++) {
+//			stepForward(157);
+//			stopStepper();
+//			if (active) {
+//				GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,GPIO_PIN_3);
+//				active=FALSE;
+//						} 
+//			else {
+//				GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,0);
+//				active=TRUE;
+//				printLCD("Stepping Foward");
+//				setCursorPositionLCD(1,0);
+//				printLCD("Really Stepfoward");
+//				SysCtlDelay(10000000);
+//				clearLCD();
+//			}
+//			SysCtlDelay(1000000);
+//		}
+//			stepForward(21);
+//			stopStepper();
 
-			SysCtlDelay(10000000);
-		}
-	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2 ,GPIO_PIN_2);
-	while(1) {
+//			SysCtlDelay(10000000);
+//		}
+//	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2 ,GPIO_PIN_2);
+//	while(1) {
 
-	}	
+//	}	
 
 		uint8_t temp;
     volatile uint32_t ui32Loop;
@@ -159,7 +159,12 @@ int  main(void)
 				UnlockPins();
 				UpdateMYbuttons ();	
 				initLCD();
-				if(Mybuttons.SW1==0)
+				initStepper();
+				int i,rotations,active=1;
+				for (rotations=0; rotations<100; rotations++) {
+				for (i=0; i<26;i++) {
+	
+				if(Mybuttons.SW1==0 & active)
 				{
 				}
 				else
@@ -169,11 +174,14 @@ int  main(void)
        // Turn on Green Led
 				
     		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
-				printLCD("Hey Switch ONE");
-				setCursorPositionLCD(1,0);
-				printLCD("Green ON");
-				SysCtlDelay(10000000);
-				clearLCD();
+					stepForward(157);
+					
+		
+					printLCD("Hey Switch ONE");
+					setCursorPositionLCD(1,0);
+					printLCD("Green STEPON");
+					SysCtlDelay(10000000);
+					clearLCD();
         // Delay for a bit.
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -181,9 +189,11 @@ int  main(void)
 
         // Turn off the Green LED.
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
+					stepForward(157);
+					
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
-				printLCD("Green OFF");
+				printLCD("Green STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         // Delay for a bit.
@@ -193,9 +203,11 @@ int  main(void)
 				// Turn on the Blue LED.
 			
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
+				stepForward(157);
+				
 				printLCD("Hey Switch ONE");
 				setCursorPositionLCD(1,0);
-				printLCD("Blue ON");
+				printLCD("Blue STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
         // Delay for a bit.
@@ -205,9 +217,11 @@ int  main(void)
 
         // Turn off the Blue LED.
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
+				stepForward(157);
+				
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
-				printLCD("Blue OFF");
+				printLCD("Blue STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         // Delay for a bit.
@@ -216,9 +230,11 @@ int  main(void)
         }// Turn on the Red LED.
 			
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
+				stepForward(157);
+			
 				printLCD("Hey Switch ONE");
 				setCursorPositionLCD(1,0);
-				printLCD("Red ON");
+				printLCD("Red STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
         // Delay for a bit.
@@ -228,18 +244,22 @@ int  main(void)
 
         // Turn off the Red LED.
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
+				stepForward(157);
+		
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
-				printLCD("Red OFF");
+				printLCD("Red STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         // Delay for a bit.
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
-        { 
+        {
 				}
 			}
+		}
+	
 				
-			if(Mybuttons.SW2==0)
+			if(Mybuttons.SW2==0 & active)
 				{
 				}
 				else
@@ -249,9 +269,13 @@ int  main(void)
 			
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
+					
+					stepBackward(157);
+					
+				
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Purple ON");
+				printLCD("Purple STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
         // Delay for a bit.
@@ -262,9 +286,11 @@ int  main(void)
         // Turn off the Purple LED.
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
+					stepBackward(157);
+					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Purple OFF");
+				printLCD("Purple STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         // Delay for a bit.
@@ -275,9 +301,11 @@ int  main(void)
 			
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
+					stepBackward(157);
+					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Yellow ON");
+				printLCD("Yellow STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
         // Delay for a bit.
@@ -288,9 +316,11 @@ int  main(void)
         // Turn off the Yellow LED.
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
+					stepBackward(157);
+				
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Yellow OFF");
+				printLCD("Yellow STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         // Delay for a bit.
@@ -302,9 +332,11 @@ int  main(void)
 			  GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
+					stepBackward(157);
+				
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("White ON");
+				printLCD("White STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
         // Delay for a bit.
@@ -317,9 +349,11 @@ int  main(void)
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
+					stepBackward(157);
+					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("White OFF");
+				printLCD("White STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         // Delay for a bit.
@@ -330,9 +364,11 @@ int  main(void)
 			
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
+					stepBackward(157);
+					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Cyan ON");
+				printLCD("Cyan STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
 				// Delay for a bit.
@@ -346,14 +382,14 @@ int  main(void)
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Cyan OFF");
+				printLCD("Cyan STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
 				// Delay for a bit.
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
         }
-				
+				stopStepper();
 				
 				if(Mybuttons.SW2==1 &  Mybuttons.SW1==1)
 				{ // Turn on Green Led
@@ -543,4 +579,5 @@ int  main(void)
 			}
 			 
 		}
+	}
 }

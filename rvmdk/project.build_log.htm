@@ -45,6 +45,10 @@ compiling ADC_helper.c...
 ADC_helper.c(81): warning:  #1-D: last line of file ends without a newline
   }
 ADC_helper.c: 1 warning, 0 errors
+compiling PWM_helper.c...
+PWM_helper.c(133): warning:  #1-D: last line of file ends without a newline
+  }
+PWM_helper.c: 1 warning, 0 errors
 compiling project.c...
 driverlib/hibernate.h(229): warning:  #231-D: declaration is not visible outside of function
   extern void HibernateCalendarSet(struct tm *psTime);
@@ -62,21 +66,15 @@ LCDDiplay.h(55): warning:  #1-D: last line of file ends without a newline
   #endif /* LIB_DISPLAY_H_ */
 Stepper.h(72): warning:  #1-D: last line of file ends without a newline
   #endif /* LIB_STEPPER_H_ */
-project.c(128): warning:  #111-D: statement is unreachable
-  			SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-project.c(546): warning:  #1-D: last line of file ends without a newline
+project.c(583): warning:  #1-D: last line of file ends without a newline
   }
-project.c: 10 warnings, 0 errors
+project.c: 9 warnings, 0 errors
 creating preprocessor file for GPIO_helper.c...
 compiling GPIO_helper.c...
 GPIO_helper.c(126): warning:  #1-D: last line of file ends without a newline
   //}
 GPIO_helper.c: 1 warning, 0 errors
 creating preprocessor file for LCDDisplay.c...
-compiling PWM_helper.c...
-PWM_helper.c(133): warning:  #1-D: last line of file ends without a newline
-  }
-PWM_helper.c: 1 warning, 0 errors
 creating preprocessor file for Stepper.c...
 compiling LCDDisplay.c...
 LCDDiplay.h(55): warning:  #1-D: last line of file ends without a newline
@@ -91,10 +89,10 @@ Stepper.c(69): warning:  #1-D: last line of file ends without a newline
   }
 Stepper.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=2212 RO-data=32 RW-data=36 ZI-data=260  
+Program Size: Code=5400 RO-data=628 RW-data=40 ZI-data=256  
 FromELF: creating hex file...
 After Build - User command #1: fromelf --bin --output .\rvmdk\project.bin .\rvmdk\project.axf
-".\rvmdk\project.axf" - 0 Error(s), 19 Warning(s).
+".\rvmdk\project.axf" - 0 Error(s), 18 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -117,7 +115,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.0.2
-Build Time Elapsed:  00:00:04
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

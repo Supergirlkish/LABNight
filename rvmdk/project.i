@@ -18030,41 +18030,41 @@ void UpdateMYbuttons()
 
 int  main(void)
  {
-	SysCtlClockSet(0x03C00000|0x00000000|0x00000540|0x00000000);
-	SysCtlPeripheralEnable(0xf0000805);
-	GPIOPinTypeGPIOOutput(0x40025000,  0x00000004|0x00000008);
-	GPIOPinWrite(0x40025000, 0x00000004|0x00000008 ,0);
-	initStepper();
-	initLCD();
-	int i,rotations,active=1;
-	for (rotations=0; rotations<100; rotations++) {
-		for (i=0; i<26;i++) {
-			stepForward(157);
-			stopStepper();
-			if (active) {
-				GPIOPinWrite(0x40025000,0x00000008,0x00000008);
-				active=0;
-						} 
-			else {
-				GPIOPinWrite(0x40025000,0x00000008,0);
-				active=1;
-				printLCD("WHAT THE F?");
-				setCursorPositionLCD(1,0);
-				printLCD("Green OFF");
-				SysCtlDelay(10000000);
-				clearLCD();
-			}
-			SysCtlDelay(1000000);
-		}
-			stepForward(21);
-			stopStepper();
 
-			SysCtlDelay(10000000);
-		}
-	GPIOPinWrite(0x40025000, 0x00000004 ,0x00000004);
-	while(1) {
 
-	}	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		uint8_t temp;
     volatile uint32_t ui32Loop;
@@ -18105,7 +18105,12 @@ int  main(void)
 				UnlockPins();
 				UpdateMYbuttons ();	
 				initLCD();
-				if(Mybuttons.SW1==0)
+				initStepper();
+				int i,rotations,active=1;
+				for (rotations=0; rotations<100; rotations++) {
+				for (i=0; i<26;i++) {
+	
+				if(Mybuttons.SW1==0 & active)
 				{
 				}
 				else
@@ -18115,11 +18120,14 @@ int  main(void)
        
 				
     		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
-				printLCD("Hey Switch ONE");
-				setCursorPositionLCD(1,0);
-				printLCD("Green ON");
-				SysCtlDelay(10000000);
-				clearLCD();
+					stepForward(157);
+					
+		
+					printLCD("Hey Switch ONE");
+					setCursorPositionLCD(1,0);
+					printLCD("Green STEPON");
+					SysCtlDelay(10000000);
+					clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
@@ -18127,9 +18135,11 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000008, 0x0);
+					stepForward(157);
+					
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
-				printLCD("Green OFF");
+				printLCD("Green STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         
@@ -18139,9 +18149,11 @@ int  main(void)
 				
 			
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
+				stepForward(157);
+				
 				printLCD("Hey Switch ONE");
 				setCursorPositionLCD(1,0);
-				printLCD("Blue ON");
+				printLCD("Blue STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
         
@@ -18151,9 +18163,11 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
+				stepForward(157);
+				
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
-				printLCD("Blue OFF");
+				printLCD("Blue STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         
@@ -18162,9 +18176,11 @@ int  main(void)
         }
 			
         GPIOPinWrite(0x40025000, 0x00000002, 0xF);
+				stepForward(157);
+			
 				printLCD("Hey Switch ONE");
 				setCursorPositionLCD(1,0);
-				printLCD("Red ON");
+				printLCD("Red STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
         
@@ -18174,18 +18190,22 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000002, 0x0);
+				stepForward(157);
+		
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
-				printLCD("Red OFF");
+				printLCD("Red STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
-        { 
+        { stopStepper();
 				}
 			}
+		}
+	
 				
-			if(Mybuttons.SW2==0)
+			if(Mybuttons.SW2==0 & active)
 				{
 				}
 				else
@@ -18195,9 +18215,13 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
+					
+					stepBackward(157);
+					
+				
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Purple ON");
+				printLCD("Purple STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
         
@@ -18208,9 +18232,11 @@ int  main(void)
         
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
+					stepBackward(157);
+					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Purple OFF");
+				printLCD("Purple STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         
@@ -18221,9 +18247,11 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
+					stepBackward(157);
+					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Yellow ON");
+				printLCD("Yellow STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
         
@@ -18234,9 +18262,11 @@ int  main(void)
         
         GPIOPinWrite(0x40025000, 0x00000008, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
+					stepBackward(157);
+				
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Yellow OFF");
+				printLCD("Yellow STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         
@@ -18248,9 +18278,11 @@ int  main(void)
 			  GPIOPinWrite(0x40025000, 0x00000008, 0xF);
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
+					stepBackward(157);
+				
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("White ON");
+				printLCD("White STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
         
@@ -18263,9 +18295,11 @@ int  main(void)
 				GPIOPinWrite(0x40025000, 0x00000008, 0x0);
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
+					stepBackward(157);
+					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("White OFF");
+				printLCD("White STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
         
@@ -18276,9 +18310,11 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000004, 0xF);
+					stepBackward(157);
+					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Cyan ON");
+				printLCD("Cyan STEPON");
 				SysCtlDelay(10000000);
 				clearLCD();
 				
@@ -18297,7 +18333,7 @@ int  main(void)
 				clearLCD();
 				
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
-        {
+        {stopStepper();
         }
 				
 				
@@ -18489,4 +18525,5 @@ int  main(void)
 			}
 			 
 		}
+	}
 }
