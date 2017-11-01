@@ -35,16 +35,20 @@ compiling Uart_helper.c...
 src\Uart_helper.h(11): warning:  #1-D: last line of file ends without a newline
   void UartSetup2(void);	//sets up Uart for my configuration registers
 src\Uart_helper.c: 1 warning, 0 errors
-creating preprocessor file for ADC_helper.c...
 compiling systick.c...
 systick.c(22): warning:  #1-D: last line of file ends without a newline
   }
 systick.c: 1 warning, 0 errors
+creating preprocessor file for ADC_helper.c...
 creating preprocessor file for PWM_helper.c...
 compiling ADC_helper.c...
 ADC_helper.c(81): warning:  #1-D: last line of file ends without a newline
   }
 ADC_helper.c: 1 warning, 0 errors
+compiling PWM_helper.c...
+PWM_helper.c(133): warning:  #1-D: last line of file ends without a newline
+  }
+PWM_helper.c: 1 warning, 0 errors
 compiling project.c...
 driverlib/hibernate.h(229): warning:  #231-D: declaration is not visible outside of function
   extern void HibernateCalendarSet(struct tm *psTime);
@@ -62,28 +66,22 @@ LCDDiplay.h(55): warning:  #1-D: last line of file ends without a newline
   #endif /* LIB_DISPLAY_H_ */
 Stepper.h(72): warning:  #1-D: last line of file ends without a newline
   #endif /* LIB_STEPPER_H_ */
-project.c(585): warning:  #111-D: statement is unreachable
-  		return(0);
-project.c(586): warning:  #1-D: last line of file ends without a newline
-  }
-project.c: 10 warnings, 0 errors
+project.c(576): warning:  #1-D: last line of file ends without a newline
+  	}
+project.c: 9 warnings, 0 errors
 creating preprocessor file for GPIO_helper.c...
+creating preprocessor file for LCDDisplay.c...
 compiling GPIO_helper.c...
 GPIO_helper.c(126): warning:  #1-D: last line of file ends without a newline
   //}
 GPIO_helper.c: 1 warning, 0 errors
-compiling PWM_helper.c...
-PWM_helper.c(133): warning:  #1-D: last line of file ends without a newline
-  }
-PWM_helper.c: 1 warning, 0 errors
-creating preprocessor file for LCDDisplay.c...
+creating preprocessor file for Stepper.c...
 compiling LCDDisplay.c...
 LCDDiplay.h(55): warning:  #1-D: last line of file ends without a newline
   #endif /* LIB_DISPLAY_H_ */
 LCDDisplay.c(215): warning:  #1-D: last line of file ends without a newline
   }
 LCDDisplay.c: 2 warnings, 0 errors
-creating preprocessor file for Stepper.c...
 compiling Stepper.c...
 Stepper.h(72): warning:  #1-D: last line of file ends without a newline
   #endif /* LIB_STEPPER_H_ */
@@ -91,10 +89,10 @@ Stepper.c(69): warning:  #1-D: last line of file ends without a newline
   }
 Stepper.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=5340 RO-data=628 RW-data=40 ZI-data=256  
+Program Size: Code=5000 RO-data=628 RW-data=4 ZI-data=260  
 FromELF: creating hex file...
 After Build - User command #1: fromelf --bin --output .\rvmdk\project.bin .\rvmdk\project.axf
-".\rvmdk\project.axf" - 0 Error(s), 19 Warning(s).
+".\rvmdk\project.axf" - 0 Error(s), 18 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -117,7 +115,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.0.2
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

@@ -1421,30 +1421,30 @@ N#define TRUE 1
 N/*
 N *
 N * Pin Connections:
-N * PE4 [pin 5]  -> RS
-N * PE5 [pin 6]  -> EN
-N * PD0 [pin 23] -> D4
-N * PD1 [pin 24] -> D5
-N * PD2 [pin 25] -> D6
-N * PD3 [pin 26] -> D7
+N * PE4 [pin 59]  -> RS
+N * PE5 [pin 60]  -> EN
+N * PB0 [pin 45]  -> D4
+N * PB1 [pin 46]  -> D5
+N * PB2 [pin 47]  -> D6
+N * PB3 [pin 48]  -> D7
 N *
 N * pin number in [] indicates
 N * energia pin reference!
 N *
 N */
 N
-N#define RS GPIO_PIN_4 // Pin 5
-N#define EN GPIO_PIN_5 // Pin 6
-N#define D4 GPIO_PIN_0 // Pin 23
-N#define D5 GPIO_PIN_1 // Pin 24
-N#define D6 GPIO_PIN_2 // Pin 25
-N#define D7 GPIO_PIN_3 // Pin 26
+N#define RS GPIO_PIN_4 // Pin 59
+N#define EN GPIO_PIN_5 // Pin 60
+N#define D4 GPIO_PIN_0 // Pin 45
+N#define D5 GPIO_PIN_1 // Pin 46
+N#define D6 GPIO_PIN_2 // Pin 47
+N#define D7 GPIO_PIN_3 // Pin 48
 N#define ALLDATAPINS  D7 | D6 | D5 | D4
 N#define ALLCONTROLPINS RS | EN
 N
-N#define DATA_PORT_BASE GPIO_PORTD_BASE
+N#define DATA_PORT_BASE GPIO_PORTB_BASE
 N#define CMD_PORT_BASE GPIO_PORTE_BASE
-N#define DATA_PERIPH SYSCTL_PERIPH_GPIOD
+N#define DATA_PERIPH SYSCTL_PERIPH_GPIOB
 N#define CMD_PERIPH SYSCTL_PERIPH_GPIOE
 N
 W "LCDDiplay.h" 55 28 last line of file ends without a newline
@@ -1500,10 +1500,10 @@ N	else
 N		setCmd();
 N	SysCtlDelay(400);
 N	GPIOPinWrite(DATA_PORT_BASE, ALLDATAPINS, byteToSend >>4);
-X	GPIOPinWrite(0x40007000, 0x00000008 | 0x00000004 | 0x00000002 | 0x00000001, byteToSend >>4);
+X	GPIOPinWrite(0x40005000, 0x00000008 | 0x00000004 | 0x00000002 | 0x00000001, byteToSend >>4);
 N	pulseLCD();
 N	GPIOPinWrite(DATA_PORT_BASE, ALLDATAPINS, byteToSend);
-X	GPIOPinWrite(0x40007000, 0x00000008 | 0x00000004 | 0x00000002 | 0x00000001, byteToSend);
+X	GPIOPinWrite(0x40005000, 0x00000008 | 0x00000004 | 0x00000002 | 0x00000001, byteToSend);
 N	pulseLCD();
 N}
 N
@@ -1634,15 +1634,15 @@ N	// set the MSP pin configurations
 N	// and bring them to low
 N	//
 N	SysCtlPeripheralEnable(DATA_PERIPH);
-X	SysCtlPeripheralEnable(0xf0000803);
+X	SysCtlPeripheralEnable(0xf0000801);
 N	SysCtlPeripheralEnable(CMD_PERIPH);
 X	SysCtlPeripheralEnable(0xf0000804);
 N	GPIOPinTypeGPIOOutput(DATA_PORT_BASE,  ALLDATAPINS);
-X	GPIOPinTypeGPIOOutput(0x40007000,  0x00000008 | 0x00000004 | 0x00000002 | 0x00000001);
+X	GPIOPinTypeGPIOOutput(0x40005000,  0x00000008 | 0x00000004 | 0x00000002 | 0x00000001);
 N	GPIOPinTypeGPIOOutput(CMD_PORT_BASE, ALLCONTROLPINS);
 X	GPIOPinTypeGPIOOutput(0x40024000, 0x00000010 | 0x00000020);
 N	GPIOPinWrite(DATA_PORT_BASE, ALLDATAPINS ,0);
-X	GPIOPinWrite(0x40007000, 0x00000008 | 0x00000004 | 0x00000002 | 0x00000001 ,0);
+X	GPIOPinWrite(0x40005000, 0x00000008 | 0x00000004 | 0x00000002 | 0x00000001 ,0);
 N	GPIOPinWrite(CMD_PORT_BASE, ALLCONTROLPINS ,0);
 X	GPIOPinWrite(0x40024000, 0x00000010 | 0x00000020 ,0);
 N
@@ -1662,10 +1662,10 @@ N
 N	setCmd();
 N	SysCtlDelay(15000);
 N	GPIOPinWrite(DATA_PORT_BASE,ALLDATAPINS,0xF);
-X	GPIOPinWrite(0x40007000,0x00000008 | 0x00000004 | 0x00000002 | 0x00000001,0xF);
+X	GPIOPinWrite(0x40005000,0x00000008 | 0x00000004 | 0x00000002 | 0x00000001,0xF);
 N	pulseLCD();
 N	GPIOPinWrite(DATA_PORT_BASE,ALLDATAPINS,0xF);
-X	GPIOPinWrite(0x40007000,0x00000008 | 0x00000004 | 0x00000002 | 0x00000001,0xF);
+X	GPIOPinWrite(0x40005000,0x00000008 | 0x00000004 | 0x00000002 | 0x00000001,0xF);
 N	pulseLCD();
 N	sendByte(0x28,FALSE);  // Set two lines
 X	sendByte(0x28,0);  

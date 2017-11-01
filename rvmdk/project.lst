@@ -64165,30 +64165,30 @@ N#define TRUE 1
 N/*
 N *
 N * Pin Connections:
-N * PE4 [pin 5]  -> RS
-N * PE5 [pin 6]  -> EN
-N * PD0 [pin 23] -> D4
-N * PD1 [pin 24] -> D5
-N * PD2 [pin 25] -> D6
-N * PD3 [pin 26] -> D7
+N * PE4 [pin 59]  -> RS
+N * PE5 [pin 60]  -> EN
+N * PB0 [pin 45]  -> D4
+N * PB1 [pin 46]  -> D5
+N * PB2 [pin 47]  -> D6
+N * PB3 [pin 48]  -> D7
 N *
 N * pin number in [] indicates
 N * energia pin reference!
 N *
 N */
 N
-N#define RS GPIO_PIN_4 // Pin 5
-N#define EN GPIO_PIN_5 // Pin 6
-N#define D4 GPIO_PIN_0 // Pin 23
-N#define D5 GPIO_PIN_1 // Pin 24
-N#define D6 GPIO_PIN_2 // Pin 25
-N#define D7 GPIO_PIN_3 // Pin 26
+N#define RS GPIO_PIN_4 // Pin 59
+N#define EN GPIO_PIN_5 // Pin 60
+N#define D4 GPIO_PIN_0 // Pin 45
+N#define D5 GPIO_PIN_1 // Pin 46
+N#define D6 GPIO_PIN_2 // Pin 47
+N#define D7 GPIO_PIN_3 // Pin 48
 N#define ALLDATAPINS  D7 | D6 | D5 | D4
 N#define ALLCONTROLPINS RS | EN
 N
-N#define DATA_PORT_BASE GPIO_PORTD_BASE
+N#define DATA_PORT_BASE GPIO_PORTB_BASE
 N#define CMD_PORT_BASE GPIO_PORTE_BASE
-N#define DATA_PERIPH SYSCTL_PERIPH_GPIOD
+N#define DATA_PERIPH SYSCTL_PERIPH_GPIOB
 N#define CMD_PERIPH SYSCTL_PERIPH_GPIOE
 N
 W "LCDDiplay.h" 55 28 last line of file ends without a newline
@@ -64449,24 +64449,19 @@ N
 N				UnlockPins();
 N				UpdateMYbuttons ();	
 N				initLCD();
-N				initStepper();
-N			 int i,rotations,active=1;
-N				if(Mybuttons.SW1==0 & active)
+N
+N				if(Mybuttons.SW1==0)
 N				{
 N				}
 N				else
 N				{						
-N			
-N				for (rotations=0; rotations<100; rotations++) {
-N				for (i=0; i<26;i++) {
-N		
+N						
 N		
 N       // Turn on Green Led
-N				 
+N				
 N    		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 X    		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
-N					stepForward(157);
-N					
+N							
 N		
 N					printLCD("Hey Switch ONE");
 N					setCursorPositionLCD(1,0);
@@ -64481,7 +64476,7 @@ N
 N        // Turn off the Green LED.
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0x0);
-N					stepForward(157);
+N			
 N					
 N				printLCD("Hey Switch One");
 N				setCursorPositionLCD(1,0);
@@ -64496,7 +64491,7 @@ N				// Turn on the Blue LED.
 N			
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-N				stepForward(157);
+N
 N				
 N				printLCD("Hey Switch ONE");
 N				setCursorPositionLCD(1,0);
@@ -64511,7 +64506,7 @@ N
 N        // Turn off the Blue LED.
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-N				stepForward(157);
+N				
 N				
 N				printLCD("Hey Switch One");
 N				setCursorPositionLCD(1,0);
@@ -64525,7 +64520,7 @@ N        }// Turn on the Red LED.
 N			
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				stepForward(157);
+N				
 N			
 N				printLCD("Hey Switch ONE");
 N				setCursorPositionLCD(1,0);
@@ -64540,7 +64535,7 @@ N
 N        // Turn off the Red LED.
 N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N				stepForward(157);
+N				
 N		
 N				printLCD("Hey Switch One");
 N				setCursorPositionLCD(1,0);
@@ -64551,13 +64546,11 @@ N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
 N				}
-N				stepForward(21);
-N				stopStepper();	
 N			}
-N		}
+N		
 N	
 N				
-N			if(Mybuttons.SW2==0 & active)
+N			if(Mybuttons.SW2==0)
 N				{
 N				}
 N				else
@@ -64570,7 +64563,7 @@ X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
 N					
-N					stepBackward(157);
+N		
 N					
 N				
 N				printLCD("Hey Switch TWO");
@@ -64588,7 +64581,7 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N					stepBackward(157);
+N				
 N					
 N				printLCD("Hey Switch TWO");
 N				setCursorPositionLCD(1,0);
@@ -64605,7 +64598,7 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N					stepBackward(157);
+N					
 N					
 N				printLCD("Hey Switch TWO");
 N				setCursorPositionLCD(1,0);
@@ -64622,7 +64615,7 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0x0);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N					stepBackward(157);
+N					
 N				
 N				printLCD("Hey Switch TWO");
 N				setCursorPositionLCD(1,0);
@@ -64641,7 +64634,7 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N					stepBackward(157);
+N		
 N				
 N				printLCD("Hey Switch TWO");
 N				setCursorPositionLCD(1,0);
@@ -64661,7 +64654,7 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N					stepBackward(157);
+N					
 N					
 N				printLCD("Hey Switch TWO");
 N				setCursorPositionLCD(1,0);
@@ -64678,7 +64671,7 @@ N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 X        GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 X				GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-N					stepBackward(157);
+N					
 N					
 N				printLCD("Hey Switch TWO");
 N				setCursorPositionLCD(1,0);
@@ -64705,7 +64698,7 @@ N				// Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
 N        }
-N				stopStepper();
+N	
 N				
 N				if(Mybuttons.SW2==1 &  Mybuttons.SW1==1)
 N				{ // Turn on Green Led
@@ -64917,10 +64910,6 @@ N				else
 N				{
 N				}
 N			}
-N			 
 N		}
+W "project.c" 576 3 last line of file ends without a newline
 N	}
-W "project.c" 585 3 statement is unreachable
-N		return(0);
-W "project.c" 586 2 last line of file ends without a newline
-N}

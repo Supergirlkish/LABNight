@@ -159,12 +159,8 @@ int  main(void)
 				UnlockPins();
 				UpdateMYbuttons ();	
 				initLCD();
-				initStepper();
-				int i,rotations,active=1;
-				for (rotations=0; rotations<100; rotations++) {
-				for (i=0; i<26;i++) {
-	
-				if(Mybuttons.SW1==0 & active)
+
+				if(Mybuttons.SW1==0)
 				{
 				}
 				else
@@ -174,8 +170,7 @@ int  main(void)
        // Turn on Green Led
 				
     		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
-					stepForward(157);
-					
+							
 		
 					printLCD("Hey Switch ONE");
 					setCursorPositionLCD(1,0);
@@ -189,7 +184,7 @@ int  main(void)
 
         // Turn off the Green LED.
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
-					stepForward(157);
+			
 					
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
@@ -203,7 +198,7 @@ int  main(void)
 				// Turn on the Blue LED.
 			
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
-				stepForward(157);
+
 				
 				printLCD("Hey Switch ONE");
 				setCursorPositionLCD(1,0);
@@ -217,7 +212,7 @@ int  main(void)
 
         // Turn off the Blue LED.
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
-				stepForward(157);
+				
 				
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
@@ -230,7 +225,7 @@ int  main(void)
         }// Turn on the Red LED.
 			
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
-				stepForward(157);
+				
 			
 				printLCD("Hey Switch ONE");
 				setCursorPositionLCD(1,0);
@@ -244,7 +239,7 @@ int  main(void)
 
         // Turn off the Red LED.
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
-				stepForward(157);
+				
 		
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
@@ -256,10 +251,10 @@ int  main(void)
         {
 				}
 			}
-		}
+		
 	
 				
-			if(Mybuttons.SW2==0 & active)
+			if(Mybuttons.SW2==0)
 				{
 				}
 				else
@@ -270,7 +265,7 @@ int  main(void)
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
 					
-					stepBackward(157);
+		
 					
 				
 				printLCD("Hey Switch TWO");
@@ -286,7 +281,7 @@ int  main(void)
         // Turn off the Purple LED.
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
-					stepBackward(157);
+				
 					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -301,7 +296,7 @@ int  main(void)
 			
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
-					stepBackward(157);
+					
 					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -316,7 +311,7 @@ int  main(void)
         // Turn off the Yellow LED.
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
-					stepBackward(157);
+					
 				
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -332,7 +327,7 @@ int  main(void)
 			  GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
-					stepBackward(157);
+		
 				
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -349,7 +344,7 @@ int  main(void)
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
-					stepBackward(157);
+					
 					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -364,7 +359,7 @@ int  main(void)
 			
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
-					stepBackward(157);
+					
 					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -389,7 +384,7 @@ int  main(void)
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
         }
-				stopStepper();
+	
 				
 				if(Mybuttons.SW2==1 &  Mybuttons.SW1==1)
 				{ // Turn on Green Led
@@ -577,8 +572,5 @@ int  main(void)
 				{
 				}
 			}
-			 
 		}
 	}
-		return(0);
-}

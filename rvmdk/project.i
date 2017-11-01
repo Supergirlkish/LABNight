@@ -18105,23 +18105,18 @@ int  main(void)
 				UnlockPins();
 				UpdateMYbuttons ();	
 				initLCD();
-				initStepper();
-			 int i,rotations,active=1;
-				if(Mybuttons.SW1==0 & active)
+
+				if(Mybuttons.SW1==0)
 				{
 				}
 				else
 				{						
-			
-				for (rotations=0; rotations<100; rotations++) {
-				for (i=0; i<26;i++) {
-		
+						
 		
        
-				 
+				
     		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
-					stepForward(157);
-					
+							
 		
 					printLCD("Hey Switch ONE");
 					setCursorPositionLCD(1,0);
@@ -18135,7 +18130,7 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000008, 0x0);
-					stepForward(157);
+			
 					
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
@@ -18149,7 +18144,7 @@ int  main(void)
 				
 			
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-				stepForward(157);
+
 				
 				printLCD("Hey Switch ONE");
 				setCursorPositionLCD(1,0);
@@ -18163,7 +18158,7 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-				stepForward(157);
+				
 				
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
@@ -18176,7 +18171,7 @@ int  main(void)
         }
 			
         GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-				stepForward(157);
+				
 			
 				printLCD("Hey Switch ONE");
 				setCursorPositionLCD(1,0);
@@ -18190,7 +18185,7 @@ int  main(void)
 
         
         GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-				stepForward(157);
+				
 		
 				printLCD("Hey Switch One");
 				setCursorPositionLCD(1,0);
@@ -18201,13 +18196,11 @@ int  main(void)
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
 				}
-				stepForward(21);
-				stopStepper();	
 			}
-		}
+		
 	
 				
-			if(Mybuttons.SW2==0 & active)
+			if(Mybuttons.SW2==0)
 				{
 				}
 				else
@@ -18218,7 +18211,7 @@ int  main(void)
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
 					
-					stepBackward(157);
+		
 					
 				
 				printLCD("Hey Switch TWO");
@@ -18234,7 +18227,7 @@ int  main(void)
         
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-					stepBackward(157);
+				
 					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -18249,7 +18242,7 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-					stepBackward(157);
+					
 					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -18264,7 +18257,7 @@ int  main(void)
         
         GPIOPinWrite(0x40025000, 0x00000008, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-					stepBackward(157);
+					
 				
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -18280,7 +18273,7 @@ int  main(void)
 			  GPIOPinWrite(0x40025000, 0x00000008, 0xF);
         GPIOPinWrite(0x40025000, 0x00000004, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-					stepBackward(157);
+		
 				
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -18297,7 +18290,7 @@ int  main(void)
 				GPIOPinWrite(0x40025000, 0x00000008, 0x0);
         GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-					stepBackward(157);
+					
 					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -18312,7 +18305,7 @@ int  main(void)
 			
         GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 				GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-					stepBackward(157);
+					
 					
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
@@ -18337,7 +18330,7 @@ int  main(void)
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
         {
         }
-				stopStepper();
+	
 				
 				if(Mybuttons.SW2==1 &  Mybuttons.SW1==1)
 				{ 
@@ -18525,8 +18518,5 @@ int  main(void)
 				{
 				}
 			}
-			 
 		}
 	}
-		return(0);
-}
