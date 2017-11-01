@@ -6,7 +6,7 @@
 #include "driverlib/rom_map.h"
 #include "Stepper.h"
 //#include "PWM_helper.h"
-//#define STEPPER (*((volatile uint32_t *)0x4000703C))
+#define STEPPER (*((volatile uint32_t *)0x4000703C))
 struct Mybuttons Mybuttons;
 //*****************************************************************************
 //
@@ -76,14 +76,79 @@ void UpdateMYbuttons()
 
 		
 	}
-//	static void step(uint32_t n)
-//		{
-//	  STEPPER = n; // output stepper causing it to step once
-//		SysTickWait10ms(10); // wait for 10 ms
-//		}
-//		
-int  main(void)
- {
+	static void step(uint32_t n)
+		{
+	  STEPPER = n; // output stepper causing it to step once
+		SysTickWait10ms(10); // wait for 10 ms
+		}
+struct State{ 
+	uint8_t Out;
+	const struct State *Next[2];
+};
+typedef const struct  State StateType;
+typedef StateType *StatePtr;
+#define clockwise 0
+#define counterclockwise 1
+StateType fam[4]= {
+{10,{&fam[1],&fam[3]}},
+{9,{&fam[2],&fam[0]}},
+{5,{&fam[3],&fam[1]}},
+{6,{&fam[0],&fam[2]}},
+};
+
+uint8_t Pos;
+const struct State *Pt;
+void Stepper_CW(uint32_t delay){
+Pt  = Pt ->Next[clockwise];
+STEPPER = Pt->Out;
+	if(Pos==199){
+		Pos=0;
+	}
+	else{
+		Pos++;
+	}
+	SysTick_Wait(delay);
+}
+void Stepper_CCW(uint32_t delay){
+	Pt= Pt->Next[counterclockwise];
+	STEPPER = Pt->Out;
+	if(Pos==0){
+		Pos=199;
+	}
+	else{
+		Pos--;
+	}
+	SysTick_Wait(delay);
+}
+void Stepper_Init(void){
+	SYSCTL_RCGCGPIO_R |=0x08;
+	SysTick_Init;
+	Pos=0; Pt= &fam[0];
+	GPIO_PORTD_AFSEL_R &= ~0x0F;
+	GPIO_PORTD_AMSEL_R &= ~0x0F;
+	GPIO_PORTD_PCTL_R &=~0x0000FFFF;
+	GPIO_PORTD_DIR_R |=0x0F;
+	GPIO_PORTD_DEN_R |=0x0F;
+	GPIO_PORTD_DR8R_R |=0x0F;
+}
+void Stepper_Seek(uint8_t desired, uint32_t time){
+	int16_t CWsteps;
+	if((CWsteps= (desired-Pos))<0){
+		CWsteps += 200;
+	}
+	if(CWsteps > 100){
+		while(desired !=Pos){
+			Stepper_CCW(time);
+		}
+	}
+	else{
+		while(desired !=Pos){
+			Stepper_CW(time);
+		}
+	}
+}
+int main(void){
+
 //	SysCtlClockSet(SYSCTL_SYSDIV_8|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
 //	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 //	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE,  GPIO_PIN_2|GPIO_PIN_3);

@@ -64249,30 +64249,30 @@ N#define TRUE 1
 N/*
 N *
 N * Pin Connections:
-N * PE0 [pin 18]  -> IN1
-N * PE1 [pin 27]  -> IN2
-N * PE2 [pin 28]  -> IN3
-N * PE3 [pin 29]  -> IN4
+N * PD0 [pin 61]  -> IN1
+N * PD1 [pin 62]  -> IN2
+N * PD2 [pin 63]  -> IN3
+N * PD3 [pin 64]  -> IN4
 N *
 N * pin number in [] indicates
 N * energia pin reference!
 N *
 N */
 N
-N#define IN1 GPIO_PIN_0 // Pin 18
-N#define IN2 GPIO_PIN_1 // Pin 27
-N#define IN3 GPIO_PIN_2 // Pin 28
-N#define IN4 GPIO_PIN_3 // Pin 29
+N#define IN1 GPIO_PIN_0 // Pin 61
+N#define IN2 GPIO_PIN_1 // Pin 62
+N#define IN3 GPIO_PIN_2 // Pin 63
+N#define IN4 GPIO_PIN_3 // Pin 64
 N#define ALLINPINS IN1|IN2|IN3|IN4
 N
-N#define STEPPER_PORT_BASE GPIO_PORTE_BASE
-N#define STEPPER_PERIPH SYSCTL_PERIPH_GPIOE
+N#define STEPPER_PORT_BASE GPIO_PORTD_BASE
+N#define STEPPER_PERIPH SYSCTL_PERIPH_GPIOD
 N
 W "Stepper.h" 72 28 last line of file ends without a newline
 N#endif /* LIB_STEPPER_H_ */
 L 8 "project.c" 2
 N//#include "PWM_helper.h"
-N//#define STEPPER (*((volatile uint32_t *)0x4000703C))
+N#define STEPPER (*((volatile uint32_t *)0x4000703C))
 Nstruct Mybuttons Mybuttons;
 N//*****************************************************************************
 N//
@@ -64357,14 +64357,95 @@ N		else Mybuttons.SW2 = 1;
 N
 N		
 N	}
-N//	static void step(uint32_t n)
-N//		{
-N//	  STEPPER = n; // output stepper causing it to step once
-N//		SysTickWait10ms(10); // wait for 10 ms
-N//		}
-N//		
-Nint  main(void)
-N {
+N	static void step(uint32_t n)
+N		{
+N	  STEPPER = n; // output stepper causing it to step once
+X	  (*((volatile uint32_t *)0x4000703C)) = n; 
+W "project.c" 82 3 function "SysTickWait10ms" declared implicitly
+N		SysTickWait10ms(10); // wait for 10 ms
+N		}
+Nstruct State{ 
+N	uint8_t Out;
+N	const struct State *Next[2];
+N};
+Ntypedef const struct  State StateType;
+Ntypedef StateType *StatePtr;
+N#define clockwise 0
+N#define counterclockwise 1
+NStateType fam[4]= {
+N{10,{&fam[1],&fam[3]}},
+N{9,{&fam[2],&fam[0]}},
+N{5,{&fam[3],&fam[1]}},
+N{6,{&fam[0],&fam[2]}},
+N};
+N
+Nuint8_t Pos;
+Nconst struct State *Pt;
+Nvoid Stepper_CW(uint32_t delay){
+NPt  = Pt ->Next[clockwise];
+XPt  = Pt ->Next[0];
+NSTEPPER = Pt->Out;
+X(*((volatile uint32_t *)0x4000703C)) = Pt->Out;
+N	if(Pos==199){
+N		Pos=0;
+N	}
+N	else{
+N		Pos++;
+N	}
+W "project.c" 110 2 function "SysTick_Wait" declared implicitly
+N	SysTick_Wait(delay);
+N}
+Nvoid Stepper_CCW(uint32_t delay){
+N	Pt= Pt->Next[counterclockwise];
+X	Pt= Pt->Next[1];
+N	STEPPER = Pt->Out;
+X	(*((volatile uint32_t *)0x4000703C)) = Pt->Out;
+N	if(Pos==0){
+N		Pos=199;
+N	}
+N	else{
+N		Pos--;
+N	}
+W "project.c" 121 2 function "SysTick_Wait" declared implicitly
+N	SysTick_Wait(delay);
+N}
+Nvoid Stepper_Init(void){
+N	SYSCTL_RCGCGPIO_R |=0x08;
+X	(*((volatile uint32_t *)0x400FE608)) |=0x08;
+E "project.c" 125 2 identifier "SysTick_Init" is undefined
+N	SysTick_Init;
+N	Pos=0; Pt= &fam[0];
+N	GPIO_PORTD_AFSEL_R &= ~0x0F;
+X	(*((volatile uint32_t *)0x40007420)) &= ~0x0F;
+N	GPIO_PORTD_AMSEL_R &= ~0x0F;
+X	(*((volatile uint32_t *)0x40007528)) &= ~0x0F;
+N	GPIO_PORTD_PCTL_R &=~0x0000FFFF;
+X	(*((volatile uint32_t *)0x4000752C)) &=~0x0000FFFF;
+N	GPIO_PORTD_DIR_R |=0x0F;
+X	(*((volatile uint32_t *)0x40007400)) |=0x0F;
+N	GPIO_PORTD_DEN_R |=0x0F;
+X	(*((volatile uint32_t *)0x4000751C)) |=0x0F;
+N	GPIO_PORTD_DR8R_R |=0x0F;
+X	(*((volatile uint32_t *)0x40007508)) |=0x0F;
+N}
+Nvoid Stepper_Seek(uint8_t desired, uint32_t time){
+N	int16_t CWsteps;
+N	if((CWsteps= (desired-Pos))<0){
+N		CWsteps += 200;
+N	}
+N	if(CWsteps > 100){
+N		while(desired !=Pos){
+N			Stepper_CCW(time);
+N		}
+N	}
+N	else{
+N		while(desired !=Pos){
+N			Stepper_CW(time);
+N		}
+N	}
+N}
+Nint main(void){
+N
 N//	SysCtlClockSet(SYSCTL_SYSDIV_8|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
 N//	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 N//	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE,  GPIO_PIN_2|GPIO_PIN_3);
@@ -64911,5 +64992,6 @@ N				{
 N				}
 N			}
 N		}
-W "project.c" 576 3 last line of file ends without a newline
+W "project.c" 641 3 last line of file ends without a newline
 N	}
+W "project.c" 79 14 function "step"  was declared but never referenced

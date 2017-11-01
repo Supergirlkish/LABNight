@@ -18022,14 +18022,79 @@ void UpdateMYbuttons()
 
 		
 	}
+	static void step(uint32_t n)
+		{
+	  (*((volatile uint32_t *)0x4000703C)) = n; 
+		SysTickWait10ms(10); 
+		}
+struct State{ 
+	uint8_t Out;
+	const struct State *Next[2];
+};
+typedef const struct  State StateType;
+typedef StateType *StatePtr;
 
 
+StateType fam[4]= {
+{10,{&fam[1],&fam[3]}},
+{9,{&fam[2],&fam[0]}},
+{5,{&fam[3],&fam[1]}},
+{6,{&fam[0],&fam[2]}},
+};
 
+uint8_t Pos;
+const struct State *Pt;
+void Stepper_CW(uint32_t delay){
+Pt  = Pt ->Next[0];
+(*((volatile uint32_t *)0x4000703C)) = Pt->Out;
+	if(Pos==199){
+		Pos=0;
+	}
+	else{
+		Pos++;
+	}
+	SysTick_Wait(delay);
+}
+void Stepper_CCW(uint32_t delay){
+	Pt= Pt->Next[1];
+	(*((volatile uint32_t *)0x4000703C)) = Pt->Out;
+	if(Pos==0){
+		Pos=199;
+	}
+	else{
+		Pos--;
+	}
+	SysTick_Wait(delay);
+}
+void Stepper_Init(void){
+	(*((volatile uint32_t *)0x400FE608)) |=0x08;
+	SysTick_Init;
+	Pos=0; Pt= &fam[0];
+	(*((volatile uint32_t *)0x40007420)) &= ~0x0F;
+	(*((volatile uint32_t *)0x40007528)) &= ~0x0F;
+	(*((volatile uint32_t *)0x4000752C)) &=~0x0000FFFF;
+	(*((volatile uint32_t *)0x40007400)) |=0x0F;
+	(*((volatile uint32_t *)0x4000751C)) |=0x0F;
+	(*((volatile uint32_t *)0x40007508)) |=0x0F;
+}
+void Stepper_Seek(uint8_t desired, uint32_t time){
+	int16_t CWsteps;
+	if((CWsteps= (desired-Pos))<0){
+		CWsteps += 200;
+	}
+	if(CWsteps > 100){
+		while(desired !=Pos){
+			Stepper_CCW(time);
+		}
+	}
+	else{
+		while(desired !=Pos){
+			Stepper_CW(time);
+		}
+	}
+}
+int main(void){
 
-
-
-int  main(void)
- {
 
 
 

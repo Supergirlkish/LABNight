@@ -905,19 +905,36 @@ void stopStepper(void);
 
 
 #line 35 "Stepper.c"
+	
+struct State{ 
+	uint8_t Out;
+	const struct State *Next[2];
+};
+typedef const struct  State StateType;
+
+StateType fam[4]= {
+{10,{&fam[1],&fam[3]}},
+{9,{&fam[2],&fam[0]}},
+{5,{&fam[3],&fam[1]}},
+{6,{&fam[0],&fam[2]}},
+};
+
+uint8_t Pos;
+const struct State *Pt;
+
 int states[]={0x01,0x03,0x02,0x06,0x04,0x0C,0x08,0x09};
 
 int currentstate=0;
 
 void initStepper(void)
 {
-	SysCtlPeripheralEnable(0xf0000804);
-	GPIOPinTypeGPIOOutput(0x40024000,  0x00000001|0x00000002|0x00000004|0x00000008);
-	GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008 ,0);
+	SysCtlPeripheralEnable(0xf0000803);
+	GPIOPinTypeGPIOOutput(0x40007000,  0x00000001|0x00000002|0x00000004|0x00000008);
+	GPIOPinWrite(0x40007000, 0x00000001|0x00000002|0x00000004|0x00000008 ,0);
 }
 
 void stopStepper(void) {
-	GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008, 0);
+	GPIOPinWrite(0x40007000, 0x00000001|0x00000002|0x00000004|0x00000008, 0);
 	if (--currentstate<0)
 		currentstate=7;
 }
@@ -926,7 +943,7 @@ void stopStepper(void) {
 void stepForward(int steps) {
 	int n;
 	for (n=0; n<steps; n++) {
-		GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate++]);
+		GPIOPinWrite(0x40007000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate++]);
 		if (currentstate>7) currentstate=0;
 		SysCtlDelay(10000);
 	}
@@ -935,7 +952,7 @@ void stepForward(int steps) {
 void stepBackward(int steps) {
 	int n;
 	for (n=steps; n>=0; n--) {
-		GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate--]);
+		GPIOPinWrite(0x40007000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate--]);
 		if (currentstate<0) currentstate=7;
 		SysCtlDelay(10000);
 	}

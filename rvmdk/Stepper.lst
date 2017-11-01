@@ -1477,28 +1477,45 @@ N#define TRUE 1
 N/*
 N *
 N * Pin Connections:
-N * PE0 [pin 18]  -> IN1
-N * PE1 [pin 27]  -> IN2
-N * PE2 [pin 28]  -> IN3
-N * PE3 [pin 29]  -> IN4
+N * PD0 [pin 61]  -> IN1
+N * PD1 [pin 62]  -> IN2
+N * PD2 [pin 63]  -> IN3
+N * PD3 [pin 64]  -> IN4
 N *
 N * pin number in [] indicates
 N * energia pin reference!
 N *
 N */
 N
-N#define IN1 GPIO_PIN_0 // Pin 18
-N#define IN2 GPIO_PIN_1 // Pin 27
-N#define IN3 GPIO_PIN_2 // Pin 28
-N#define IN4 GPIO_PIN_3 // Pin 29
+N#define IN1 GPIO_PIN_0 // Pin 61
+N#define IN2 GPIO_PIN_1 // Pin 62
+N#define IN3 GPIO_PIN_2 // Pin 63
+N#define IN4 GPIO_PIN_3 // Pin 64
 N#define ALLINPINS IN1|IN2|IN3|IN4
 N
-N#define STEPPER_PORT_BASE GPIO_PORTE_BASE
-N#define STEPPER_PERIPH SYSCTL_PERIPH_GPIOE
+N#define STEPPER_PORT_BASE GPIO_PORTD_BASE
+N#define STEPPER_PERIPH SYSCTL_PERIPH_GPIOD
 N
 W "Stepper.h" 72 28 last line of file ends without a newline
 N#endif /* LIB_STEPPER_H_ */
 L 35 "Stepper.c" 2
+N	
+Nstruct State{ 
+N	uint8_t Out;
+N	const struct State *Next[2];
+N};
+Ntypedef const struct  State StateType;
+N
+NStateType fam[4]= {
+N{10,{&fam[1],&fam[3]}},
+N{9,{&fam[2],&fam[0]}},
+N{5,{&fam[3],&fam[1]}},
+N{6,{&fam[0],&fam[2]}},
+N};
+N
+Nuint8_t Pos;
+Nconst struct State *Pt;
+N
 Nint states[]={0x01,0x03,0x02,0x06,0x04,0x0C,0x08,0x09};
 N//int states[]={0b0001,0b0011,0b0010,0b0110,0b0100,0b1100,0b1000,0b1001};
 Nint currentstate=0;
@@ -1506,16 +1523,16 @@ N
 Nvoid initStepper(void)
 N{
 N	SysCtlPeripheralEnable(STEPPER_PERIPH);
-X	SysCtlPeripheralEnable(0xf0000804);
+X	SysCtlPeripheralEnable(0xf0000803);
 N	GPIOPinTypeGPIOOutput(STEPPER_PORT_BASE,  ALLINPINS);
-X	GPIOPinTypeGPIOOutput(0x40024000,  0x00000001|0x00000002|0x00000004|0x00000008);
+X	GPIOPinTypeGPIOOutput(0x40007000,  0x00000001|0x00000002|0x00000004|0x00000008);
 N	GPIOPinWrite(STEPPER_PORT_BASE, ALLINPINS ,0);
-X	GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008 ,0);
+X	GPIOPinWrite(0x40007000, 0x00000001|0x00000002|0x00000004|0x00000008 ,0);
 N}
 N
 Nvoid stopStepper(void) {
 N	GPIOPinWrite(STEPPER_PORT_BASE, ALLINPINS, 0);
-X	GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008, 0);
+X	GPIOPinWrite(0x40007000, 0x00000001|0x00000002|0x00000004|0x00000008, 0);
 N	if (--currentstate<0)
 N		currentstate=7;
 N}
@@ -1525,7 +1542,7 @@ Nvoid stepForward(int steps) {
 N	int n;
 N	for (n=0; n<steps; n++) {
 N		GPIOPinWrite(STEPPER_PORT_BASE, ALLINPINS,  states[currentstate++]);
-X		GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate++]);
+X		GPIOPinWrite(0x40007000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate++]);
 N		if (currentstate>7) currentstate=0;
 N		SysCtlDelay(10000);
 N	}
@@ -1535,9 +1552,9 @@ Nvoid stepBackward(int steps) {
 N	int n;
 N	for (n=steps; n>=0; n--) {
 N		GPIOPinWrite(STEPPER_PORT_BASE, ALLINPINS,  states[currentstate--]);
-X		GPIOPinWrite(0x40024000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate--]);
+X		GPIOPinWrite(0x40007000, 0x00000001|0x00000002|0x00000004|0x00000008,  states[currentstate--]);
 N		if (currentstate<0) currentstate=7;
 N		SysCtlDelay(10000);
 N	}
-W "Stepper.c" 69 2 last line of file ends without a newline
+W "Stepper.c" 86 2 last line of file ends without a newline
 N}

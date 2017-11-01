@@ -50,23 +50,23 @@ void stopStepper(void);
 /*
  *
  * Pin Connections:
- * PE0 [pin 18]  -> IN1
- * PE1 [pin 27]  -> IN2
- * PE2 [pin 28]  -> IN3
- * PE3 [pin 29]  -> IN4
+ * PD0 [pin 61]  -> IN1
+ * PD1 [pin 62]  -> IN2
+ * PD2 [pin 63]  -> IN3
+ * PD3 [pin 64]  -> IN4
  *
  * pin number in [] indicates
  * energia pin reference!
  *
  */
 
-#define IN1 GPIO_PIN_0 // Pin 18
-#define IN2 GPIO_PIN_1 // Pin 27
-#define IN3 GPIO_PIN_2 // Pin 28
-#define IN4 GPIO_PIN_3 // Pin 29
+#define IN1 GPIO_PIN_0 // Pin 61
+#define IN2 GPIO_PIN_1 // Pin 62
+#define IN3 GPIO_PIN_2 // Pin 63
+#define IN4 GPIO_PIN_3 // Pin 64
 #define ALLINPINS IN1|IN2|IN3|IN4
 
-#define STEPPER_PORT_BASE GPIO_PORTE_BASE
-#define STEPPER_PERIPH SYSCTL_PERIPH_GPIOE
+#define STEPPER_PORT_BASE GPIO_PORTD_BASE
+#define STEPPER_PERIPH SYSCTL_PERIPH_GPIOD
 
 #endif /* LIB_STEPPER_H_ */
