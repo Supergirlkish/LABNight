@@ -3516,9 +3516,9 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>.\project.c</Name>
-        <ColumnNumber>23</ColumnNumber>
-        <TopLine>359</TopLine>
-        <CurrentLine>390</CurrentLine>
+        <ColumnNumber>6</ColumnNumber>
+        <TopLine>144</TopLine>
+        <CurrentLine>169</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
@@ -3597,9 +3597,9 @@
       </Doc>
       <Doc>
         <Name>.\Stepper.c</Name>
-        <ColumnNumber>2</ColumnNumber>
-        <TopLine>27</TopLine>
-        <CurrentLine>36</CurrentLine>
+        <ColumnNumber>22</ColumnNumber>
+        <TopLine>28</TopLine>
+        <CurrentLine>39</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>

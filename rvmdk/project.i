@@ -18106,19 +18106,19 @@ int  main(void)
 				UpdateMYbuttons ();	
 				initLCD();
 				initStepper();
-				int i,rotations,active=1;
-				for (rotations=0; rotations<100; rotations++) {
-				for (i=0; i<26;i++) {
-	
+			 int i,rotations,active=1;
 				if(Mybuttons.SW1==0 & active)
 				{
 				}
 				else
 				{						
-						
+			
+				for (rotations=0; rotations<100; rotations++) {
+				for (i=0; i<26;i++) {
+		
 		
        
-				
+				 
     		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 					stepForward(157);
 					
@@ -18199,8 +18199,10 @@ int  main(void)
 				clearLCD();
         
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
-        { stopStepper();
+        {
 				}
+				stepForward(21);
+				stopStepper();	
 			}
 		}
 	
@@ -18328,14 +18330,14 @@ int  main(void)
 				GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 				printLCD("Hey Switch TWO");
 				setCursorPositionLCD(1,0);
-				printLCD("Cyan OFF");
+				printLCD("Cyan STEPOFF");
 				SysCtlDelay(10000000);
 				clearLCD();
 				
         for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
-        {stopStepper();
+        {
         }
-				
+				stopStepper();
 				
 				if(Mybuttons.SW2==1 &  Mybuttons.SW1==1)
 				{ 
@@ -18526,4 +18528,5 @@ int  main(void)
 			 
 		}
 	}
+		return(0);
 }

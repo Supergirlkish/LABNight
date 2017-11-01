@@ -64450,19 +64450,19 @@ N				UnlockPins();
 N				UpdateMYbuttons ();	
 N				initLCD();
 N				initStepper();
-N				int i,rotations,active=1;
-N				for (rotations=0; rotations<100; rotations++) {
-N				for (i=0; i<26;i++) {
-N	
+N			 int i,rotations,active=1;
 N				if(Mybuttons.SW1==0 & active)
 N				{
 N				}
 N				else
 N				{						
-N						
+N			
+N				for (rotations=0; rotations<100; rotations++) {
+N				for (i=0; i<26;i++) {
+N		
 N		
 N       // Turn on Green Led
-N				
+N				 
 N    		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 X    		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 N					stepForward(157);
@@ -64549,8 +64549,10 @@ N				SysCtlDelay(10000000);
 N				clearLCD();
 N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
-N        { stopStepper();
+N        {
 N				}
+N				stepForward(21);
+N				stopStepper();	
 N			}
 N		}
 N	
@@ -64696,14 +64698,14 @@ N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
 X				GPIOPinWrite(0x40025000, 0x00000004, 0x0);
 N				printLCD("Hey Switch TWO");
 N				setCursorPositionLCD(1,0);
-N				printLCD("Cyan OFF");
+N				printLCD("Cyan STEPOFF");
 N				SysCtlDelay(10000000);
 N				clearLCD();
 N				// Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
-N        {stopStepper();
+N        {
 N        }
-N				
+N				stopStepper();
 N				
 N				if(Mybuttons.SW2==1 &  Mybuttons.SW1==1)
 N				{ // Turn on Green Led
@@ -64918,5 +64920,7 @@ N			}
 N			 
 N		}
 N	}
-W "project.c" 583 2 last line of file ends without a newline
+W "project.c" 585 3 statement is unreachable
+N		return(0);
+W "project.c" 586 2 last line of file ends without a newline
 N}
