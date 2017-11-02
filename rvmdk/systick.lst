@@ -13552,8 +13552,8 @@ N	  NVIC_ST_CTRL_R = 0x00000005;
 X	  (*((volatile uint32_t *)0xE000E010)) = 0x00000005;
 N}	
 Nvoid SysTick_Wait(uint32_t delay){
-N	NVIC_ST_RELOAD_R= delay -1;
-X	(*((volatile uint32_t *)0xE000E014))= delay -1;
+N	NVIC_ST_RELOAD_R= delay-1;
+X	(*((volatile uint32_t *)0xE000E014))= delay-1;
 N	NVIC_ST_CURRENT_R = 0;
 X	(*((volatile uint32_t *)0xE000E018)) = 0;
 N	while((NVIC_ST_CTRL_R&0x000100000)==0){ // wait for count flag

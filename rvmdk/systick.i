@@ -8433,7 +8433,7 @@ void SysTick_Init(void)
 	  (*((volatile uint32_t *)0xE000E010)) = 0x00000005;
 }	
 void SysTick_Wait(uint32_t delay){
-	(*((volatile uint32_t *)0xE000E014))= delay -1;
+	(*((volatile uint32_t *)0xE000E014))= delay-1;
 	(*((volatile uint32_t *)0xE000E018)) = 0;
 	while(((*((volatile uint32_t *)0xE000E010))&0x000100000)==0){ 
 		}

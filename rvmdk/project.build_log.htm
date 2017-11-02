@@ -28,8 +28,8 @@ Project File Date:  10/25/2017
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'project'
 creating preprocessor file for project.c...
-creating preprocessor file for Uart_helper.c...
 assembling startup_rvmdk.S...
+creating preprocessor file for Uart_helper.c...
 creating preprocessor file for systick.c...
 compiling Uart_helper.c...
 src\Uart_helper.h(11): warning:  #1-D: last line of file ends without a newline
@@ -58,47 +58,45 @@ LCDDiplay.h(55): warning:  #1-D: last line of file ends without a newline
   #endif /* LIB_DISPLAY_H_ */
 Stepper.h(72): warning:  #1-D: last line of file ends without a newline
   #endif /* LIB_STEPPER_H_ */
-project.c(82): warning:  #223-D: function "SysTickWait10ms" declared implicitly
-  		SysTickWait10ms(10); // wait for 10 ms
-project.c(110): warning:  #223-D: function "SysTick_Wait" declared implicitly
-  	SysTick_Wait(delay);
-project.c(121): warning:  #223-D: function "SysTick_Wait" declared implicitly
-  	SysTick_Wait(delay);
-project.c(125): error:  #20: identifier "SysTick_Init" is undefined
-  	SysTick_Init;
-project.c(641): warning:  #1-D: last line of file ends without a newline
+project.c(129): warning:  #177-D: variable "active"  was declared but never referenced
+  				int i,rotations,active=1;
+project.c(233): warning:  #177-D: variable "active"  was declared but never referenced
+  				int i,rotations,active=1;
+project.c(554): warning:  #1-D: last line of file ends without a newline
   	}
-project.c(79): warning:  #177-D: function "step"  was declared but never referenced
-  	static void step(uint32_t n)
-project.c: 13 warnings, 1 error
+project.c: 11 warnings, 0 errors
+creating preprocessor file for GPIO_helper.c...
 compiling ADC_helper.c...
 ADC_helper.c(81): warning:  #1-D: last line of file ends without a newline
   }
 ADC_helper.c: 1 warning, 0 errors
-creating preprocessor file for GPIO_helper.c...
 compiling GPIO_helper.c...
 GPIO_helper.c(126): warning:  #1-D: last line of file ends without a newline
   //}
 GPIO_helper.c: 1 warning, 0 errors
-creating preprocessor file for LCDDisplay.c...
 compiling PWM_helper.c...
 PWM_helper.c(133): warning:  #1-D: last line of file ends without a newline
   }
 PWM_helper.c: 1 warning, 0 errors
+creating preprocessor file for LCDDisplay.c...
 creating preprocessor file for Stepper.c...
 compiling LCDDisplay.c...
 LCDDiplay.h(55): warning:  #1-D: last line of file ends without a newline
   #endif /* LIB_DISPLAY_H_ */
-LCDDisplay.c(215): warning:  #1-D: last line of file ends without a newline
+LCDDisplay.c(214): warning:  #1-D: last line of file ends without a newline
   }
 LCDDisplay.c: 2 warnings, 0 errors
 compiling Stepper.c...
 Stepper.h(72): warning:  #1-D: last line of file ends without a newline
   #endif /* LIB_STEPPER_H_ */
-Stepper.c(86): warning:  #1-D: last line of file ends without a newline
+Stepper.c(71): warning:  #1-D: last line of file ends without a newline
   }
 Stepper.c: 2 warnings, 0 errors
-".\rvmdk\project.axf" - 1 Error(s), 22 Warning(s).
+linking...
+Program Size: Code=5148 RO-data=628 RW-data=40 ZI-data=256  
+FromELF: creating hex file...
+After Build - User command #1: fromelf --bin --output .\rvmdk\project.bin .\rvmdk\project.axf
+".\rvmdk\project.axf" - 0 Error(s), 20 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -121,8 +119,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.0.2
-Target not created.
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

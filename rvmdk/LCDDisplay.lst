@@ -1688,7 +1688,6 @@ N	while ((c != 0) && (*c != 0))
 N	{
 N		sendByte(*c, TRUE);
 X		sendByte(*c, 1);
-N		c++;
-N	}
-W "LCDDisplay.c" 215 2 last line of file ends without a newline
+N		c++;}
+W "LCDDisplay.c" 214 2 last line of file ends without a newline
 N}

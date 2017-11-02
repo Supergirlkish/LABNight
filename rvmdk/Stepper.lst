@@ -1499,22 +1499,7 @@ N
 W "Stepper.h" 72 28 last line of file ends without a newline
 N#endif /* LIB_STEPPER_H_ */
 L 35 "Stepper.c" 2
-N	
-Nstruct State{ 
-N	uint8_t Out;
-N	const struct State *Next[2];
-N};
-Ntypedef const struct  State StateType;
 N
-NStateType fam[4]= {
-N{10,{&fam[1],&fam[3]}},
-N{9,{&fam[2],&fam[0]}},
-N{5,{&fam[3],&fam[1]}},
-N{6,{&fam[0],&fam[2]}},
-N};
-N
-Nuint8_t Pos;
-Nconst struct State *Pt;
 N
 Nint states[]={0x01,0x03,0x02,0x06,0x04,0x0C,0x08,0x09};
 N//int states[]={0b0001,0b0011,0b0010,0b0110,0b0100,0b1100,0b1000,0b1001};
@@ -1556,5 +1541,5 @@ X		GPIOPinWrite(0x40007000, 0x00000001|0x00000002|0x00000004|0x00000008,  states
 N		if (currentstate<0) currentstate=7;
 N		SysCtlDelay(10000);
 N	}
-W "Stepper.c" 86 2 last line of file ends without a newline
+W "Stepper.c" 71 2 last line of file ends without a newline
 N}

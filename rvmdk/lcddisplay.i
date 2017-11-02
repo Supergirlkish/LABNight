@@ -1059,6 +1059,5 @@ void printLCD(char *text)
 	while ((c != 0) && (*c != 0))
 	{
 		sendByte(*c, 1);
-		c++;
-	}
+		c++;}
 }

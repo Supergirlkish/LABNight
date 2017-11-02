@@ -32,22 +32,7 @@
 
 
 #include "Stepper.h"
-	
-struct State{ 
-	uint8_t Out;
-	const struct State *Next[2];
-};
-typedef const struct  State StateType;
 
-StateType fam[4]= {
-{10,{&fam[1],&fam[3]}},
-{9,{&fam[2],&fam[0]}},
-{5,{&fam[3],&fam[1]}},
-{6,{&fam[0],&fam[2]}},
-};
-
-uint8_t Pos;
-const struct State *Pt;
 
 int states[]={0x01,0x03,0x02,0x06,0x04,0x0C,0x08,0x09};
 //int states[]={0b0001,0b0011,0b0010,0b0110,0b0100,0b1100,0b1000,0b1001};
