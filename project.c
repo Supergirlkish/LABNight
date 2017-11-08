@@ -61,7 +61,7 @@ void UnlockPins()
 
 		
 }
-void UpdateMYbuttons()
+void UpdateMYbuttons() // updates the buttons status
 	{
 		uint8_t WorkingMode;
 		
@@ -115,17 +115,17 @@ int main(void){
 				//UARTCharPut(UART0_BASE, '\r');
         
 			
-				UnlockPins();
-				UpdateMYbuttons ();	
-				initLCD();
-			  initStepper();
+				UnlockPins();  // unlock pins for GPIO
+				UpdateMYbuttons ();	// undate the functions of the button status
+				initLCD(); // initialize the LCD Screen
+			  initStepper(); // initialize the Stepper
 				
 				if(Mybuttons.SW1==0){
 
 		}
 				else
 				{						
-					
+					 // Steps the motor foward 15 times
 				int i,rotations,active=1;
 			  for (rotations=0; rotations<15; rotations++) {
 		    for (i=0; i<15;i++) {
@@ -229,10 +229,10 @@ int main(void){
 				}
 				else
 				{
-					
+					// steps backward 15 times 
 				int i,rotations,active=1;
 			  for (rotations=0; rotations<15; rotations++) {
-		    for (i=0; i<15;i++) {
+		    for (i=0; i<15;i++) { 
 			 		stepBackward(15);
 			}
 				  printLCD("STEP BACKWARD");
@@ -368,8 +368,24 @@ int main(void){
 			}
 		
 				
-				if(Mybuttons.SW2==1 &  Mybuttons.SW1==1)
-				{ // Turn on Green Led
+				if(Mybuttons.SW2==0 &  Mybuttons.SW1==0)
+				 {
+					 
+			}
+			   
+				 
+				else
+				{  // Steps the motor backward 15 times
+					int i,rotations,active=1;
+			     for (rotations=0; rotations<15; rotations++) {
+		       for (i=0; i<15;i++) {
+					   stepBackward(15);
+						 stopStepper();
+					}
+					 SysCtlDelay(1000000);
+				}
+					
+					// Turn on Green Led
 				
     		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 				printLCD("Hey SW1 & SW2");

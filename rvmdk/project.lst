@@ -64698,8 +64698,24 @@ W "project.c" 233 21 variable "active"  was declared but never referenced
 N			}
 N		
 N				
-N				if(Mybuttons.SW2==1 &  Mybuttons.SW1==1)
-N				{ // Turn on Green Led
+N				if(Mybuttons.SW2==0 &  Mybuttons.SW1==0)
+N				 {
+N					 
+N			}
+N			   
+N				 
+N				else
+N				{ 
+N					int i,rotations,active=1;
+N			     for (rotations=0; rotations<15; rotations++) {
+N		       for (i=0; i<15;i++) {
+N					   stepBackward(15);
+N						 stopStepper();
+N					}
+N					 SysCtlDelay(1000000);
+N				}
+N					
+N					// Turn on Green Led
 N				
 N    		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
 X    		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
@@ -64903,7 +64919,8 @@ N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
 N        {
 N        }
 N			
+W "project.c" 379 22 variable "active"  was declared but never referenced
 N			}
 N		}
-W "project.c" 554 3 last line of file ends without a newline
+W "project.c" 570 3 last line of file ends without a newline
 N	}

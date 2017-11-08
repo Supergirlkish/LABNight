@@ -18327,8 +18327,24 @@ int main(void){
 			}
 		
 				
-				if(Mybuttons.SW2==1 &  Mybuttons.SW1==1)
+				if(Mybuttons.SW2==0 &  Mybuttons.SW1==0)
+				 {
+					 
+			}
+			   
+				 
+				else
 				{ 
+					int i,rotations,active=1;
+			     for (rotations=0; rotations<15; rotations++) {
+		       for (i=0; i<15;i++) {
+					   stepBackward(15);
+						 stopStepper();
+					}
+					 SysCtlDelay(1000000);
+				}
+					
+					
 				
     		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
 				printLCD("Hey SW1 & SW2");
