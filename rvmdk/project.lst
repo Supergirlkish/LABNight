@@ -64697,10 +64697,7 @@ N        {
 N        }
 W "project.c" 234 21 variable "active"  was declared but never referenced
 N			}
-N		
-N				
-N			
-N				
+N					
 N		}
-W "project.c" 375 3 last line of file ends without a newline
+W "project.c" 372 3 last line of file ends without a newline
 N	}
