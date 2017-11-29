@@ -64354,7 +64354,7 @@ N
 N
 N		
 N}
-Nvoid UpdateMYbuttons()
+Nvoid UpdateMYbuttons() // updates the buttons status
 N	{
 N		uint8_t WorkingMode;
 N		
@@ -64419,17 +64419,18 @@ N				//UARTCharPut(UART0_BASE, '\n');
 N				//UARTCharPut(UART0_BASE, '\r');
 N        
 N			
-N				UnlockPins();
-N				UpdateMYbuttons ();	
-N				initLCD();
-N			  initStepper();
+N				UnlockPins();  // unlock pins for GPIO
+N				UpdateMYbuttons ();	// undate the functions of the button status
+N				initLCD(); // initialize the LCD Screen
+N			  initStepper(); // initialize the Stepper
 N				
-N				if(Mybuttons.SW1==0){
+N				if(Mybuttons.SW1==0)
+N					{
 N
-N		}
+N	      	}
 N				else
 N				{						
-N					
+N					 // Steps the motor foward 15 times
 N				int i,rotations,active=1;
 N			  for (rotations=0; rotations<15; rotations++) {
 N		    for (i=0; i<15;i++) {
@@ -64530,7 +64531,7 @@ N        // Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
 N				}
-W "project.c" 129 21 variable "active"  was declared but never referenced
+W "project.c" 130 21 variable "active"  was declared but never referenced
 N			}
 N		
 N		
@@ -64540,10 +64541,10 @@ N				{
 N				}
 N				else
 N				{
-N					
+N					// steps backward 15 times 
 N				int i,rotations,active=1;
 N			  for (rotations=0; rotations<15; rotations++) {
-N		    for (i=0; i<15;i++) {
+N		    for (i=0; i<15;i++) { 
 N			 		stepBackward(15);
 N			}
 N				  printLCD("STEP BACKWARD");
@@ -64694,233 +64695,12 @@ N				// Delay for a bit.
 N        for(ui32Loop = 0; ui32Loop < 1000000; ui32Loop++)
 N        {
 N        }
-W "project.c" 233 21 variable "active"  was declared but never referenced
+W "project.c" 234 21 variable "active"  was declared but never referenced
 N			}
 N		
 N				
-N				if(Mybuttons.SW2==0 &  Mybuttons.SW1==0)
-N				 {
-N					 
-N			}
-N			   
-N				 
-N				else
-N				{ 
-N					int i,rotations,active=1;
-N			     for (rotations=0; rotations<15; rotations++) {
-N		       for (i=0; i<15;i++) {
-N					   stepBackward(15);
-N						 stopStepper();
-N					}
-N					 SysCtlDelay(1000000);
-N				}
-N					
-N					// Turn on Green Led
+N			
 N				
-N    		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
-X    		GPIOPinWrite(0x40025000, 0x00000008, 0xF);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Green ON");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }
-N
-N        // Turn off the Green LED.
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
-X        GPIOPinWrite(0x40025000, 0x00000008, 0x0);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Green OFF");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }
-N				// Turn on the Blue LED.
-N			
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
-X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Blue ON");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }
-N
-N        // Turn off the Blue LED.
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
-X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Blue OFF");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }// Turn on the Red LED.
-N			
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
-X        GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Red ON");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }
-N
-N        // Turn off the Red LED.
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
-X        GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Red OFF");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        { 
-N				}
-N			// Turn on the Purple LED.
-N			
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
-X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
-X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Purple ON");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }
-N
-N        // Turn off the Purple LED.
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
-X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
-X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Purple OFF");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }
-N				// Turn on the Yellow LED.
-N			
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
-X        GPIOPinWrite(0x40025000, 0x00000008, 0xF);
-N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
-X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Yellow ON");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }
-N
-N        // Turn off the Yellow LED.
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
-X        GPIOPinWrite(0x40025000, 0x00000008, 0x0);
-N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
-X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Yellow OFF");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }
-N				
-N				// Turn on the White LED.
-N			  GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
-X			  GPIOPinWrite(0x40025000, 0x00000008, 0xF);
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
-X        GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0xF);
-X				GPIOPinWrite(0x40025000, 0x00000002, 0xF);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("White ON");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }
-N
-N        // Turn off the White LED.
-N				
-N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
-X				GPIOPinWrite(0x40025000, 0x00000008, 0x0);
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
-X        GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x0);
-X				GPIOPinWrite(0x40025000, 0x00000002, 0x0);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("White OFF");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N        // Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }
-N				// Turn on the CYAN LED.
-N			
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0xF);
-X        GPIOPinWrite(0x40025000, 0x00000008, 0xF);
-N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0xF);
-X				GPIOPinWrite(0x40025000, 0x00000004, 0xF);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Cyan ON");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N				// Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N				{
-N				}				
-N				
-N				// Turn off the CYAN LED.
-N			
-N        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0x0);
-X        GPIOPinWrite(0x40025000, 0x00000008, 0x0);
-N				GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x0);
-X				GPIOPinWrite(0x40025000, 0x00000004, 0x0);
-N				printLCD("Hey SW1 & SW2");
-N				setCursorPositionLCD(1,0);
-N				printLCD("Cyan OFF");
-N				SysCtlDelay(10000000);
-N				clearLCD();
-N				// Delay for a bit.
-N        for(ui32Loop = 0; ui32Loop < 100000; ui32Loop++)
-N        {
-N        }
-N			
-W "project.c" 379 22 variable "active"  was declared but never referenced
-N			}
 N		}
-W "project.c" 570 3 last line of file ends without a newline
+W "project.c" 375 3 last line of file ends without a newline
 N	}
