@@ -26,8 +26,8 @@ void homeLCD(void);
 /*
  *
  * Pin Connections:
- * PA4 [pin 59]  -> RS
- * PA5 [pin 60]  -> EN
+ * PE4 [pin 59]  -> RS
+ * PE5 [pin 60]  -> EN
  * PB0 [pin 45]  -> D4
  * PB1 [pin 46]  -> D5
  * PB2 [pin 47]  -> D6
@@ -38,7 +38,7 @@ void homeLCD(void);
  *
  */
 
-#define RS GPIO_PIN_4 // Pin 59
+#define RS GPIO_PIN_4 // Pin 59 
 #define EN GPIO_PIN_5 // Pin 60
 #define D4 GPIO_PIN_0 // Pin 45
 #define D5 GPIO_PIN_1 // Pin 46
@@ -47,9 +47,9 @@ void homeLCD(void);
 #define ALLDATAPINS  D7 | D6 | D5 | D4
 #define ALLCONTROLPINS RS | EN
 
-#define DATA_PORT_BASE GPIO_PORTB_BASE
-#define CMD_PORT_BASE GPIO_PORTE_BASE
-#define DATA_PERIPH SYSCTL_PERIPH_GPIOB
-#define CMD_PERIPH SYSCTL_PERIPH_GPIOE
+#define DATA_PORT_BASE GPIO_PORTB_BASE  //
+#define CMD_PORT_BASE GPIO_PORTE_BASE  //
+#define DATA_PERIPH SYSCTL_PERIPH_GPIOB //
+#define CMD_PERIPH SYSCTL_PERIPH_GPIOE //
 
 #endif /* LIB_DISPLAY_H_ */

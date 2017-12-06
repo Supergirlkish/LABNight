@@ -32,14 +32,14 @@ void UnlockPins()
 {
 	
 	//need to unlock the pins first
-	GPIO_PORTF_LOCK_R = GPIO_LOCK_KEY;  //allow write access to CR reg
-	GPIO_PORTF_CR_R = 0xFF; 						//write CR reg
-	GPIO_PORTF_LOCK_R = 0;							//lock access to CR reg
+	GPIO_PORTF_LOCK_R = GPIO_LOCK_KEY;  // Write access to the CR Register
+	GPIO_PORTF_CR_R = 0xFF; 						// Writes to the Register
+	GPIO_PORTF_LOCK_R = 0;							//Lock access to CR Register
 
-	GPIO_PORTF_DIR_R = 0x0000000E; //PF1-3, outputs, all others inputs
-	GPIO_PORTF_PUR_R = 0x00000011; //Pullups on PF0, PF4
+	GPIO_PORTF_DIR_R = 0x0000000E; // PF1,PF2 & PF3 are outputs the Rest are inputs
+	GPIO_PORTF_PUR_R = 0x00000011; // Pullup Resistors on PF0 & PF4
 	
-	GPIO_PORTF_DEN_R = 0x0000001F; //PF0-4, digital enable, all others not
+	GPIO_PORTF_DEN_R = 0x0000001F; // PF0, PF1,PF2,PF3,PF3 & PF4 pins are enabled for digital
 	//alternatively, set the digital enable while preserving the register contents
 	GPIO_PORTF_DEN_R = GPIO_PORTF_DEN_R | 0x0000001F; 
 	//short hand
