@@ -1,4 +1,4 @@
-## LCD with Step Motor Control
+## LCD Display with Step Motor Control
 
 ## Names 
 LaKeysha L. Green 
@@ -20,7 +20,7 @@ Using the code for varies sources, The LCD display along with the Stepper motor,
 
 
 ## Software Description
-![]https://github.com/Supergirlkish/LABNight/blob/master/images/projectlist.jpg?raw=true
+![](https://github.com/Supergirlkish/LABNight/blob/master/images/projectlist.jpg?raw=true)
 ## Summary and Conclusions
 The microcontroller that was used here was a very interesting piece of equipment that is capable of many things. Once I was able to find different pinouts and code for the stepper motor and the LCD display, I was able to change the code to different pin outs to add multiple stepper motors.
 
