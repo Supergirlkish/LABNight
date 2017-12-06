@@ -14,7 +14,7 @@ SunFounder LCD1602 Module 3.3v backlight, 16x2 Character display white on blue b
 ## Hardware Description
 The stepper motor and LCD display were connected to a bread board that would be powered through a USB cable on the Tiva launchpad.
 
-LABNight/images/IMG_0519.jpg
+https://github.com/Supergirlkish/LABNight/blob/master/images/IMG_0519.jpg
  
 
 Using the code for varies sources, The LCD display along with the Stepper motor, activate when either switch 1 or switch 2 are pressed. When switch 1 is pressed, the stepper motor moves foward 15 times and then will run through the LEDs( Green,blue and Red) that were assigned to it. When swithed 2 is pressed, the stepper motor moves backward 15 times and then run through the LEDs(Purple,Yellow,White & Cyan) that were assigned to it Each function programed to the on board switches will display the activity on  the LCD display.
