@@ -26,8 +26,8 @@ void homeLCD(void);
 /*
  *
  * Pin Connections:
- * PE4 [pin 59]  -> RS
- * PE5 [pin 60]  -> EN
+ * PA4 [pin 59]  -> RS
+ * PA5 [pin 60]  -> EN
  * PB0 [pin 45]  -> D4
  * PB1 [pin 46]  -> D5
  * PB2 [pin 47]  -> D6

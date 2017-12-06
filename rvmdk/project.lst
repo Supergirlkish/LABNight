@@ -64165,8 +64165,8 @@ N#define TRUE 1
 N/*
 N *
 N * Pin Connections:
-N * PE4 [pin 59]  -> RS
-N * PE5 [pin 60]  -> EN
+N * PA4 [pin 59]  -> RS
+N * PA5 [pin 60]  -> EN
 N * PB0 [pin 45]  -> D4
 N * PB1 [pin 46]  -> D5
 N * PB2 [pin 47]  -> D6
