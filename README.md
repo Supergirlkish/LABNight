@@ -1,4 +1,4 @@
-## LCD Display with Step Motor Control
+## LCD Display with Stepper Motor Control
 
 ## Names 
 LaKeysha L. Green 
